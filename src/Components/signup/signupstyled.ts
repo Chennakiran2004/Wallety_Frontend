@@ -2,10 +2,12 @@ import styled from "styled-components";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
+import {motion} from 'framer-motion'
+import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
 
-export const SignUpContainer = styled.div`
-    height: 100vh;
+export const SignUpContainer = styled(motion.div)`
     width: 100%;
+    padding-bottom: 40px;
 `
 
 export const SignUpSubContainer = styled.div`
@@ -76,7 +78,6 @@ export const GenderContainer = styled.div`
     margin: auto;
     border: 1px solid #F1F1FA;
     border-radius: 16px;
-    padding-left: 12px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -91,6 +92,7 @@ export const ParaElement = styled.p`
 export const GenderHeadingContainer=  styled.div`
     display: flex;
     align-items: center;
+    padding-left: 8px;
 `
 
 export const GenderContents = styled.div`
@@ -100,10 +102,19 @@ export const GenderContents = styled.div`
 `
 
 export const GenderButton = styled.button`
-    width: 100%;
+    width: 95%;
     background: none;
     border: none;
     text-align: left;
     font-size: 16px;
     color: #91919F;
+    border: 1px solid #AFAFAF;
+    margin: auto;
+    padding: 14px;
+    border-radius: 8px;
+`
+
+export const SignUpButton = styled(GlobalButton1)`
+    width: 90%;
+    margin: auto;
 `
