@@ -14,7 +14,7 @@ import {
   ParaElement,
   GenderHeadingContainer,
   GenderContents,
-  GenderButton, SignUpButton, HidePassword
+  GenderButton, SignUpButton, HidePassword, AlreadyHaveAnAccout, LoginLink
 } from "./signupstyled";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -82,7 +82,7 @@ const SignUp = () => {
     if(name === "" || email === "" || password === "" || role === "Role" || gender === "Gender"){
         setError("Please fill all the fields")
     }else{
-        setError("")
+        navigate("/Setup")
     }
   }
 
@@ -136,6 +136,7 @@ const SignUp = () => {
             </GenderContainer>
             {error && <p>{error}</p>}
             <SignUpButton type = "submit" onClick = {submitForm}>Sign Up</SignUpButton>
+            <AlreadyHaveAnAccout>Already have an account? <LoginLink to = "/login">Login</LoginLink></AlreadyHaveAnAccout>
             </FieldsContainer>
         </SignUpSubContainer>
         </SignUpContainer>
