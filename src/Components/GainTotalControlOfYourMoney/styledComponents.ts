@@ -55,6 +55,7 @@ export const GlobalButtonsContainer = styled.div`
   width: 100%;
   gap: 8px;
   margin-top: 96px;
+  z-index: 10;
 `;
 
 export const GlobalButton1 = styled.button`
