@@ -16,7 +16,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Wallety
+          hello Wallety
         </a>
       </header>
     </div>
