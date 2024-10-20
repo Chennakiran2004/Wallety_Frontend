@@ -9,7 +9,8 @@ import {AccountSetUpContainer,
 const SetUp = ()=>{
     return(
         <AnimatePresence mode = "wait">
-            <AccountSetUpContainer initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ duration: 0.2 }}>
+            {/* {initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ duration: 0.2 }}} */}
+            <AccountSetUpContainer >
                 <AccountSubContainer>
                     <AccountSetUpContents>
                         <AccountSetUpHeading>Let’s setup your <br/>account!</AccountSetUpHeading>

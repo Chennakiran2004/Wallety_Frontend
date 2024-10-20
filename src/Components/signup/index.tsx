@@ -46,6 +46,29 @@ const dropdownVariants = {
       },
   };
 
+  const pageVariants = {
+    initial: {
+      x: '100vw',  // Start from right outside the viewport
+      opacity: 0,
+    },
+    animate: {
+      x: 0,        // End at the center of the screen
+      opacity: 1,
+      transition: {
+        type: 'spring',
+        stiffness: 100,
+        damping: 20,
+      },
+    },
+    exit: {
+      x: '-100vw', // Exit to the left
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+      },
+    },
+  };
+
 const SignUp = () => {
   const navigate = useNavigate();
   
@@ -88,7 +111,8 @@ const SignUp = () => {
 
   return (
     <AnimatePresence mode="wait">
-        <SignUpContainer initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ duration: 0.2 }}>
+      {/* initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ duration: 0.2 }} */}
+        <SignUpContainer>
         <SignUpSubContainer>
             <HeaderContainer>
                 <IconContianer onClick={handleBack} size={40} />

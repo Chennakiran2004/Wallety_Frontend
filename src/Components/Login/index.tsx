@@ -71,7 +71,8 @@ const Login = () => {
 
   return (
     <AnimatePresence mode="wait">
-        <SignUpContainer initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ duration: 0.2 }}>
+      {/* initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ duration: 0.2 }} */}
+        <SignUpContainer>
         <SignUpSubContainer>
             <HeaderContainer>
                 <IconContianer onClick={handleBack} size={40} />
