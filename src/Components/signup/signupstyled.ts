@@ -4,6 +4,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
 import {motion} from 'framer-motion'
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
+import { FaRegEyeSlash } from "react-icons/fa";
 
 export const SignUpContainer = styled(motion.div)`
     width: 100%;
@@ -64,11 +65,17 @@ export const EyeIconContainer = styled(IoEyeOutline)`
     right: 30px;
     color: #91919F;
 `
+interface GenderIconContainerProps {
+    isactive: boolean
+}
 
-export const GenderIconContainer = styled(IoIosArrowDown)`
+export const GenderIconContainer = styled(IoIosArrowDown)<GenderIconContainerProps>`
     position: fixed;
     right: 30px;
     color: black;
+    transition: transform 0.3s ease;
+  transform: ${({ isactive }) => (isactive ? 'rotate(180deg)' : 'rotate(0deg)')};
+
 `
 
 export const GenderContainer = styled.div`
@@ -112,9 +119,16 @@ export const GenderButton = styled.button`
     margin: auto;
     padding: 14px;
     border-radius: 8px;
+    color: black;
 `
 
 export const SignUpButton = styled(GlobalButton1)`
     width: 90%;
     margin: auto;
+`
+
+export const HidePassword = styled(FaRegEyeSlash)`
+    position: fixed;
+    right: 30px;
+    color: #91919F;
 `
