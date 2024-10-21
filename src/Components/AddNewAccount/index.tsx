@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavigationEvents } from "../../Constants/changeEvents";
+import { NavigationEvents } from "../../Constants/EventHandlers";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
 
@@ -30,10 +30,7 @@ import {
   ParaElement,
   GenderIconContainer,
 } from "../signup/signupstyled";
-import {
-  CarouselItemImage,
-  GlobalButton1,
-} from "../GainTotalControlOfYourMoney/styledComponents";
+import { CarouselItemImage } from "../GainTotalControlOfYourMoney/styledComponents";
 
 const dropdownVariants = {
   hidden: {
