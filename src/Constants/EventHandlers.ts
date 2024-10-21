@@ -38,6 +38,10 @@ export const NavigationEvents = () => {
     navigate("/home");
   };
 
+  const navigateToTransaction = () => {
+    navigate("/transaction");
+  };
+
   return {
     navigateSignIn,
     navigateLogin,
@@ -45,5 +49,6 @@ export const NavigationEvents = () => {
     navigateAddNewAccount,
     naviagteToYouAreAllSet,
     navigateToHome,
+    navigateToTransaction,
   };
 };

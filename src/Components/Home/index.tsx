@@ -20,6 +20,7 @@ import {
   SeeAllButton,
   UserName,
 } from "./styledComponents";
+import { NavigationEvents } from "../../Constants/EventHandlers";
 
 interface Transaction {
   type: string;
@@ -89,6 +90,7 @@ const recentTransactionsData: Transaction[] = [
 ];
 
 const Home: React.FC = () => {
+  const { navigateToTransaction } = NavigationEvents();
   return (
     <HomeMainContainer>
       <HomeContentContainer>
@@ -120,7 +122,7 @@ const Home: React.FC = () => {
 
       <RecentTransactionsContainer>
         <RecentTransactionText>Recent Transactions</RecentTransactionText>
-        <SeeAllButton>See All</SeeAllButton>
+        <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
       </RecentTransactionsContainer>
       <RecentItemsContainer>
         {recentTransactionsData.map((transaction, index) => (
