@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
@@ -7,15 +7,26 @@ import { Link } from "react-router-dom";
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
 import { FaRegEyeSlash } from "react-icons/fa";
 
-export const SignUpContainer = styled(motion.div)`
-  width: 100%;
-  padding-bottom: 40px;
+export const slideIn = keyframes`
+  0% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 `;
 
-export const SignUpSubContainer = styled.div`
+export const SignUpContainer = styled.div`
+  padding-bottom: 40px;
+  
+  animation: ${slideIn} 0.35s;
+`;
+
+export const SignUpSubContainer = styled(motion.div)`
   display: flex;
   flex-direction: column;
-  width: 100%;
   padding-top: 24px;
 `;
 
