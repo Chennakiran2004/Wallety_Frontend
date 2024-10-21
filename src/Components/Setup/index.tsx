@@ -7,7 +7,7 @@ import {
   AccountSetUpContents,
   LetsGo,
 } from "./setupstyled";
-import { NavigationEvents } from "../../Constants/changeEvents";
+import { NavigationEvents } from "../../Constants/EventHandlers";
 
 const SetUp = () => {
   const { navigateAddNewAccount } = NavigationEvents();

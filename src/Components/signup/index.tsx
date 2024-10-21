@@ -22,7 +22,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { ChangeEvents, NavigationEvents } from "../../Constants/changeEvents";
+import { ChangeEvents, NavigationEvents } from "../../Constants/EventHandlers";
 import { motion } from "framer-motion";
 
 const dropdownVariants = {

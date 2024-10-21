@@ -8,7 +8,7 @@ import {
   GlobalButton2,
   GlobalButtonsContainer,
 } from "../GainTotalControlOfYourMoney/styledComponents";
-import { NavigationEvents } from "../../Constants/changeEvents";
+import { NavigationEvents } from "../../Constants/EventHandlers";
 
 const KnowWhereYourMoneyGoes = () => {
   const { navigateSignIn, navigateLogin } = NavigationEvents();
