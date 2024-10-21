@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { interMedium } from "../../Constants/fontStyles";
+import { Link } from "react-router-dom";
 
 export const TabBarMainContainer = styled.div`
   display: flex;
@@ -16,6 +17,8 @@ export const TabBarSubContainer = styled.div`
   justify-content: space-around;
   width: 100%;
   background: #fff;
+  align-items: baseline;
+  padding-bottom: 16px;
 `;
 
 export const TabBarItemContainer = styled.div`
@@ -24,7 +27,6 @@ export const TabBarItemContainer = styled.div`
   align-items: center;
   gap: 4px;
   justify-content: space-between;
-  padding-bottom: 8px;
 `;
 
 export const TabBarItemImage = styled.img``;
@@ -38,5 +40,11 @@ export const TabBarItemText = styled.p`
 
 export const AddButtonContainer = styled.div`
   position: relative;
-  bottom: 2px;
+  bottom: 0px;
+`;
+
+export const CustomLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  cursor: none;
 `;
