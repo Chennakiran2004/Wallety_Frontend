@@ -22,7 +22,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import ChangeEvents from "../../Constants/changeEvents";
+import { ChangeEvents, NavigationEvents } from "../../Constants/changeEvents";
 import { motion } from "framer-motion";
 
 const dropdownVariants = {
@@ -87,7 +87,8 @@ const SignUp = () => {
   const [role, setRole] = useState("Role");
   const [error, setError] = useState<String | undefined>(undefined);
 
-  const { changePassword, handleBack } = ChangeEvents();
+  const { changePassword } = ChangeEvents();
+  const { handleBack } = NavigationEvents();
 
   const openGenderDropDown = () => {
     setGenderContents(!genderContents);

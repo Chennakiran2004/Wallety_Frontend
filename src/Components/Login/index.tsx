@@ -23,7 +23,7 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import ChangeEvents from "../../Constants/changeEvents";
+import { ChangeEvents, NavigationEvents } from "../../Constants/changeEvents";
 import { motion } from "framer-motion";
 
 const dropdownVariants = {
@@ -60,10 +60,7 @@ const Login = () => {
   const [error, setError] = useState<String | undefined>(undefined);
 
   const { changePassword } = ChangeEvents();
-
-  const handleBack = () => {
-    navigate(-1);
-  };
+  const { handleBack } = NavigationEvents();
 
   const submitForm = () => {
     if (email === "" || password === "") {

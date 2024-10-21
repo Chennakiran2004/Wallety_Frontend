@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   CarouseItemMainContainer,
   CarouselItemDescription,
@@ -9,13 +8,11 @@ import {
   GlobalButton2,
   GlobalButtonsContainer,
 } from "../GainTotalControlOfYourMoney/styledComponents";
+import { NavigationEvents } from "../../Constants/changeEvents";
 
 const KnowWhereYourMoneyGoes = () => {
-  const navigate = useNavigate();
+  const { navigateSignIn, navigateLogin } = NavigationEvents();
 
-  const navigateSignIn = () => {
-    navigate("/Signup");
-  };
   return (
     <CarouseItemMainContainer>
       <CarouselItemImage src="/Images/home2.svg" />
@@ -27,7 +24,7 @@ const KnowWhereYourMoneyGoes = () => {
       </CarouselItemTextContainer>
       <GlobalButtonsContainer>
         <GlobalButton1 onClick={navigateSignIn}>Sign Up</GlobalButton1>
-        <GlobalButton2>Learn More</GlobalButton2>
+        <GlobalButton2 onClick={navigateLogin}>Login</GlobalButton2>
       </GlobalButtonsContainer>
     </CarouseItemMainContainer>
   );

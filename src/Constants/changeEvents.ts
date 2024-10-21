@@ -1,18 +1,34 @@
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent } from "react";
 
-const ChangeEvents = () => {
-  const navigate = useNavigate();
-
+// Change password function
+export const ChangeEvents = () => {
   const changePassword = (e: ChangeEvent<HTMLInputElement>) => {
     return e.target.value;
   };
 
-  const handleBack = () => {
-    navigate("/");
-  };
-
-  return { changePassword, handleBack };
+  return { changePassword };
 };
 
-export default ChangeEvents;
+// Navigation events
+export const NavigationEvents = () => {
+  const navigate = useNavigate();
+
+  const navigateSignIn = () => {
+    navigate("/Signup");
+  };
+
+  const navigateLogin = () => {
+    navigate("/login");
+  };
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
+  const navigateAddNewAccount = () => {
+    navigate("/AddNewAccount");
+  };
+
+  return { navigateSignIn, navigateLogin, handleBack };
+};
