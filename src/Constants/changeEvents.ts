@@ -30,5 +30,5 @@ export const NavigationEvents = () => {
     navigate("/AddNewAccount");
   };
 
-  return { navigateSignIn, navigateLogin, handleBack };
+  return { navigateSignIn, navigateLogin, handleBack, navigateAddNewAccount };
 };

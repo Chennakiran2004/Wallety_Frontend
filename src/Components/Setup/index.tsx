@@ -7,8 +7,11 @@ import {
   AccountSetUpContents,
   LetsGo,
 } from "./setupstyled";
+import { NavigationEvents } from "../../Constants/changeEvents";
 
 const SetUp = () => {
+  const { navigateAddNewAccount } = NavigationEvents();
+
   return (
     <AnimatePresence mode="wait">
       {/* {initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ duration: 0.2 }}} */}
@@ -23,7 +26,7 @@ const SetUp = () => {
               Account can be your bank, credit card or your wallet.
             </AccountSideHeading>
           </AccountSetUpContents>
-          <LetsGo>Let's go</LetsGo>
+          <LetsGo onClick={navigateAddNewAccount}>Let's go</LetsGo>
         </AccountSubContainer>
       </AccountSetUpContainer>
     </AnimatePresence>
