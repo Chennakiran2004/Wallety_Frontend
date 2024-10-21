@@ -1,9 +1,18 @@
-const ChangeEvents = ()=>{
-    const changePassword = (e: any)=>{
-        return e.target.value
-    }
+import { useNavigate } from "react-router-dom";
+import { ChangeEvent } from "react";
 
-    return {changePassword}
-}
+const ChangeEvents = () => {
+  const navigate = useNavigate();
 
-export default ChangeEvents
+  const changePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    return e.target.value;
+  };
+
+  const handleBack = () => {
+    navigate("/");
+  };
+
+  return { changePassword, handleBack };
+};
+
+export default ChangeEvents;
