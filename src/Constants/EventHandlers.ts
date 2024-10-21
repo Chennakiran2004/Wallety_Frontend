@@ -30,5 +30,20 @@ export const NavigationEvents = () => {
     navigate("/AddNewAccount");
   };
 
-  return { navigateSignIn, navigateLogin, handleBack, navigateAddNewAccount };
+  const naviagteToYouAreAllSet = () => {
+    navigate("/youAreAllSet");
+  };
+
+  const navigateToHome = () => {
+    navigate("/home");
+  };
+
+  return {
+    navigateSignIn,
+    navigateLogin,
+    handleBack,
+    navigateAddNewAccount,
+    naviagteToYouAreAllSet,
+    navigateToHome,
+  };
 };
