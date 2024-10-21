@@ -265,7 +265,6 @@ const Transaction = () => {
           </AnimatePresence>
        </TransactionSubContainer>
     </TransactionMainContainer>
-    <TabBar/>
     </>
   );
 };
