@@ -1,10 +1,16 @@
-
-import { OuterAllSetContainer, CombinedGifAndtextDiv, AllSetText, ContinueButtonInAllSet, GifWrapper } from "./allSetStyled";
+import { NavigationEvents } from "../../Constants/EventHandlers";
+import {
+  OuterAllSetContainer,
+  CombinedGifAndtextDiv,
+  AllSetText,
+  ContinueButtonInAllSet,
+  GifWrapper,
+} from "./allSetStyled";
 export default function YouAreAllSet() {
-  const GifComponent = () => {
-const gifUrl = `gifs/allsetTickMark.gif?${new Date().getTime()}`;
+  const { navigateToHome } = NavigationEvents();
 
-    
+  const GifComponent = () => {
+    const gifUrl = `/gifs/finnalYouAreAllSet.gif?${new Date().getTime()}`;
     return <GifWrapper gifUrl={gifUrl} />;
   };
 
@@ -14,8 +20,9 @@ const gifUrl = `gifs/allsetTickMark.gif?${new Date().getTime()}`;
         <GifComponent />
         <AllSetText>You are all set</AllSetText>
       </CombinedGifAndtextDiv>
-      <ContinueButtonInAllSet>Okay</ContinueButtonInAllSet>
+      <ContinueButtonInAllSet onClick={navigateToHome}>
+        Done
+      </ContinueButtonInAllSet>
     </OuterAllSetContainer>
-    
   );
 }
