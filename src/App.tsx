@@ -15,7 +15,6 @@ import Profile from "./Components/Profile";
 function App() {
   return (
     <Router>
-      <div className="App">
         <Routes>
           {/* <Route path="/" element={<HomeCarousel />} />
           <Route path="/Signup" element={<SignUp />} />
@@ -28,7 +27,6 @@ function App() {
           <Route path="/Transaction" element={<Transaction />} />
           <Route path="/Profile" element={<Profile />} />
         </Routes>
-      </div>
     </Router>
   );
 }

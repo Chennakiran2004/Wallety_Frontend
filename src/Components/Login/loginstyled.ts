@@ -6,10 +6,12 @@ import {motion} from 'framer-motion'
 import { Link } from "react-router-dom";
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { slideIn } from "../signup/signupstyled";
 
 export const SignUpContainer = styled(motion.div)`
     width: 100%;
     padding-bottom: 40px;
+    animation: ${slideIn} 0.35s;
 `
 
 export const SignUpSubContainer = styled.div`

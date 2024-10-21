@@ -2,13 +2,15 @@ import styled from "styled-components";
 import { interMedium } from "../../Constants/fontStyles";
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
 import { motion } from "framer-motion";
+import { slideIn } from "../signup/signupstyled";
 
-export const AccountSetUpContainer = styled(motion.div)`
+export const AccountSetUpContainer = styled.div`
   width: 100%;
   height: 90vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  animation: ${slideIn} 0.35s;
 `;
 
 export const AccountSubContainer = styled.div`
