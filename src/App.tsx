@@ -5,6 +5,7 @@ import SignUp from "./Components/signup";
 import "./App.css";
 import Login from "./Components/Login";
 import SetUp from "./Components/Setup";
+import AddNewAccount from "./Components/AddNewAccount";
 
 function App() {
   return (
@@ -13,8 +14,9 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeCarousel />} />
           <Route path="/Signup" element={<SignUp />} />
-          <Route path = "/login" element = {<Login/>} />
-          <Route path = "/SetUp" element = {<SetUp/>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/SetUp" element={<SetUp />} />
+          <Route path="AddNewAccount" element={<AddNewAccount />} />
         </Routes>
       </div>
     </Router>
