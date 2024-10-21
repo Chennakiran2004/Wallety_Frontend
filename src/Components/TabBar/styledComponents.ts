@@ -16,6 +16,7 @@ export const TabBarSubContainer = styled.div`
   justify-content: space-around;
   width: 100%;
   background: #fff;
+  padding-bottom: 16px;
 `;
 
 export const TabBarItemContainer = styled.div`
