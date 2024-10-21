@@ -84,20 +84,7 @@ const AppRoutes = () => {
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Routes>
-          {/* <Route path="/" element={<HomeCarousel />} />
-          <Route path="/Signup" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/SetUp" element={<SetUp />} />
-          <Route path="/AddNewAccount" element={<AddNewAccount />} /> */}
-          <Route path="/TabBar" element={<TabBar />} />
-          <Route path="/Home" element={<Home />} />
-          <Route path="/Budget" element={<Budget />} />
-          <Route path="/Transaction" element={<Transaction />} />
-          <Route path="/Profile" element={<Profile />} />
-        </Routes>
-      </div>
+      <AppRoutes />
     </Router>
   );
 }
