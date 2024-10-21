@@ -4,6 +4,7 @@ import {
   HeaderContainer,
   IconContianer,
   SignUpHeading,
+  slideIn,
 } from "../signup/signupstyled";
 import { interRegular, interSemiBold } from "../../Constants/fontStyles";
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
@@ -41,6 +42,7 @@ export const AccountDetailsContainer = styled.div`
   position: absolute;
   bottom: 0;
   left: 0;
+  padding-bottom: 16px; 
 `;
 
 export const AccountDetailsSubContainer = styled.div`

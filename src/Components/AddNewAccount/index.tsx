@@ -166,7 +166,6 @@ const AddNewAccount = () => {
               </AnimatePresence>
             </GenderContainer>
           </LocationContainer>
-
           <ContinueButton>Continue</ContinueButton>
         </AccountDetailsSubContainer>
       </AccountDetailsContainer>

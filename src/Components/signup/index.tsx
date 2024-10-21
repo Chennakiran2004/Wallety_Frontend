@@ -51,11 +51,11 @@ const dropdownVariants = {
 
 const pageVariants = {
   initial: {
-    x: "100vw", // Start from right outside the viewport
+    x: "1000000vw", // Start from right
     opacity: 0,
   },
   animate: {
-    x: 0, // End at the center of the screen
+    x: "0vw", // Slide into view
     opacity: 1,
     transition: {
       type: "spring",
@@ -64,7 +64,7 @@ const pageVariants = {
     },
   },
   exit: {
-    x: "-100vw", // Exit to the left
+    x: "-100vw", // Exit to left
     opacity: 0,
     transition: {
       duration: 0.3,
@@ -114,10 +114,9 @@ const SignUp = () => {
     }
   };
 
-  return (
-    <AnimatePresence mode="wait">
-      {/* initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ duration: 0.2 }} */}
+  return (      
       <SignUpContainer>
+         {/* variants={pageVariants} initial="initial" animate="animate" exit="exit" */}
         <SignUpSubContainer>
           <HeaderContainer>
             <IconContianer onClick={handleBack} size={40} />
@@ -223,7 +222,6 @@ const SignUp = () => {
           </FieldsContainer>
         </SignUpSubContainer>
       </SignUpContainer>
-    </AnimatePresence>
   );
 };
 

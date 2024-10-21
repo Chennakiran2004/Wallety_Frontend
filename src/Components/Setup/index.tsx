@@ -13,8 +13,6 @@ const SetUp = () => {
   const { navigateAddNewAccount } = NavigationEvents();
 
   return (
-    <AnimatePresence mode="wait">
-      {/* {initial={{ x: 300 }} animate={{ x: 0 }} exit={{ x: -300 }} transition={{ duration: 0.2 }}} */}
       <AccountSetUpContainer>
         <AccountSubContainer>
           <AccountSetUpContents>
@@ -29,7 +27,6 @@ const SetUp = () => {
           <LetsGo onClick={navigateAddNewAccount}>Let's go</LetsGo>
         </AccountSubContainer>
       </AccountSetUpContainer>
-    </AnimatePresence>
   );
 };
 

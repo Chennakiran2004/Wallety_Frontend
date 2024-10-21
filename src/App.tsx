@@ -10,7 +10,6 @@ import AddNewAccount from "./Components/AddNewAccount";
 function App() {
   return (
     <Router>
-      <div className="App">
         <Routes>
           <Route path="/" element={<HomeCarousel />} />
           <Route path="/Signup" element={<SignUp />} />
@@ -18,7 +17,6 @@ function App() {
           <Route path="/SetUp" element={<SetUp />} />
           <Route path="AddNewAccount" element={<AddNewAccount />} />
         </Routes>
-      </div>
     </Router>
   );
 }
