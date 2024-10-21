@@ -11,7 +11,7 @@ import {
 import { NavigationEvents } from "../../Constants/changeEvents";
 
 const KnowWhereYourMoneyGoes = () => {
-  const { navigateSignIn } = NavigationEvents();
+  const { navigateSignIn, navigateLogin } = NavigationEvents();
 
   return (
     <CarouseItemMainContainer>
@@ -24,7 +24,7 @@ const KnowWhereYourMoneyGoes = () => {
       </CarouselItemTextContainer>
       <GlobalButtonsContainer>
         <GlobalButton1 onClick={navigateSignIn}>Sign Up</GlobalButton1>
-        <GlobalButton2>Login</GlobalButton2>
+        <GlobalButton2 onClick={navigateLogin}>Login</GlobalButton2>
       </GlobalButtonsContainer>
     </CarouseItemMainContainer>
   );
