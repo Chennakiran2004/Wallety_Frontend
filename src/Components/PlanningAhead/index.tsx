@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import {
   CarouseItemMainContainer,
   CarouselItemDescription,
@@ -9,12 +8,10 @@ import {
   GlobalButton2,
   GlobalButtonsContainer,
 } from "../GainTotalControlOfYourMoney/styledComponents";
+import { NavigationEvents } from "../../Constants/changeEvents";
 
 const PlanningAhead = () => {
-  const navigate = useNavigate();
-  const navigateSignIn = () => {
-    navigate("/Signup");
-  };
+  const { navigateSignIn, navigateLogin } = NavigationEvents();
 
   return (
     <CarouseItemMainContainer>
@@ -27,7 +24,7 @@ const PlanningAhead = () => {
       </CarouselItemTextContainer>
       <GlobalButtonsContainer>
         <GlobalButton1 onClick={navigateSignIn}>Sign Up</GlobalButton1>
-        <GlobalButton2>Learn More</GlobalButton2>
+        <GlobalButton2 onClick={navigateLogin}>Login</GlobalButton2>
       </GlobalButtonsContainer>
     </CarouseItemMainContainer>
   );
