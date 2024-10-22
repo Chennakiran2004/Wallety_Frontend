@@ -50,6 +50,10 @@ export const NavigationEvents = () => {
     navigate(`/transaction/:${id}`);
   };
 
+  const navigateToFinancialReport = () => {
+    navigate("/financialReport");
+  };
+
   return {
     navigateSignIn,
     navigateLogin,
@@ -60,5 +64,6 @@ export const NavigationEvents = () => {
     navigateToTransaction,
     navigateToTransactionDetails,
     navigateToUserInfo,
+    navigateToFinancialReport,
   };
 };
