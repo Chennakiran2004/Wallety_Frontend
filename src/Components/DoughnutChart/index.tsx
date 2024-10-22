@@ -6,32 +6,45 @@ import {
   Tooltip,
   Legend,
   ChartConfiguration,
+  Plugin,
 } from "chart.js";
 
 Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
-const DoughnutChart: React.FC = () => {
+interface DoughnutChartProps {
+  data: number[];
+  backgroundColors: string[];
+}
+
+const DoughnutChart: React.FC<DoughnutChartProps> = ({
+  data,
+  backgroundColors,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  const data = {
+  const chartData = {
     datasets: [
       {
-        label: "Pie Chart Data",
-        data: [204.5, 108.5, 188.461],
-        backgroundColor: ["#7F3DFF", "#FD3C4A", "#FCAC12"],
-        hoverBackgroundColor: ["#BA55D3", "#FF6347", "#FFD700"],
+        label: "Expenses Breakdown",
+        data: data,
+        backgroundColor: backgroundColors,
+        hoverBackgroundColor: backgroundColors.map((color) => color + "AA"),
         hoverOffset: 20,
         borderWidth: 0,
       },
     ],
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const config: ChartConfiguration<"doughnut", number[], string> = {
     type: "doughnut",
-    data: data,
+    data: chartData,
     options: {
       cutout: "85%",
+      plugins: {
+        tooltip: {
+          enabled: true,
+        },
+      },
       elements: {
         arc: {
           borderWidth: 0,
@@ -48,10 +61,40 @@ const DoughnutChart: React.FC = () => {
     },
   };
 
+  const centerTextPlugin: Plugin<"doughnut"> = {
+    id: "centerTextPlugin",
+    afterDraw(chart) {
+      const { ctx, chartArea } = chart;
+      const text = "365";
+
+      const fontSize = 32;
+      const fontStyle = "normal";
+      const fontWeight = 700; // Bold
+      const fontFamily = "Inter";
+      const lineHeight = 39;
+      const color = "#000";
+
+      ctx.save();
+      ctx.font = `${fontWeight} ${fontStyle} ${fontSize}px ${fontFamily}`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = color;
+
+      const x = (chartArea.left + chartArea.right) / 2;
+      const y = (chartArea.top + chartArea.bottom) / 2;
+
+      ctx.fillText(text, x, y);
+      ctx.restore();
+    },
+  };
+
   useEffect(() => {
     const ctx = canvasRef.current?.getContext("2d");
     if (ctx) {
-      const doughnutChart = new Chart(ctx, config);
+      const doughnutChart = new Chart(ctx, {
+        ...config,
+        plugins: [centerTextPlugin],
+      });
 
       return () => {
         doughnutChart.destroy();

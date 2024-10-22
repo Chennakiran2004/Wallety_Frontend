@@ -110,7 +110,7 @@ const Home: React.FC = () => {
             </IncomeContainer>
 
             <ExpenseContainer>
-              <IncomeAndExpenseImage src="/Images/expense.png" />
+              <IncomeAndExpenseImage src="/Images/expenses.svg" />
               <IncomeAndExpenseContentContainer>
                 <IncomeAndExpenseHeading>Expenses</IncomeAndExpenseHeading>
                 <IncomeAndExpenseMoney>₹5000</IncomeAndExpenseMoney>
