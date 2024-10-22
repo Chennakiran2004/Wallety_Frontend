@@ -38,16 +38,19 @@ import {
   ApplyButton,
   NumberOfFilters,
   NumberOfFiltersContainer,
-  CategoryPopupContainer,
   CategoryItemsContainer,
 } from "./styledComponents";
 import { motion, AnimatePresence } from "framer-motion";
+import TransactionList from "../TransactionList";
+import FilterPopup from "../FilterPopUp";
+import CategoryPopup from "../CategoryPopUp";
 
 const data = [
   {
     date: "Today",
     details: [
       {
+        id: 1,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -55,6 +58,7 @@ const data = [
         imageUrl: "/Images/shoppingicon.svg",
       },
       {
+        id: 2,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -62,6 +66,7 @@ const data = [
         imageUrl: "/Images/foodicon.svg",
       },
       {
+        id: 3,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -69,6 +74,7 @@ const data = [
         imageUrl: "/Images/transportation.svg",
       },
       {
+        id: 4,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -81,6 +87,7 @@ const data = [
     date: "Yesterday",
     details: [
       {
+        id: 5,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -88,6 +95,7 @@ const data = [
         imageUrl: "/Images/foodicon.svg",
       },
       {
+        id: 6,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -95,6 +103,7 @@ const data = [
         imageUrl: "/Images/transportation.svg",
       },
       {
+        id: 7,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -102,6 +111,7 @@ const data = [
         imageUrl: "/Images/shoppingicon.svg",
       },
       {
+        id: 8,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -111,12 +121,6 @@ const data = [
     ],
   },
 ];
-
-const popupVariants = {
-  hidden: { opacity: 0, y: "100%" },
-  visible: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: "100%" },
-};
 
 const overlayVariants = {
   hidden: { opacity: 0 },
@@ -129,12 +133,6 @@ const mainPopupExit = {
   exit: { x: "-100%", opacity: 0 },
 };
 
-const categoryPopupVariants = {
-  hidden: { x: "100%", opacity: 0 },
-  visible: { x: 0, opacity: 1 },
-  exit: { x: "100%", opacity: 0 },
-};
-
 const sortOptions = ["Highest", "Lowest", "Oldest"];
 const categoryOptions = ["Shopping", "Food", "Transport", "Entertainment"];
 
@@ -142,9 +140,9 @@ const Transaction = () => {
   const [isPopupOpen, setIsPopUpOpen] = useState(false);
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
 
-  const [selectedSortOptions, setSelectedSortOptions] = useState<String[]>([]);
+  const [selectedSortOptions, setSelectedSortOptions] = useState<string[]>([]);
   const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<
-    String[]
+    string[]
   >([]);
 
   const [numberOfFilters, setNumberofFilters] = useState(0);
@@ -216,34 +214,13 @@ const Transaction = () => {
             <ArrowRight src="/Images/arrow-right-2.svg" />
           </FinancialReportContainer>
           <TransactionsContainer>
-            {data.map((eachItem) => {
-              return (
-                <>
-                  <DateHeading>{eachItem.date}</DateHeading>
-                  <TransactionListContainer>
-                    {eachItem.details.map((item) => {
-                      return (
-                        <ListItem>
-                          <img src={item.imageUrl} />
-                          <ListItemContentsContainer>
-                            <PriceContainer>
-                              <CategoryHeading>Shopping</CategoryHeading>
-                              <PriceHeading>-$120</PriceHeading>
-                            </PriceContainer>
-                            <DescriptionContainer>
-                              <DescriptionHeading>
-                                Buy some grocery
-                              </DescriptionHeading>
-                              <TimeElement>10:00 AM</TimeElement>
-                            </DescriptionContainer>
-                          </ListItemContentsContainer>
-                        </ListItem>
-                      );
-                    })}
-                  </TransactionListContainer>
-                </>
-              );
-            })}
+            {data.map((eachItem, index) => (
+              <TransactionList
+                key={index}
+                date={eachItem.date}
+                details={eachItem.details}
+              />
+            ))}
           </TransactionsContainer>
 
           <AnimatePresence mode="wait">
@@ -254,51 +231,16 @@ const Transaction = () => {
                 animate="visible"
                 exit="exit"
               >
-                <PopupContainer
-                  onClick={(e) => e.stopPropagation()}
-                  variants={popupVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <PopUpSubContainer>
-                    <FilterPopUpHeadingContainer>
-                      <FilterPopUpHeading>
-                        Filter Transaction
-                      </FilterPopUpHeading>
-                      <ResetButton onClick={resetFilters}>Reset</ResetButton>
-                    </FilterPopUpHeadingContainer>
-                    <SortByContainer>
-                      <PopUpSubHeading>Sort By</PopUpSubHeading>
-                      <SortByItemsContainer>
-                        {sortOptions.map((option) => (
-                          <SortItem
-                            key={option}
-                            onClick={() => handleSortSelection(option)}
-                            isselected={selectedSortOptions.includes(option)}
-                          >
-                            {option}
-                          </SortItem>
-                        ))}
-                      </SortByItemsContainer>
-                    </SortByContainer>
-                    <CategoryContainer>
-                      <PopUpSubHeading>Category</PopUpSubHeading>
-                      <CategoryButtonContainer onClick={openCategoryPopup}>
-                        <CategorySideHeading>
-                          Choose Category
-                        </CategorySideHeading>
-                        <CategoryItemSelectedContainer>
-                          <NumberOfItemsSelected>
-                            {selectedCategoryOptions.length} Selected
-                          </NumberOfItemsSelected>
-                          <ArrowRight src="/Images/arrow-right-2.svg" />
-                        </CategoryItemSelectedContainer>
-                      </CategoryButtonContainer>
-                    </CategoryContainer>
-                    <ApplyButton onClick={applyFilters}>Apply</ApplyButton>
-                  </PopUpSubContainer>
-                </PopupContainer>
+                <FilterPopup
+                  selectedSortOptions={selectedSortOptions}
+                  selectedCategoryOptions={selectedCategoryOptions}
+                  handleSortSelection={handleSortSelection}
+                  togglePopUp={togglePopUp}
+                  applyFilters={applyFilters}
+                  resetFilters={resetFilters}
+                  openCategoryPopup={openCategoryPopup}
+                  sortOptions={sortOptions}
+                />
               </Overlay>
             )}
 
@@ -309,32 +251,12 @@ const Transaction = () => {
                 animate="visible"
                 exit="exit"
               >
-                <CategoryPopupContainer
-                  onClick={(e) => e.stopPropagation()}
-                  variants={categoryPopupVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <PopUpSubContainer>
-                    <FilterPopUpHeading>Choose Category</FilterPopUpHeading>
-                    <CategoryItemsContainer>
-                      {categoryOptions.map((category) => (
-                        <SortItem
-                          key={category}
-                          isselected={selectedCategoryOptions.includes(
-                            category
-                          )}
-                          onClick={() => handleCategorySelection(category)}
-                        >
-                          {category}
-                        </SortItem>
-                      ))}
-                    </CategoryItemsContainer>
-
-                    <ApplyButton onClick={closeCategoryPopup}>Done</ApplyButton>
-                  </PopUpSubContainer>
-                </CategoryPopupContainer>
+                <CategoryPopup
+                  selectedCategoryOptions={selectedCategoryOptions}
+                  handleCategorySelection={handleCategorySelection}
+                  categoryOptions={categoryOptions}
+                  closeCategoryPopup={closeCategoryPopup}
+                />
               </Overlay>
             )}
           </AnimatePresence>

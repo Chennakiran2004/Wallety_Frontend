@@ -46,6 +46,10 @@ export const NavigationEvents = () => {
     navigate("/userInfo");
   };
 
+  const navigateToTransactionDetails = (id: number) => {
+    navigate(`/transaction/:${id}`);
+  };
+
   return {
     navigateSignIn,
     navigateLogin,
@@ -54,6 +58,7 @@ export const NavigationEvents = () => {
     naviagteToYouAreAllSet,
     navigateToHome,
     navigateToTransaction,
+    navigateToTransactionDetails,
     navigateToUserInfo,
   };
 };

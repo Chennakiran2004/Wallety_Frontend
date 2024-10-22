@@ -72,13 +72,11 @@ export const ListItem = styled.li`
 `;
 
 export const TransactionsContainer = styled.div`
-  max-height: 58vh;
+  max-height: 68vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 `;
 
 export const ListItemContentsContainer = styled.div`
@@ -211,7 +209,9 @@ export const SortItem = styled.div<SortItemInterface>`
 
 export const CategoryContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   gap: 20px;
 `;
 
@@ -268,4 +268,10 @@ export const CategoryPopupContainer = styled(motion.div)`
   z-index: 1000;
   padding-bottom: 6%;
   padding-top: 8%;
+`;
+
+export const CategoryItemsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
 `;
