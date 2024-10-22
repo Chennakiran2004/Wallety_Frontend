@@ -42,9 +42,13 @@ export const NavigationEvents = () => {
     navigate("/transaction");
   };
 
-  const navigateToTransactionDetails = (id: number)=>{
-    navigate(`/transaction/${id}`)
-  }
+  const navigateToUserInfo = () => {
+    navigate("/userInfo");
+  };
+
+  const navigateToTransactionDetails = (id: number) => {
+    navigate(`/transaction/:${id}`);
+  };
 
   return {
     navigateSignIn,
@@ -53,6 +57,8 @@ export const NavigationEvents = () => {
     navigateAddNewAccount,
     naviagteToYouAreAllSet,
     navigateToHome,
-    navigateToTransaction, navigateToTransactionDetails
+    navigateToTransaction,
+    navigateToTransactionDetails,
+    navigateToUserInfo,
   };
 };

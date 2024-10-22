@@ -1,22 +1,30 @@
-import { useState } from 'react';
-import TabBar from '../TabBar';
-import {TransactionMainContainer, 
+import { useState } from "react";
+import TabBar from "../TabBar";
+import {
+  TransactionMainContainer,
   TransactionSubContainer,
-  FilterContainer, 
+  FilterContainer,
   FilterImage,
-  FilterButton, 
-  FinancialReportContainer, 
-  FinancialReportHeading, 
-  ArrowRight, 
+  FilterButton,
+  FinancialReportContainer,
+  FinancialReportHeading,
+  ArrowRight,
   TransactionListContainer,
   ListItem,
-  TransactionsContainer, 
-  ListItemContentsContainer, 
-  PriceContainer, 
+  TransactionsContainer,
+  ListItemContentsContainer,
+  PriceContainer,
   DescriptionContainer,
-  DateHeading, CategoryHeading, PriceHeading, DescriptionHeading, TimeElement,
+  DateHeading,
+  CategoryHeading,
+  PriceHeading,
+  DescriptionHeading,
+  TimeElement,
   Overlay,
-  PopupContainer, PopUpSubContainer, FilterPopUpHeadingContainer, ResetButton,
+  PopupContainer,
+  PopUpSubContainer,
+  FilterPopUpHeadingContainer,
+  ResetButton,
   FilterPopUpHeading,
   SortByContainer,
   PopUpSubHeading,
@@ -27,15 +35,15 @@ import {TransactionMainContainer,
   CategoryButtonContainer,
   CategoryItemSelectedContainer,
   NumberOfItemsSelected,
-  ApplyButton, NumberOfFilters,
+  ApplyButton,
+  NumberOfFilters,
   NumberOfFiltersContainer,
-  CategoryPopupContainer, CategoryItem,
-  CategoryItemsContainer} from './styledComponents'
-import { motion, AnimatePresence } from 'framer-motion';
-import TransactionList from '../TransactionList';
-import FilterPopup from '../FilterPopUp';
-import CategoryPopup from '../CategoryPopUp';
-
+  CategoryItemsContainer,
+} from "./styledComponents";
+import { motion, AnimatePresence } from "framer-motion";
+import TransactionList from "../TransactionList";
+import FilterPopup from "../FilterPopUp";
+import CategoryPopup from "../CategoryPopUp";
 
 const data = [
   {
@@ -47,31 +55,35 @@ const data = [
         money: "120",
         description: "Buy Some grocerry",
         time: "10:00 AM",
-        imageUrl: "/Images/shoppingicon.svg"
-      }, {
+        imageUrl: "/Images/shoppingicon.svg",
+      },
+      {
         id: 2,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
         time: "10:00 AM",
-        imageUrl: "/Images/foodicon.svg"
-      }, {
+        imageUrl: "/Images/foodicon.svg",
+      },
+      {
         id: 3,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
         time: "10:00 AM",
-        imageUrl: "/Images/transportation.svg"
-      },{
+        imageUrl: "/Images/transportation.svg",
+      },
+      {
         id: 4,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
         time: "10:00 AM",
-        imageUrl: "/Images/shoppingicon.svg"
-      }
-    ]
-  }, {
+        imageUrl: "/Images/shoppingicon.svg",
+      },
+    ],
+  },
+  {
     date: "Yesterday",
     details: [
       {
@@ -80,32 +92,35 @@ const data = [
         money: "120",
         description: "Buy Some grocerry",
         time: "10:00 AM",
-        imageUrl: "/Images/foodicon.svg"
-      }, {
+        imageUrl: "/Images/foodicon.svg",
+      },
+      {
         id: 6,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
         time: "10:00 AM",
-        imageUrl: "/Images/transportation.svg"
-      }, {
+        imageUrl: "/Images/transportation.svg",
+      },
+      {
         id: 7,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
         time: "10:00 AM",
-        imageUrl: "/Images/shoppingicon.svg"
-      },{
+        imageUrl: "/Images/shoppingicon.svg",
+      },
+      {
         id: 8,
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
         time: "10:00 AM",
-        imageUrl: "/Images/transportation.svg"
-      }
-    ]
-  }, 
-]
+        imageUrl: "/Images/transportation.svg",
+      },
+    ],
+  },
+];
 
 const overlayVariants = {
   hidden: { opacity: 0 },
@@ -114,107 +129,139 @@ const overlayVariants = {
 };
 
 const mainPopupExit = {
-  hidden: { x: 0, opacity: 1},
-  exit: { x: '-100%', opacity: 0 },
+  hidden: { x: 0, opacity: 1 },
+  exit: { x: "-100%", opacity: 0 },
 };
 
 const sortOptions = ["Highest", "Lowest", "Oldest"];
 const categoryOptions = ["Shopping", "Food", "Transport", "Entertainment"];
 
 const Transaction = () => {
-  const [isPopupOpen, setIsPopUpOpen] = useState(false)
+  const [isPopupOpen, setIsPopUpOpen] = useState(false);
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
 
   const [selectedSortOptions, setSelectedSortOptions] = useState<string[]>([]);
-  const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<string[]>([]);
+  const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<
+    string[]
+  >([]);
 
-  const [numberOfFilters, setNumberofFilters] = useState(0)
+  const [numberOfFilters, setNumberofFilters] = useState(0);
 
   const handleSortSelection = (option: string) => {
-    if(option === selectedSortOptions[0]){
-      return setSelectedSortOptions([])
+    if (option === selectedSortOptions[0]) {
+      return setSelectedSortOptions([]);
     }
-    setSelectedSortOptions([option])
+    setSelectedSortOptions([option]);
   };
 
-  const handleCategorySelection = (option: string)=>{
-      if(selectedCategoryOptions.includes(option)){
-         const filteredArr = selectedCategoryOptions.filter((eachItem)=>{
-            return option != eachItem
-         })
+  const handleCategorySelection = (option: string) => {
+    if (selectedCategoryOptions.includes(option)) {
+      const filteredArr = selectedCategoryOptions.filter((eachItem) => {
+        return option != eachItem;
+      });
 
-         setSelectedCategoryOptions(filteredArr)
-      }else{
-         setSelectedCategoryOptions([option, ...selectedCategoryOptions])
-      }
-  }
+      setSelectedCategoryOptions(filteredArr);
+    } else {
+      setSelectedCategoryOptions([option, ...selectedCategoryOptions]);
+    }
+  };
 
-  const togglePopUp = ()=> {
-    setIsPopUpOpen(!isPopupOpen)
-  }
+  const togglePopUp = () => {
+    setIsPopUpOpen(!isPopupOpen);
+  };
 
   const openCategoryPopup = () => {
     setIsPopUpOpen(false);
-    setIsCategoryPopupOpen(true); 
+    setIsCategoryPopupOpen(true);
   };
 
   const closeCategoryPopup = () => {
     setIsCategoryPopupOpen(false);
-    setIsPopUpOpen(true); 
+    setIsPopUpOpen(true);
   };
 
-  const applyFilters = ()=>{
-    const count = selectedSortOptions.length
-    const countB = selectedCategoryOptions.length > 0 ? 1: 0
-    setNumberofFilters(count + countB)
-    togglePopUp()
-  }
+  const applyFilters = () => {
+    const count = selectedSortOptions.length;
+    const countB = selectedCategoryOptions.length > 0 ? 1 : 0;
+    setNumberofFilters(count + countB);
+    togglePopUp();
+  };
 
-  const resetFilters = ()=>{
-    setSelectedSortOptions([])
-    setSelectedCategoryOptions([])
-  }
+  const resetFilters = () => {
+    setSelectedSortOptions([]);
+    setSelectedCategoryOptions([]);
+  };
 
   return (
     <>
-    <TransactionMainContainer>
-       <TransactionSubContainer>
+      <TransactionMainContainer>
+        <TransactionSubContainer>
           <FilterContainer>
             <p>Month</p>
-            <FilterButton onClick = {togglePopUp}>
-              <FilterImage src = "/Images/filtericon.svg"/>
+            <FilterButton onClick={togglePopUp}>
+              <FilterImage src="/Images/filtericon.svg" />
               {numberOfFilters > 0 && (
                 <NumberOfFiltersContainer>
-                    <NumberOfFilters>{numberOfFilters}</NumberOfFilters>
+                  <NumberOfFilters>{numberOfFilters}</NumberOfFilters>
                 </NumberOfFiltersContainer>
               )}
             </FilterButton>
           </FilterContainer>
           <FinancialReportContainer>
-            <FinancialReportHeading>See your financial report</FinancialReportHeading>
-            <ArrowRight src = "/Images/arrow-right-2.svg"/>
+            <FinancialReportHeading>
+              See your financial report
+            </FinancialReportHeading>
+            <ArrowRight src="/Images/arrow-right-2.svg" />
           </FinancialReportContainer>
           <TransactionsContainer>
             {data.map((eachItem, index) => (
-              <TransactionList key={index} date={eachItem.date} details={eachItem.details} />
+              <TransactionList
+                key={index}
+                date={eachItem.date}
+                details={eachItem.details}
+              />
             ))}
-        </TransactionsContainer>
+          </TransactionsContainer>
 
-          <AnimatePresence mode='wait'>
+          <AnimatePresence mode="wait">
             {isPopupOpen && (
-              <Overlay variants={overlayVariants} initial="hidden" animate="visible" exit="exit">
-                <FilterPopup selectedSortOptions={selectedSortOptions} selectedCategoryOptions={selectedCategoryOptions} handleSortSelection={handleSortSelection} togglePopUp={togglePopUp} applyFilters={applyFilters} resetFilters={resetFilters} openCategoryPopup={openCategoryPopup} sortOptions={sortOptions}/>
+              <Overlay
+                variants={overlayVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <FilterPopup
+                  selectedSortOptions={selectedSortOptions}
+                  selectedCategoryOptions={selectedCategoryOptions}
+                  handleSortSelection={handleSortSelection}
+                  togglePopUp={togglePopUp}
+                  applyFilters={applyFilters}
+                  resetFilters={resetFilters}
+                  openCategoryPopup={openCategoryPopup}
+                  sortOptions={sortOptions}
+                />
               </Overlay>
             )}
 
-          {isCategoryPopupOpen && (
-            <Overlay variants={overlayVariants} initial="hidden" animate="visible" exit="exit">
-              <CategoryPopup selectedCategoryOptions={selectedCategoryOptions} handleCategorySelection={handleCategorySelection} categoryOptions={categoryOptions} closeCategoryPopup={closeCategoryPopup}/>
-            </Overlay>
-          )}
+            {isCategoryPopupOpen && (
+              <Overlay
+                variants={overlayVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <CategoryPopup
+                  selectedCategoryOptions={selectedCategoryOptions}
+                  handleCategorySelection={handleCategorySelection}
+                  categoryOptions={categoryOptions}
+                  closeCategoryPopup={closeCategoryPopup}
+                />
+              </Overlay>
+            )}
           </AnimatePresence>
-       </TransactionSubContainer>
-    </TransactionMainContainer>
+        </TransactionSubContainer>
+      </TransactionMainContainer>
     </>
   );
 };

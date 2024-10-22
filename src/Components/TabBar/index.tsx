@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AddButtonContainer,
   CustomLink,
@@ -8,12 +8,18 @@ import {
   TabBarMainContainer,
   TabBarSubContainer,
 } from "./styledComponents";
+import { useLocation } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 
 const TabBar = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState("/home");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setActiveTab(location.pathname);
+  }, [location.pathname]);
 
   const handleTabClick = (tab: any) => {
     setActiveTab(tab);
