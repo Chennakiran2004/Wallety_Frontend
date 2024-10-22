@@ -152,7 +152,7 @@ export const RecentItemsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
-  max-height: 40vh;
+  max-height: 50vh;
   overflow: scroll;
   padding-top: 16px;
   -ms-overflow-style: none;
