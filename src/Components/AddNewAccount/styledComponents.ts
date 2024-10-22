@@ -78,7 +78,7 @@ export const EnterYourSalaryInput = styled.input`
   width: 100%;
   border: none;
   outline: none;
-`;
+`; 
 
 export const LocationContainer = styled.div`
   display: flex;

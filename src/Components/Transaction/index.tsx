@@ -29,7 +29,8 @@ import {TransactionMainContainer,
   NumberOfItemsSelected,
   ApplyButton, NumberOfFilters,
   NumberOfFiltersContainer,
-  CategoryPopupContainer} from './styledComponents'
+  CategoryPopupContainer, CategoryItem,
+  CategoryItemsContainer} from './styledComponents'
 import { motion, AnimatePresence } from 'framer-motion';
 
 
@@ -108,14 +109,13 @@ const overlayVariants = {
 };
 
 const mainPopupExit = {
-  hidden: { x: 0, opacity: 1 },
+  hidden: { x: 0, opacity: 1},
   exit: { x: '-100%', opacity: 0 },
 };
 
-// Animation for sliding the category popup in from the right
 const categoryPopupVariants = {
   hidden: { x: '100%', opacity: 0 },
-  visible: { x: 0, opacity: 1 },
+  visible: { x: 0, opacity: 1},
   exit: { x: '100%', opacity: 0 },
 };
 
@@ -127,6 +127,8 @@ const Transaction = () => {
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
 
   const [selectedSortOptions, setSelectedSortOptions] = useState<String[]>([]);
+  const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<String[]>([]);
+
   const [numberOfFilters, setNumberofFilters] = useState(0)
 
   const handleSortSelection = (option: string) => {
@@ -135,6 +137,18 @@ const Transaction = () => {
     }
     setSelectedSortOptions([option])
   };
+
+  const handleCategorySelection = (option: string)=>{
+      if(selectedCategoryOptions.includes(option)){
+         const filteredArr = selectedCategoryOptions.filter((eachItem)=>{
+            return option != eachItem
+         })
+
+         setSelectedCategoryOptions(filteredArr)
+      }else{
+         setSelectedCategoryOptions([option, ...selectedCategoryOptions])
+      }
+  }
 
   const togglePopUp = ()=> {
     setIsPopUpOpen(!isPopupOpen)
@@ -152,12 +166,14 @@ const Transaction = () => {
 
   const applyFilters = ()=>{
     const count = selectedSortOptions.length
-    setNumberofFilters(count)
+    const countB = selectedCategoryOptions.length > 0 ? 1: 0
+    setNumberofFilters(count + countB)
     togglePopUp()
   }
 
   const resetFilters = ()=>{
     setSelectedSortOptions([])
+    setSelectedCategoryOptions([])
   }
 
   return (
@@ -221,7 +237,7 @@ const Transaction = () => {
                             <PopUpSubHeading>Sort By</PopUpSubHeading>
                             <SortByItemsContainer>
                             {sortOptions.map((option) => (
-                              <SortItem key={option} onClick={() => handleSortSelection(option)} style={{backgroundColor: selectedSortOptions.includes(option)? '#d3d3d3': 'transparent',}}>{option}</SortItem>
+                              <SortItem key={option} onClick={() => handleSortSelection(option)} isselected = {selectedSortOptions.includes(option)}>{option}</SortItem>
                             ))}
                             </SortByItemsContainer>
                         </SortByContainer>
@@ -230,7 +246,7 @@ const Transaction = () => {
                             <CategoryButtonContainer onClick={openCategoryPopup}>
                               <CategorySideHeading>Choose Category</CategorySideHeading>
                               <CategoryItemSelectedContainer>
-                                  <NumberOfItemsSelected>0 Selected</NumberOfItemsSelected>
+                                  <NumberOfItemsSelected>{selectedCategoryOptions.length} Selected</NumberOfItemsSelected>
                                   <ArrowRight src = "/Images/arrow-right-2.svg"/>
                               </CategoryItemSelectedContainer>
                             </CategoryButtonContainer>
@@ -241,27 +257,30 @@ const Transaction = () => {
               </Overlay>
             )}
 
-{/* {isCategoryPopupOpen && (
-              <Overlay variants={overlayVariants} initial="hidden" animate="visible" exit="exit">
-                <CategoryPopupContainer
-                  onClick={(e) => e.stopPropagation()}
-                  variants={categoryPopupVariants} // Slide in from right
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                >
-                  <FilterPopUpHeading>Choose Category</FilterPopUpHeading>
+          {isCategoryPopupOpen && (
+            <Overlay variants={overlayVariants} initial="hidden" animate="visible" exit="exit">
+              <CategoryPopupContainer
+                onClick={(e) => e.stopPropagation()}
+                variants={categoryPopupVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+              >
+                <PopUpSubContainer>
+                <FilterPopUpHeading>Choose Category</FilterPopUpHeading>
+                <CategoryItemsContainer>
+                {categoryOptions.map((category) => (
+                  <SortItem key={category} isselected = {selectedCategoryOptions.includes(category)} onClick = {()=> handleCategorySelection(category)}>
+                    {category}
+                  </SortItem>
+                ))}
+                </CategoryItemsContainer>
 
-                  {categoryOptions.map((category) => (
-                    <SortItem key={category}>
-                      {category}
-                    </SortItem>
-                  ))}
-
-                  <ApplyButton onClick={closeCategoryPopup}>Done</ApplyButton>
-                </CategoryPopupContainer>
-              </Overlay>
-            )} */}
+                <ApplyButton onClick={closeCategoryPopup}>Done</ApplyButton>
+                </PopUpSubContainer>
+              </CategoryPopupContainer>
+            </Overlay>
+          )}
           </AnimatePresence>
        </TransactionSubContainer>
     </TransactionMainContainer>

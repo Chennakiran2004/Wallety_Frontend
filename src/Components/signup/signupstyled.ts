@@ -39,7 +39,7 @@ export const HeaderContainer = styled.div`
 `;
 
 export const IconContianer = styled(IoIosArrowRoundBack)`
-  position: fixed;
+  position: absolute;
 `;
 
 export const SignUpHeading = styled.h1`

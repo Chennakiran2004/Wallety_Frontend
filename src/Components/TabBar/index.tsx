@@ -9,8 +9,11 @@ import {
   TabBarSubContainer,
 } from "./styledComponents";
 
+import { useNavigate } from "react-router-dom";
+
 const TabBar = () => {
   const [activeTab, setActiveTab] = useState("/home");
+  const navigate = useNavigate();
 
   const handleTabClick = (tab: any) => {
     setActiveTab(tab);
@@ -69,7 +72,7 @@ const TabBar = () => {
             </TabBarItemText>
           </TabBarItemContainer>
         </CustomLink>
-        <AddButtonContainer>
+        <AddButtonContainer onClick = {()=> navigate("/expense")}>
           <TabBarItemImage src="/Images/Add.svg" />
         </AddButtonContainer>
         <CustomLink to="/budget" onClick={() => handleTabClick("/budget")}>

@@ -188,12 +188,18 @@ export const SortByItemsContainer = styled.div`
     gap: 8px;
 `
 
-export const SortItem = styled.div`
+interface SortItemInterface{
+    isselected: boolean
+}
+
+export const SortItem = styled.div<SortItemInterface>`
     border: #E3E5E5 solid 1px;
     padding: 12px 20px 12px 20px;
     border-radius: 24px;
     ${interMedium}
     font-size: 14px;
+    background-color: ${({isselected})=> isselected ? "#7F3DFF": "transparent"};
+    color: ${({isselected})=> isselected ? "white": "black"}
 `
 
 export const CategoryContainer = styled.div`
@@ -256,4 +262,14 @@ export const CategoryPopupContainer = styled(motion.div)`
     z-index: 1000;
     padding-bottom: 6%;
     padding-top: 8%;
+`
+
+export const CategoryItemsContainer = styled.div`
+    display:flex;
+    flex-wrap: wrap;
+    gap: 8px;
+`
+
+export const CategoryItem = styled.button`
+    width: fit-content;
 `
