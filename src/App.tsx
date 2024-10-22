@@ -19,6 +19,7 @@ import ExpenseComponent from "./Components/Expense";
 import TransactionDetails from "./Components/TransactionDetails";
 import UserInfo from "./Components/UserInfo";
 import FinancialReport from "./Components/FinancialReport";
+import MonthReview from "./Components/MonthReview";
 
 function App() {
   const location = useLocation();
@@ -47,6 +48,7 @@ function App() {
         <Route path="/expense" element={<ExpenseComponent />} />
         <Route path="/transaction/:id" element={<TransactionDetails />} />
         <Route path="/financialReport" element={<FinancialReport />} />
+        <Route path="/month-review" element = {<MonthReview/>}/>
       </Routes>
       {shouldShowTabBar && <TabBar />}
     </div>

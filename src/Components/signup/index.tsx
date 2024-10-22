@@ -49,28 +49,6 @@ const dropdownVariants = {
   },
 };
 
-const pageVariants = {
-  initial: {
-    x: "1000000vw", // Start from right
-    opacity: 0,
-  },
-  animate: {
-    x: "0vw", // Slide into view
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 20,
-    },
-  },
-  exit: {
-    x: "-100vw", // Exit to left
-    opacity: 0,
-    transition: {
-      duration: 0.3,
-    },
-  },
-};
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -110,6 +88,7 @@ const SignUp = () => {
     ) {
       setError("Please fill all the fields");
     } else {
+      //make an api call here
       navigate("/Setup");
     }
   };
