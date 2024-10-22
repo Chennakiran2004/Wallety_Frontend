@@ -3,6 +3,7 @@ import { interMedium, interRegular, interSemiBold } from "../../Constants/fontSt
 import { motion } from "framer-motion";
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
 
+
 export const TransactionMainContainer = styled.div`
     width: 100vw;
 `;
@@ -68,7 +69,7 @@ export const ListItem = styled.li`
 `
 
 export const TransactionsContainer = styled.div`
-    max-height: 58vh;
+    max-height: 68vh;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
@@ -204,7 +205,9 @@ export const SortItem = styled.div<SortItemInterface>`
 
 export const CategoryContainer = styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
     gap: 20px;
 `
 

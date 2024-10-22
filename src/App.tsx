@@ -16,6 +16,7 @@ import Budget from "./Components/Budget";
 import Home from "./Components/Home";
 import YouAreAllSet from "./Components/YouAreAllSet";
 import ExpenseComponent from "./Components/Expense";
+import TransactionDetails from "./Components/TransactionDetails";
 
 function App() {
   const location = useLocation();
@@ -41,6 +42,7 @@ function App() {
         <Route path="/budget" element={<Budget />} />
         <Route path="/youAreAllSet" element={<YouAreAllSet />} />
         <Route path = "/expense" element = {<ExpenseComponent/>}/>
+        <Route path="/transaction/:id" element={<TransactionDetails />} />
       </Routes>
       {shouldShowTabBar && <TabBar />}
     </div>
