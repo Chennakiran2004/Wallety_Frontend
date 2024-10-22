@@ -10,13 +10,31 @@ TypeDetailsContainer,
 DetailBottomSubContainer,
 IncomeType,
 IncomeElement} from "./styledComponents"
+import { Overlay } from "../Transaction/styledComponents";
+import { AnimatePresence } from "framer-motion";
+import DeleteSuccessPopUp from "../DeleteSuccessFullPopUp";
+
+const overlayVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    exit: { opacity: 0 },
+  };
 
 const TransactionDetails = ()=>{
     const { handleBack } = NavigationEvents();
     const [deletePopUp, setDeletePopUp] = useState(false);
+    const [successfulPopUp, setSuccessfulPopUp] = useState(false);
 
     const togglePopUp = ()=>{
         setDeletePopUp(!deletePopUp)
+    }
+
+    const openSuccessPopUp = ()=>{
+        setSuccessfulPopUp(true)
+    }
+
+    const toggleSuccessPopUp = ()=>{
+        setSuccessfulPopUp(!successfulPopUp)
     }
 
     return (
@@ -57,7 +75,19 @@ const TransactionDetails = ()=>{
                 </DetailBottomContainer>
                 </DetailsTopContainer>
             </DetailsSubContainer>
-            {deletePopUp && <DeletePopUp/>}
+            <AnimatePresence mode = "wait">
+                {deletePopUp && 
+                    <Overlay variants={overlayVariants} initial="hidden" animate="visible" exit="exit">
+                        <DeletePopUp closePopUp = {togglePopUp} openSuccessPopUp = {openSuccessPopUp}/>
+                    </Overlay>}
+            </AnimatePresence>
+            <AnimatePresence mode = "wait">
+                {successfulPopUp && 
+                        <Overlay variants={overlayVariants} initial="hidden" animate="visible" exit="exit">
+                            <DeleteSuccessPopUp closePopUp = {toggleSuccessPopUp}/>
+                        </Overlay>
+                }
+            </AnimatePresence>
         </DetailsContainer>
     )
 }
