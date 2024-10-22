@@ -6,13 +6,14 @@ import {
   ContinueButtonInAllSet,
   GifWrapper,
 } from "./allSetStyled";
+
+export const GifComponent = () => {
+  const gifUrl = `/gifs/finnalYouAreAllSet.gif?${new Date().getTime()}`;
+  return <GifWrapper gifUrl={gifUrl} />;
+};
+
 export default function YouAreAllSet() {
   const { navigateToHome } = NavigationEvents();
-
-  const GifComponent = () => {
-    const gifUrl = `/gifs/finnalYouAreAllSet.gif?${new Date().getTime()}`;
-    return <GifWrapper gifUrl={gifUrl} />;
-  };
 
   return (
     <OuterAllSetContainer>

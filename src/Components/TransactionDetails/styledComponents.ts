@@ -3,7 +3,7 @@ import { ExpenseHeader } from "../Expense/styledComponents";
 import { interBold, interMedium, interSemiBold } from "../../Constants/fontStyles";
 
 export const DetailsContainer = styled.div`
-    height: 1000vh;
+    height: 100vh;
     width: 100vw;
     background-color: #F1F1FA;
 `
