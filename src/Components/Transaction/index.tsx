@@ -44,6 +44,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import TransactionList from "../TransactionList";
 import FilterPopup from "../FilterPopUp";
 import CategoryPopup from "../CategoryPopUp";
+import { NavigationEvents } from "../../Constants/EventHandlers";
 
 const data = [
   {
@@ -147,6 +148,8 @@ const Transaction = () => {
 
   const [numberOfFilters, setNumberofFilters] = useState(0);
 
+  const { navigateToFinancialReport } = NavigationEvents();
+
   const handleSortSelection = (option: string) => {
     if (option === selectedSortOptions[0]) {
       return setSelectedSortOptions([]);
@@ -207,7 +210,7 @@ const Transaction = () => {
               )}
             </FilterButton>
           </FilterContainer>
-          <FinancialReportContainer>
+          <FinancialReportContainer onClick={navigateToFinancialReport}>
             <FinancialReportHeading>
               See your financial report
             </FinancialReportHeading>
