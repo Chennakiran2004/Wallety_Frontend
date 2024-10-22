@@ -42,6 +42,7 @@ function App() {
         <Route path="/budget" element={<Budget />} />
         <Route path="/youAreAllSet" element={<YouAreAllSet />} />
         <Route path="/expense" element={<ExpenseComponent />} />
+        <Route path="/userInfo" element={<UserInfo />} />
       </Routes>
       {shouldShowTabBar && <TabBar />}
     </div>
