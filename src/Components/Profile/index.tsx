@@ -20,13 +20,14 @@ import {
   YesButton,
 } from "./styledComponents";
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Overlay,
   PopupContainer,
   PopUpSubContainer,
 } from "../Transaction/styledComponents";
-import { NavigationEvents } from "../../Constants/EventHandlers";
+import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import axios from "axios";
 
 const popupVariants = {
   hidden: { opacity: 0, y: "100%" },
@@ -40,10 +41,22 @@ const overlayVariants = {
   exit: { opacity: 0 },
 };
 
+interface ProfileInterface{
+  email: string
+  full_name: string
+  gender: string
+  role: string
+  salary: string
+  username: string
+}
+
 const Profile = () => {
   const [isPopupOpen, setIsPopUpOpen] = useState(false);
 
-  const { navigateToUserInfo } = NavigationEvents();
+  const { navigateToUserInfo, navigateToLogin } = NavigationEvents();
+  const {accessToken, refreshToken, deleteAccessToken, deleteRefereshToken} = ChangingTokens();
+
+  const [userData, setUserData] = useState<ProfileInterface | null>()
 
   const handleLogoutClick = () => {
     setIsPopUpOpen(true);
@@ -54,8 +67,45 @@ const Profile = () => {
   };
 
   const handleLogout = () => {
-    console.log("Logout");
+    const data = {
+      "access_token": accessToken,
+      "refresh_token": refreshToken
+    }
+     const fetching = async()=>{
+      try{
+        const response = await axios.post(`${url}/user_account/logout/v1`, data, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          }});
+
+          deleteAccessToken()
+          deleteRefereshToken()
+          navigateToLogin()
+      }catch(err){
+        console.log(err)
+      }
+     }
+
+     fetching()
   };
+
+  useEffect(()=>{
+    try{
+      const fetching = async()=>{
+        const response = await axios.get(`${url}/get/user_profile/v1`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          }});
+
+          console.log(response.data)
+          setUserData(response.data)
+      }
+
+      fetching()
+    }catch(err){
+      console.log(err)
+    }
+  }, [])
 
   return (
     <ProfileMainContainer>
@@ -66,13 +116,13 @@ const Profile = () => {
           </ProfileHeadingIcon>
           <ProfileHeadingTextContainer>
             <UserNameText>Useraname</UserNameText>
-            <UserName>Nitesh Sabbavarapu</UserName>
+            <UserName>{userData?.username}</UserName>
           </ProfileHeadingTextContainer>
         </ProfileHeadingContainer>
         <ProfileInfoItemsContainer>
           <ProfileInfoItemContainer onClick={navigateToUserInfo}>
             <ProfileItemImage src="/Images/userinfo.svg" alt="userinfo pic" />
-            <ProfileItemText>User Basic Info</ProfileItemText>
+            <ProfileItemText>Edit Profile</ProfileItemText>
           </ProfileInfoItemContainer>
           <HorizontalLine />
           <ProfileInfoItemContainer onClick={handleLogoutClick}>

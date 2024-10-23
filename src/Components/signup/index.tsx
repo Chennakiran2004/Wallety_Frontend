@@ -22,8 +22,9 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { ChangeEvents, NavigationEvents } from "../../Constants/EventHandlers";
+import { ChangeEvents, ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import { motion } from "framer-motion";
+import axios from 'axios';
 
 const dropdownVariants = {
   hidden: {
@@ -78,6 +79,7 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const [genderContents, setGenderContents] = useState(false);
   const [roleContents, setRoleContents] = useState(false);
@@ -89,6 +91,7 @@ const SignUp = () => {
 
   const { changePassword } = ChangeEvents();
   const { handleBack } = NavigationEvents();
+  const {setAccessToken, setRefreshToken} = ChangingTokens()
 
   const openGenderDropDown = () => {
     setGenderContents(!genderContents);
@@ -106,10 +109,32 @@ const SignUp = () => {
       email === "" ||
       password === "" ||
       role === "Role" ||
-      gender === "Gender"
+      gender === "Gender" || username === ""
     ) {
       setError("Please fill all the fields");
     } else {
+       const fetching = async()=>{
+        try{
+          const data = {
+            "username" : username,
+            "email": email,
+            "password": password,
+            "full_name": name,
+            "role": role,
+            "gender": gender,
+
+          }
+
+          console.log(data)
+          const response = await axios.post(`${url}/user_account/signup/v1`, data);
+          setAccessToken(response.data.access_token)
+          setRefreshToken(response.data.refresh_token)
+          console.log(response.data)
+        }catch(err){
+            console.log("Error")
+        }
+       }
+       fetching();
       navigate("/Setup");
     }
   };
@@ -136,6 +161,12 @@ const SignUp = () => {
               placeholder="Email"
               onChange={(e) => setEmail(e.target.value)}
             />
+
+            <InputField
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+
             <InputFieldContainerWrapper>
               <InputField
                 placeholder="Password"
@@ -166,10 +197,10 @@ const SignUp = () => {
                     exit="exit"
                   >
                     <GenderContents>
-                      <GenderButton onClick={() => setGender("Male")}>
+                      <GenderButton onClick={() => setGender("MALE")}>
                         Male
                       </GenderButton>
-                      <GenderButton onClick={() => setGender("Female")}>
+                      <GenderButton onClick={() => setGender("FEMALE")}>
                         Female
                       </GenderButton>
                     </GenderContents>

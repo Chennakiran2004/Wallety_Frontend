@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import RecenetTransactionItem from "../RecentTransactionItem";
 import {
   AccountBalanceContainer,
@@ -20,7 +20,8 @@ import {
   SeeAllButton,
   UserName,
 } from "./styledComponents";
-import { NavigationEvents } from "../../Constants/EventHandlers";
+import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import axios from "axios";
 
 interface Transaction {
   type: string;
@@ -91,6 +92,40 @@ const recentTransactionsData: Transaction[] = [
 
 const Home: React.FC = () => {
   const { navigateToTransaction } = NavigationEvents();
+  const {accessToken} = ChangingTokens();
+
+  useEffect(()=>{
+    const fetching = async()=>{
+      try{
+        const response = await axios.get(`${url}/update_user_expense`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          }});
+
+          console.log(response)
+      }catch(err){
+        console.log(err)
+      }
+    }
+
+    const recentTransactions = async () => {
+      try {
+        const response = await axios.post(`${url}/get_last_five_transactions/`, {
+          headers: {
+            Authorization: `${accessToken}`,
+          },
+        });
+    
+        console.log(response.data); // Access the data here
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    
+    recentTransactions()
+  }, [])
+
   return (
     <HomeMainContainer>
       <HomeContentContainer>

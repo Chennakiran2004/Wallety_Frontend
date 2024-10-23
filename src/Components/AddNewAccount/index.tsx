@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavigationEvents } from "../../Constants/EventHandlers";
+import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion";
 
@@ -31,6 +31,7 @@ import {
   GenderIconContainer,
 } from "../signup/signupstyled";
 import { CarouselItemImage } from "../GainTotalControlOfYourMoney/styledComponents";
+import axios from "axios";
 
 const dropdownVariants = {
   hidden: {
@@ -74,8 +75,13 @@ const AddNewAccount = () => {
   const [spenderContents, setSpenderContents] = useState(false);
   const [locationContents, setLocationContents] = useState(false);
 
+
+
   const [spender, setSpender] = useState("Select your spending pattern");
   const [location, setLocation] = useState("Location in HYD");
+  const {accessToken} = ChangingTokens();
+
+  const [salary, setSalary] = useState("")
 
   const openGenderDropDown = () => {
     setSpenderContents(!spenderContents);
@@ -89,6 +95,40 @@ const AddNewAccount = () => {
 
   const { naviagteToYouAreAllSet } = NavigationEvents();
 
+  const confirmNewAccount = ()=>{
+    const fetching = async() =>{
+      try{
+      const spenderMap: {[key: string]: string} = {
+        "High Spender": "RICH",
+        "Average Spender": "AVERAGE",
+        "Less Spender": "LESS"
+      };
+    
+      const selectedSpender = spenderMap[spender] || "";
+        const bodyData = {
+          "salary": salary,
+          "user_preference": selectedSpender,
+          "location": location.toUpperCase()
+        }
+
+        const response = await axios.post(`${url}/get_user_details/`, bodyData, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          }});
+
+        naviagteToYouAreAllSet()
+
+          
+      }catch(err){
+        console.log(err)
+      }
+    }
+
+    fetching()
+  }
+
+  
+
   return (
     <AddNewAccountMainContainer>
       <AddNewAccountHeadingContainer>
@@ -100,7 +140,7 @@ const AddNewAccount = () => {
         <AccountDetailsSubContainer>
           <EnterYourSalaryContainer>
             <EnterYourSalaryHeading>Enter Your Salary</EnterYourSalaryHeading>
-            <EnterYourSalaryInput type="number" />
+            <EnterYourSalaryInput type="number" onChange = {(e)=> setSalary(e.target.value)} />
           </EnterYourSalaryContainer>
 
           <GenderContainer>
@@ -165,7 +205,7 @@ const AddNewAccount = () => {
               </AnimatePresence>
             </GenderContainer>
           </LocationContainer>
-          <ContinueButton onClick={naviagteToYouAreAllSet}>
+          <ContinueButton onClick={confirmNewAccount}>
             Continue
           </ContinueButton>
         </AccountDetailsSubContainer>

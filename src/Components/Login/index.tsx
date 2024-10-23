@@ -23,8 +23,9 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { ChangeEvents, NavigationEvents } from "../../Constants/EventHandlers";
+import { ChangeEvents, ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import { motion } from "framer-motion";
+import axios, { AxiosError } from "axios";
 
 const dropdownVariants = {
   hidden: {
@@ -52,6 +53,7 @@ const dropdownVariants = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const {setAccessToken, setRefreshToken} = ChangingTokens()
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -66,7 +68,47 @@ const Login = () => {
     if (email === "" || password === "") {
       setError("Please fill all the fields");
     } else {
-      navigate("/home");
+      const fetching = async()=>{
+        try{
+          const data = {
+            "email": email,
+            "password": password,
+          }
+          const response = await axios.post(`${url}/user_account/login/v1`, data);
+          setAccessToken(response.data.access_token)
+          setRefreshToken(response.data.refresh_token)
+          navigate("/home");
+        }catch(err:any){
+          if(err.response){
+            if (err.response.data.error_message) {
+              setError(err.response.data.error_message);
+            }else{
+              switch (err.response.status) {
+                case 400:
+                  setError(err.response.data.error_message);
+                  break;
+                case 401:
+                  setError("Unauthorized. Please check your credentials.");
+                  break;
+                case 404:
+                  setError("Not found. The URL may be incorrect.");
+                  break;
+                case 500:
+                  setError("Internal server error. Please try again later.");
+                  break;
+                default:
+                  setError("An unexpected error occurred. Please try again.");
+              }
+            }
+          }else if (err.request) {
+            setError("Network error. Please check your connection.");
+          } else {
+            setError("An error occurred. Please try again.");
+          }
+        }
+       }
+       fetching();
+      
     }
   };
 
