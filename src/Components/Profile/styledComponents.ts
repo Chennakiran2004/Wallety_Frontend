@@ -28,7 +28,7 @@ export const ProfileHeadingContainer = styled.div`
   display: flex;
   gap: 8px;
   align-items: center;
-  justify-content: space-evenly;
+  gap: 24px;
   width: 100%;
 `;
 

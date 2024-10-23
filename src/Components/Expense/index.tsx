@@ -6,7 +6,8 @@ import { BackIconContainer, ExpenseBottomContainer, ExpenseBottomSubContainer, E
     CategoryButton, InputExpense,
     InputHeading} from "./styledComponents"
 import { useState } from "react";
-import { NavigationEvents } from "../../Constants/EventHandlers";
+import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import axios from "axios";
 
 const dropdownVariants = {
     hidden: {
@@ -32,10 +33,11 @@ const dropdownVariants = {
     },
   };
 
-const categories = ["Shopping", "Transportation", "Food", "Groceries", "Others", "Medical"]
+const categories = ["Food", "Entertainment", "Travel", "Health", "Miscellaneous", "Rent", "Savings", "Shopping"]
 
 const ExpenseComponent = ()=>{
     const { handleBack } = NavigationEvents();
+    const {accessToken} = ChangingTokens();
 
 
     const [genderContents, setGenderContents] = useState(false);
@@ -57,6 +59,25 @@ const ExpenseComponent = ()=>{
 
             // setGenderContents(false);
             return setSelectedCategory([category])
+      }
+
+      const expenseAdd = ()=>{
+        const fetching = async()=>{
+          const response = await axios.post(`${url}//update_user_expense`, {
+            "category": selectedCategory,
+            "expense_amount": 5000,
+            "description": "adskfjksaf"
+          }, {
+            headers: {
+              "Authorization": `Bearer ${accessToken}`,
+              "Content-type": "Application/json"
+            },
+          });
+
+          console.log(response)
+        }
+
+        fetching()
       }
 
     return(
@@ -95,7 +116,7 @@ const ExpenseComponent = ()=>{
               </AnimatePresence>
                     </GenderContainer>
                     <DescriptionField placeholder = "Description" />
-                    <ContinueButton>Continue</ContinueButton>
+                    <ContinueButton onClick = {expenseAdd}>Continue</ContinueButton>
                     </ExpenseBottomSubContainer>
                 </ExpenseBottomContainer>
             </ExpenseSubContainer>

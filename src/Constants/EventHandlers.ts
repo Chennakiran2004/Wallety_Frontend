@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { ChangeEvent } from "react";
+import Cookies from 'js-cookie';
 
 // Change password function
 export const ChangeEvents = () => {
@@ -25,6 +26,10 @@ export const NavigationEvents = () => {
   const handleBack = () => {
     navigate(-1);
   };
+
+  const navigateToLogin = ()=>{
+    navigate("/login")
+  }
 
   const navigateAddNewAccount = () => {
     navigate("/AddNewAccount");
@@ -64,6 +69,37 @@ export const NavigationEvents = () => {
     navigateToTransaction,
     navigateToTransactionDetails,
     navigateToUserInfo,
-    navigateToFinancialReport,
+    navigateToFinancialReport, navigateToLogin
   };
 };
+
+export const ChangingTokens = ()=>{
+  const setAccessToken = (token: string)=>{
+      Cookies.set('access_token', token, { expires: 7 });
+  }
+
+  const setRefreshToken = (token: string)=>{
+    Cookies.set('refresh_token', token, { expires: 7 });
+  }
+
+  const deleteAccessToken = ()=>{
+    Cookies.remove("access_token")
+  }
+
+  const deleteRefereshToken = ()=>{
+    Cookies.remove("refresh_token")
+  }
+
+  const accessToken = Cookies.get("access_token")
+  const refreshToken = Cookies.get("refresh_token")
+
+  return {setAccessToken, setRefreshToken, deleteAccessToken, deleteRefereshToken, accessToken, refreshToken}
+}
+
+export const CategoriesMap: { [key: string]: string } = {
+  "Food": "/Images/food.svg",
+  "Travel": "/Images/transportation.svg",
+
+} 
+
+export const url = `http://10.18.106.222:8000`
