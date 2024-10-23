@@ -75,7 +75,7 @@ const TransactionDetails = ()=>{
         }
 
         fetching()
-    })
+    }, [])
 
     return (
         <DetailsContainer>
@@ -118,13 +118,13 @@ const TransactionDetails = ()=>{
             <AnimatePresence mode = "wait">
                 {deletePopUp && 
                     <Overlay variants={overlayVariants} initial="hidden" animate="visible" exit="exit">
-                        <DeletePopUp closePopUp = {togglePopUp} openSuccessPopUp = {openSuccessPopUp}/>
+                        <DeletePopUp transactionId = {id ?? ''} closePopUp = {togglePopUp} openSuccessPopUp = {openSuccessPopUp}/>
                     </Overlay>}
             </AnimatePresence>
             <AnimatePresence mode = "wait">
                 {successfulPopUp && 
                         <Overlay variants={overlayVariants} initial="hidden" animate="visible" exit="exit">
-                            <DeleteSuccessPopUp closePopUp = {toggleSuccessPopUp}/>
+                            <DeleteSuccessPopUp transactionId = {id ?? ''} closePopUp = {toggleSuccessPopUp}/>
                         </Overlay>
                 }
             </AnimatePresence>

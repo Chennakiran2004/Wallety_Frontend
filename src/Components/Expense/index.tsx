@@ -101,9 +101,16 @@ const ExpenseComponent = () => {
 
   const expenseAdd = () => {
     const fetching = async () => {
+
+      const data = {
+        category: selectedCategory[0].toLocaleUpperCase(),
+        expense_amount: amount,
+        description: description,
+      }
+      console.log(data)
       try {
         const response = await axios.post(
-          `${url}//update_user_expense`,
+          `${url}/update_user_expense`,
           {
             category: selectedCategory[0],
             expense_amount: amount,

@@ -4,6 +4,7 @@ import {SuccessPopUpContainer, SuccessGifContainer, GifWrapperDelete, DeleteSucc
 
 interface DeleteSuccessPopUp{
     closePopUp: ()=> void
+    transactionId: number | string
 }
 
 const popUpVariants = {
@@ -33,7 +34,7 @@ export const GifComponent = () => {
     return <GifWrapperDelete gifUrl={gifUrl} />;
 };
 
-const DeleteSuccessPopUp: React.FC<DeleteSuccessPopUp> = ({closePopUp})=>{
+const DeleteSuccessPopUp: React.FC<DeleteSuccessPopUp> = ({closePopUp, transactionId})=>{
     // initial = "hidden" animate = "visible" exit = "exit" variants={popUpVariants}
     return(
         <SuccessPopUpContainer>

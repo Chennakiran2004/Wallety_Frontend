@@ -24,13 +24,26 @@ import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHand
 import axios from "axios";
 import Transaction from "../Transaction";
 
-interface Transaction {
+
+interface TransactionItem{
   category: string;
-  description: string;
   amount: string;
   time: string;
-  date?: string;
   transaction_id: string;
+  description: string;
+}
+
+interface Transaction {
+  date: string,
+  transactions: TransactionItem[]
+}
+
+
+interface UserExpenseDetails{
+  Account_Balance: string
+  Expense: string
+  Income: string
+  user_name: string
 }
 
 // const recentTransactionsData: Transaction[] = [
@@ -88,18 +101,21 @@ const Home: React.FC = () => {
   const { navigateToTransaction } = NavigationEvents();
 
   const [recentTransactionsArr, setRecentTransactionsArr] = useState<Transaction[] >([])
+  const [userExpense, setUserExpense] = useState<UserExpenseDetails>()
   const {accessToken} = ChangingTokens();
 
   useEffect(()=>{
     const fetching = async()=>{
       try{
-        const response = await axios.get(`${url}/update_user_expense/`, {
+        const response = await axios.get(`${url}/get_user_details/`, {
           headers: {
             "Authorization": `Bearer ${accessToken}`,
             "Content-type": "Application/json"
           }});
 
-          console.log(response)
+          setUserExpense(response.data)
+
+          console.log(response.data)
       }catch(err){
         console.log(err)
       }
@@ -114,32 +130,32 @@ const Home: React.FC = () => {
             "Content-type": "Application/json"
           },
         });
-    
-        setRecentTransactionsArr(response.data.transactions) // Access the data here
+        console.log(response.data.transactions_by_date)
+        setRecentTransactionsArr(response.data.transactions_by_date)
       } catch (err) {
         console.log(err);
       }
     };
 
-    // fetching()
     recentTransactions()
+    fetching()
   }, [])
 
   return (
     <HomeMainContainer>
       <HomeContentContainer>
         <HomeContentSubContainer>
-          <UserName>Hello 👋 Nitesh,</UserName>
+          <UserName>Hello 👋 {userExpense?.user_name},</UserName>
           <AccountBalanceContainer>
             <AccountBalanceText>Account Balance</AccountBalanceText>
-            <AccountBalanceMoney>₹13,453</AccountBalanceMoney>
+            <AccountBalanceMoney>₹{userExpense?.Account_Balance}</AccountBalanceMoney>
           </AccountBalanceContainer>
           <IncomeAndExpenseContainer>
             <IncomeContainer>
               <IncomeAndExpenseImage src="/Images/income.svg" />
               <IncomeAndExpenseContentContainer>
                 <IncomeAndExpenseHeading>Income</IncomeAndExpenseHeading>
-                <IncomeAndExpenseMoney>₹5000</IncomeAndExpenseMoney>
+                <IncomeAndExpenseMoney>{userExpense?.Income}</IncomeAndExpenseMoney>
               </IncomeAndExpenseContentContainer>
             </IncomeContainer>
 
@@ -147,7 +163,7 @@ const Home: React.FC = () => {
               <IncomeAndExpenseImage src="/Images/expenses.svg" />
               <IncomeAndExpenseContentContainer>
                 <IncomeAndExpenseHeading>Expenses</IncomeAndExpenseHeading>
-                <IncomeAndExpenseMoney>₹5000</IncomeAndExpenseMoney>
+                <IncomeAndExpenseMoney>₹{userExpense?.Expense}</IncomeAndExpenseMoney>
               </IncomeAndExpenseContentContainer>
             </ExpenseContainer>
           </IncomeAndExpenseContainer>
@@ -159,15 +175,18 @@ const Home: React.FC = () => {
         <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
       </RecentTransactionsContainer>
       <RecentItemsContainer>
-        {recentTransactionsArr.map((transaction, index) => (
-          <RecenetTransactionItem
-            key={index}
-            type={transaction.category}
-            description={transaction.description}
-            price={transaction.amount}
-            time={transaction.time}
-            id = {transaction.transaction_id}
-          />
+        {recentTransactionsArr.map((Item) => (
+            Item.transactions.map((eachItem: TransactionItem)=>(
+              <RecenetTransactionItem
+                key={eachItem.transaction_id}
+                type={eachItem.category}
+                description={eachItem.description}
+                price={eachItem.amount}
+                time={eachItem.time}
+                id = {eachItem.transaction_id}
+            />
+          ))
+          
         ))}
       </RecentItemsContainer>
     </HomeMainContainer>

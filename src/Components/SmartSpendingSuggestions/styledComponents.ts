@@ -37,6 +37,8 @@ export const SmartSpendingCardsContainer = styled.div`
   gap: 20px;
   flex-shrink: 0;
   margin-top: 24px;
+  overflow: scroll;
+  max-height: 60vh;
 `;
 
 export const SmartSpendingItemCard = styled.div`
