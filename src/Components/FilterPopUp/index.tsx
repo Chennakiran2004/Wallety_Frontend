@@ -20,7 +20,7 @@ const popupVariants = {
 
 const FilterPopup: React.FC<FilterPopupProps> = ({ selectedSortOptions, selectedCategoryOptions, handleSortSelection, togglePopUp, applyFilters, resetFilters, openCategoryPopup, sortOptions }) => {
   return (
-    <PopupContainer variants={popupVariants} initial="hidden" animate="visible" exit="exit">
+    <PopupContainer onClick={(e)=> e.stopPropagation()} variants={popupVariants} initial="hidden" animate="visible" exit="exit">
             <PopUpSubContainer>
         <FilterPopUpHeadingContainer>
             <FilterPopUpHeading>Filter Transaction</FilterPopUpHeading>

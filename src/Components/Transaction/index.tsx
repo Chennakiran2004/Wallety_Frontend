@@ -150,18 +150,20 @@ interface Transaction {
 }
 
 const sortOptions = ["Highest", "Lowest", "Oldest"];
-const categoryOptions = ["Shopping", "Food", "Transport", "Entertainment"];
+const categoryOptions = ["Shopping", "Food", "Travel", "Health", "Entertainment", "Rent", "Miscellaneous"];
 
 const Transaction = () => {
   const [transactionsArr, setTransactionsArr] = useState<Transaction[] >([])
+
+  const [tempSortOptions, setTempSortOptions] = useState<string[]>([]);
 
   const [isPopupOpen, setIsPopUpOpen] = useState(false);
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
 
   const [selectedSortOptions, setSelectedSortOptions] = useState<string[]>([]);
-  const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<
-    string[]
-  >([]);
+  const [finalSortOptions, setFinalSortOptions] = useState<string[]>([]);
+
+  const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<string[]>([]);
 
   const [NoTransactions, setNoTransactions] = useState(false);
 
@@ -173,21 +175,16 @@ const Transaction = () => {
 
   const handleSortSelection = (option: string) => {
     if (option === selectedSortOptions[0]) {
-      return setSelectedSortOptions([]);
+      return setTempSortOptions([])
     }
-    setSelectedSortOptions([option]);
+    setTempSortOptions([option]);
   };
 
   const handleCategorySelection = (option: string) => {
-    if (selectedCategoryOptions.includes(option)) {
-      const filteredArr = selectedCategoryOptions.filter((eachItem) => {
-        return option != eachItem;
-      });
-
-      setSelectedCategoryOptions(filteredArr);
-    } else {
-      setSelectedCategoryOptions([option, ...selectedCategoryOptions]);
+    if (option === selectedCategoryOptions[0]) {
+      return setSelectedCategoryOptions([])
     }
+    setSelectedCategoryOptions([option]);
   };
 
   const togglePopUp = () => {
@@ -209,6 +206,7 @@ const Transaction = () => {
     const countB = selectedCategoryOptions.length > 0 ? 1 : 0;
     setNumberofFilters(count + countB);
     togglePopUp();
+    setFinalSortOptions(sortOptions);
 
     const fetching = async()=>{
       const body = {
@@ -305,14 +303,14 @@ const Transaction = () => {
 
           <AnimatePresence mode="wait">
             {isPopupOpen && (
-              <Overlay
+              <Overlay onClick = {togglePopUp}
                 variants={overlayVariants}
                 initial="hidden"
                 animate="visible"
                 exit="exit"
               >
                 <FilterPopup
-                  selectedSortOptions={selectedSortOptions}
+                  selectedSortOptions={tempSortOptions}
                   selectedCategoryOptions={selectedCategoryOptions}
                   handleSortSelection={handleSortSelection}
                   togglePopUp={togglePopUp}
@@ -329,7 +327,7 @@ const Transaction = () => {
                 variants={overlayVariants}
                 initial="hidden"
                 animate="visible"
-                exit="exit"
+                exit="exit" onClick = {closeCategoryPopup}
               >
                 <CategoryPopup
                   selectedCategoryOptions={selectedCategoryOptions}
