@@ -92,9 +92,10 @@ const Home: React.FC = () => {
   useEffect(()=>{
     const fetching = async()=>{
       try{
-        const response = await axios.get(`${url}/update_user_expense`, {
+        const response = await axios.get(`${url}/update_user_expense/`, {
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-type": "Application/json"
           }});
 
           console.log(response)
@@ -118,7 +119,7 @@ const Home: React.FC = () => {
       }
     };
 
-    
+    // fetching()
     recentTransactions()
   }, [])
 
