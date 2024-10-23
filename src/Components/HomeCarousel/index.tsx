@@ -90,6 +90,7 @@ import "./index.css";
 import GainTotalControlOfYourMoney from "../GainTotalControlOfYourMoney";
 import KnowWhereYourMoneyGoes from "../KnowWhereYourMoneyGoes";
 import PlanningAhead from "../PlanningAhead";
+import withAuthRedirect from "../../Constants/WithAuthRedirect";
 
 // Custom Arrow Components
 const NextArrow = (props: any) => {
@@ -172,4 +173,4 @@ function HomeCarousel() {
   );
 }
 
-export default HomeCarousel;
+export default withAuthRedirect(HomeCarousel);

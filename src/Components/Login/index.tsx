@@ -23,9 +23,15 @@ import {
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
-import { ChangeEvents, ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import {
+  ChangeEvents,
+  ChangingTokens,
+  NavigationEvents,
+  url,
+} from "../../Constants/EventHandlers";
 import { motion } from "framer-motion";
 import axios, { AxiosError } from "axios";
+import withAuthRedirect from "../../Constants/WithAuthRedirect";
 
 const dropdownVariants = {
   hidden: {
@@ -53,7 +59,7 @@ const dropdownVariants = {
 
 const Login = () => {
   const navigate = useNavigate();
-  const {setAccessToken, setRefreshToken} = ChangingTokens()
+  const { setAccessToken, setRefreshToken } = ChangingTokens();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -68,21 +74,24 @@ const Login = () => {
     if (email === "" || password === "") {
       setError("Please fill all the fields");
     } else {
-      const fetching = async()=>{
-        try{
+      const fetching = async () => {
+        try {
           const data = {
-            "email": email,
-            "password": password,
-          }
-          const response = await axios.post(`${url}/user_account/login/v1`, data);
-          setAccessToken(response.data.access_token)
-          setRefreshToken(response.data.refresh_token)
+            email: email,
+            password: password,
+          };
+          const response = await axios.post(
+            `${url}/user_account/login/v1`,
+            data
+          );
+          setAccessToken(response.data.access_token);
+          setRefreshToken(response.data.refresh_token);
           navigate("/home");
-        }catch(err:any){
-          if(err.response){
+        } catch (err: any) {
+          if (err.response) {
             if (err.response.data.error_message) {
               setError(err.response.data.error_message);
-            }else{
+            } else {
               switch (err.response.status) {
                 case 400:
                   setError(err.response.data.error_message);
@@ -100,15 +109,14 @@ const Login = () => {
                   setError("An unexpected error occurred. Please try again.");
               }
             }
-          }else if (err.request) {
+          } else if (err.request) {
             setError("Network error. Please check your connection.");
           } else {
             setError("An error occurred. Please try again.");
           }
         }
-       }
-       fetching();
-      
+      };
+      fetching();
     }
   };
 
@@ -161,4 +169,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default withAuthRedirect(Login);

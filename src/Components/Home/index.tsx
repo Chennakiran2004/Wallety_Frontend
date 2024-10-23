@@ -20,12 +20,16 @@ import {
   SeeAllButton,
   UserName,
 } from "./styledComponents";
-import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import {
+  ChangingTokens,
+  NavigationEvents,
+  url,
+} from "../../Constants/EventHandlers";
 import axios from "axios";
 import NoTransactionsComponent from "../NoTransactions";
+import { useNavigate } from "react-router-dom";
 
-
-interface TransactionItem{
+interface TransactionItem {
   category: string;
   amount: string;
   time: string;
@@ -34,16 +38,15 @@ interface TransactionItem{
 }
 
 interface Transaction {
-  date: string,
-  transactions: TransactionItem[]
+  date: string;
+  transactions: TransactionItem[];
 }
 
-
-interface UserExpenseDetails{
-  Account_Balance: string
-  Expense: string
-  Income: string
-  user_name: string
+interface UserExpenseDetails {
+  Account_Balance: string;
+  Expense: string;
+  Income: string;
+  user_name: string;
 }
 
 // const recentTransactionsData: Transaction[] = [
@@ -98,51 +101,83 @@ interface UserExpenseDetails{
 // ];
 
 const Home: React.FC = () => {
+  const navigate = useNavigate();
   const { navigateToTransaction } = NavigationEvents();
-  const [NoTransactions, setNoTransactions] = useState(false)
+  const [NoTransactions, setNoTransactions] = useState(false);
 
-  const [recentTransactionsArr, setRecentTransactionsArr] = useState<Transaction[] >([])
-  const [userExpense, setUserExpense] = useState<UserExpenseDetails>()
-  const {accessToken} = ChangingTokens();
+  const [recentTransactionsArr, setRecentTransactionsArr] = useState<
+    Transaction[]
+  >([]);
+  const [userExpense, setUserExpense] = useState<UserExpenseDetails>();
+  const { navigateLogin } = NavigationEvents();
+  const { accessToken, deleteAccessToken, deleteRefereshToken } =
+    ChangingTokens();
 
-  useEffect(()=>{
-    const fetching = async()=>{
-      try{
+  const isSalaryAdded = localStorage.getItem("isSalaryAdded");
+
+  useEffect(() => {
+    if (isSalaryAdded !== "true") {
+      navigate("/addNewAccount");
+    }
+    const fetching = async () => {
+      try {
         const response = await axios.get(`${url}/get_user_details/`, {
           headers: {
-            "Authorization": `Bearer ${accessToken}`,
-            "Content-type": "Application/json"
-          }});
-
-          setUserExpense(response.data)
-
-          console.log(response.data)
-      }catch(err){
-        console.log(err)
-      }
-    }
-
-    const recentTransactions = async () => {
-      try {
-        const response = await axios.post(`${url}/get_last_five_transactions/`, {}, {
-          headers: {
-            // c73dba9fbf5b480991fbfb404142d994
-            "Authorization": `Bearer ${accessToken}`,
-            "Content-type": "Application/json"
+            Authorization: `Bearer ${accessToken}`,
+            "Content-type": "Application/json",
           },
         });
-        if(response.data.transactions_by_date){
-          setNoTransactions(true)
-        }
-        setRecentTransactionsArr(response.data.transactions_by_date)
+
+        setUserExpense(response.data);
+
+        console.log(response.data);
       } catch (err) {
         console.log(err);
       }
     };
 
-    recentTransactions()
-    fetching()
-  }, [])
+    const recentTransactions = async () => {
+      try {
+        const response = await axios.post(
+          `${url}/get_last_five_transactions/`,
+          {},
+          {
+            headers: {
+              // c73dba9fbf5b480991fbfb404142d994
+              Authorization: `Bearer ${accessToken}`,
+              "Content-type": "Application/json",
+            },
+          }
+        );
+        if (response.data.transactions_by_date) {
+          setNoTransactions(true);
+        }
+        setRecentTransactionsArr(response.data.transactions_by_date);
+      } catch (err: any) {
+        if (err.response) {
+          switch (err.response.status) {
+            case 400:
+              break;
+            case 401:
+              deleteAccessToken();
+              deleteRefereshToken();
+              navigateLogin();
+              break;
+            case 404:
+              break;
+            case 500:
+              break;
+            default:
+              break;
+          }
+        }
+        console.log(err);
+      }
+    };
+
+    recentTransactions();
+    fetching();
+  }, [navigate]);
 
   return (
     <HomeMainContainer>
@@ -151,14 +186,18 @@ const Home: React.FC = () => {
           <UserName>Hello 👋 {userExpense?.user_name},</UserName>
           <AccountBalanceContainer>
             <AccountBalanceText>Account Balance</AccountBalanceText>
-            <AccountBalanceMoney>₹{userExpense?.Account_Balance}</AccountBalanceMoney>
+            <AccountBalanceMoney>
+              ₹{userExpense?.Account_Balance}
+            </AccountBalanceMoney>
           </AccountBalanceContainer>
           <IncomeAndExpenseContainer>
             <IncomeContainer>
               <IncomeAndExpenseImage src="/Images/income.svg" />
               <IncomeAndExpenseContentContainer>
                 <IncomeAndExpenseHeading>Income</IncomeAndExpenseHeading>
-                <IncomeAndExpenseMoney>{userExpense?.Income}</IncomeAndExpenseMoney>
+                <IncomeAndExpenseMoney>
+                  {userExpense?.Income}
+                </IncomeAndExpenseMoney>
               </IncomeAndExpenseContentContainer>
             </IncomeContainer>
 
@@ -166,36 +205,39 @@ const Home: React.FC = () => {
               <IncomeAndExpenseImage src="/Images/expenses.svg" />
               <IncomeAndExpenseContentContainer>
                 <IncomeAndExpenseHeading>Expenses</IncomeAndExpenseHeading>
-                <IncomeAndExpenseMoney>₹{userExpense?.Expense}</IncomeAndExpenseMoney>
+                <IncomeAndExpenseMoney>
+                  ₹{userExpense?.Expense}
+                </IncomeAndExpenseMoney>
               </IncomeAndExpenseContentContainer>
             </ExpenseContainer>
           </IncomeAndExpenseContainer>
         </HomeContentSubContainer>
       </HomeContentContainer>
-    
-        {!NoTransactions ?
+
+      {!NoTransactions ? (
         <>
           <RecentTransactionsContainer>
-        <RecentTransactionText>Recent Transactions</RecentTransactionText>
-        <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
-      </RecentTransactionsContainer>
-      <RecentItemsContainer>
-        {recentTransactionsArr.map((Item) => (
-            Item.transactions.map((eachItem: TransactionItem)=>(
-              <RecenetTransactionItem
-                key={eachItem.transaction_id}
-                type={eachItem.category}
-                description={eachItem.description}
-                price={eachItem.amount}
-                time={eachItem.time}
-                id = {eachItem.transaction_id}
-            />
-          ))
-          
-        ))}
-      </RecentItemsContainer>
+            <RecentTransactionText>Recent Transactions</RecentTransactionText>
+            <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
+          </RecentTransactionsContainer>
+          <RecentItemsContainer>
+            {recentTransactionsArr.map((Item) =>
+              Item.transactions.map((eachItem: TransactionItem) => (
+                <RecenetTransactionItem
+                  key={eachItem.transaction_id}
+                  type={eachItem.category}
+                  description={eachItem.description}
+                  price={eachItem.amount}
+                  time={eachItem.time}
+                  id={eachItem.transaction_id}
+                />
+              ))
+            )}
+          </RecentItemsContainer>
         </>
-      : <NoTransactionsComponent/>}
+      ) : (
+        <NoTransactionsComponent />
+      )}
     </HomeMainContainer>
   );
 };

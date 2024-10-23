@@ -1,4 +1,5 @@
 import { NavigationEvents } from "../../Constants/EventHandlers";
+import withAuthRedirect from "../../Constants/WithAuthRedirect";
 import {
   OuterAllSetContainer,
   CombinedGifAndtextDiv,
@@ -12,7 +13,7 @@ export const GifComponent = () => {
   return <GifWrapper gifUrl={gifUrl} />;
 };
 
-export default function YouAreAllSet() {
+const YouAreAllSet = () => {
   const { navigateToHome } = NavigationEvents();
 
   return (
@@ -26,4 +27,6 @@ export default function YouAreAllSet() {
       </ContinueButtonInAllSet>
     </OuterAllSetContainer>
   );
-}
+};
+
+export default YouAreAllSet;

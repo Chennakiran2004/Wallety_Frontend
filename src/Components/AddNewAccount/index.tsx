@@ -36,6 +36,7 @@ import {
 } from "../signup/signupstyled";
 import { CarouselItemImage } from "../GainTotalControlOfYourMoney/styledComponents";
 import axios from "axios";
+import withAuthRedirect from "../../Constants/WithAuthRedirect";
 
 const dropdownVariants = {
   hidden: {
@@ -119,6 +120,7 @@ const AddNewAccount = () => {
           },
         });
 
+        localStorage.setItem("isSalaryAdded", "true");
         navigateToSmartSpendingSuggestions();
       } catch (err) {
         console.log(err);
