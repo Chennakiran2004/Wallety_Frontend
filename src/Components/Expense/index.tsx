@@ -39,9 +39,10 @@ const ExpenseComponent = ()=>{
     const { handleBack } = NavigationEvents();
     const {accessToken} = ChangingTokens();
 
-
+    const [amount, setAmount] = useState("0")
     const [genderContents, setGenderContents] = useState(false);
     const [gender, setGender] = useState("Category");
+    const [description, setDescription] = useState("")
 
     const [selectedCategory, setSelectedCategory] = useState<String[]>([])
 
@@ -63,18 +64,25 @@ const ExpenseComponent = ()=>{
 
       const expenseAdd = ()=>{
         const fetching = async()=>{
-          const response = await axios.post(`${url}//update_user_expense`, {
-            "category": selectedCategory,
-            "expense_amount": 5000,
-            "description": "adskfjksaf"
+          try{
+            const response = await axios.post(`${url}//update_user_expense`, {
+            "category": selectedCategory[0],
+            "expense_amount": amount,
+            "description": description
           }, {
             headers: {
               "Authorization": `Bearer ${accessToken}`,
               "Content-type": "Application/json"
             },
           });
-
           console.log(response)
+          }catch(err: any){
+            if(err.response){
+              if(err.response.data.error_message){
+                  console.log("Insuffiecient Amount")
+              }
+            }
+          }
         }
 
         fetching()
@@ -89,7 +97,7 @@ const ExpenseComponent = ()=>{
                 </ExpenseHeader>
                 <InputContainer>
                     <InputHeading>How much?</InputHeading>
-                    <InputExpense placeholder = "₹" type = "number" max = "1000"/>
+                    <InputExpense placeholder = "₹" type = "number" onChange = {(e)=> setAmount(e.target.value)} max = "1000"/>
                 </InputContainer>
                 <ExpenseBottomContainer>
                     <ExpenseBottomSubContainer>
@@ -115,7 +123,7 @@ const ExpenseComponent = ()=>{
                 )}
               </AnimatePresence>
                     </GenderContainer>
-                    <DescriptionField placeholder = "Description" />
+                    <DescriptionField onChange = {(e)=> setDescription(e.target.value)} value = {description} placeholder = "Description" />
                     <ContinueButton onClick = {expenseAdd}>Continue</ContinueButton>
                     </ExpenseBottomSubContainer>
                 </ExpenseBottomContainer>
