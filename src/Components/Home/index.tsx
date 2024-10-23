@@ -108,7 +108,8 @@ const Home: React.FC = () => {
       try {
         const response = await axios.post(`${url}/get_last_five_transactions/`, {}, {
           headers: {
-            "Authorization": `Bearer c73dba9fbf5b480991fbfb404142d994`,
+            // c73dba9fbf5b480991fbfb404142d994
+            "Authorization": `Bearer ${accessToken}`,
             "Content-type": "Application/json"
           },
         });

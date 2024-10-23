@@ -102,4 +102,4 @@ export const CategoriesMap: { [key: string]: string } = {
 
 } 
 
-export const url = `http://192.168.1.17:8000`
+export const url = `http://10.18.106.222:8000`
