@@ -65,7 +65,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
     id: "centerTextPlugin",
     afterDraw(chart) {
       const { ctx, chartArea } = chart;
-      const text = "365";
+      const text = "₹365";
 
       const fontSize = 32;
       const fontStyle = "normal";
