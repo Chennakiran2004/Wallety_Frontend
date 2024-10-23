@@ -1,13 +1,15 @@
-import { NoTransactionsContainer, NoTransactionsHeading } from "./styledcomponents"
+import {
+  NoTransactionsContainer,
+  NoTransactionsHeading,
+} from "./styledcomponents";
 
-const NoTransactionsComponent = ()=>{
-    return(
-        <NoTransactionsContainer>
-            <NoTransactionsHeading>No Transactions Found</NoTransactionsHeading>
-            <button>Add Transaction</button>
-        </NoTransactionsContainer>
-        
-    )
-}
+const NoTransactionsComponent = () => {
+  return (
+    <NoTransactionsContainer>
+      <NoTransactionsHeading>No Transactions Found</NoTransactionsHeading>
+      <button>Add Transaction</button>
+    </NoTransactionsContainer>
+  );
+};
 
-export default NoTransactionsComponent
+export default NoTransactionsComponent;

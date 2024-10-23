@@ -22,6 +22,7 @@ import FinancialReport from "./Components/FinancialReport";
 import { SmartSpendingCardsContainer } from "./Components/SmartSpendingSuggestions/styledComponents";
 import SmartSpendingSuggestions from "./Components/SmartSpendingSuggestions";
 import MonthReview from "./Components/MonthReview";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 function App() {
   const location = useLocation();
@@ -40,21 +41,23 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/setup" element={<SetUp />} />
-        <Route path="/addNewAccount" element={<AddNewAccount />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/transaction" element={<Transaction />} />
-        <Route path="/budget" element={<Budget />} />
-        <Route path="/youAreAllSet" element={<YouAreAllSet />} />
-        <Route path="/userInfo" element={<UserInfo />} />
-        <Route path="/expense" element={<ExpenseComponent />} />
-        <Route path="/transaction/:id" element={<TransactionDetails />} />
-        <Route path="/financialReport" element={<FinancialReport />} />
-        <Route
-          path="/SmartSpendingSuggestions"
-          element={<SmartSpendingSuggestions />}
-        />
-        <Route path="/monthReview" element={<MonthReview />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/addNewAccount" element={<AddNewAccount />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/transaction" element={<Transaction />} />
+          <Route path="/budget" element={<Budget />} />
+          <Route path="/youAreAllSet" element={<YouAreAllSet />} />
+          <Route path="/userInfo" element={<UserInfo />} />
+          <Route path="/expense" element={<ExpenseComponent />} />
+          <Route path="/transaction/:id" element={<TransactionDetails />} />
+          <Route path="/financialReport" element={<FinancialReport />} />
+          <Route
+            path="/SmartSpendingSuggestions"
+            element={<SmartSpendingSuggestions />}
+          />
+          <Route path="/monthReview" element={<MonthReview />} />
+        </Route>
       </Routes>
       {shouldShowTabBar && <TabBar />}
     </div>
