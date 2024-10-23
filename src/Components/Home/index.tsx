@@ -131,9 +131,6 @@ const Home: React.FC = () => {
             "Content-type": "Application/json"
           },
         });
-        if(response.data.transactions_by_date){
-          setNoTransactions(true)
-        }
         setRecentTransactionsArr(response.data.transactions_by_date)
       } catch (err) {
         console.log(err);
