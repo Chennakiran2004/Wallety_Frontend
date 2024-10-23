@@ -206,6 +206,31 @@ const Transaction = () => {
     const countB = selectedCategoryOptions.length > 0 ? 1 : 0;
     setNumberofFilters(count + countB);
     togglePopUp();
+
+    const fetching = async()=>{
+      const body = {
+         "Highest": selectedSortOptions.includes("Highest"),
+         "Lowest": selectedSortOptions.includes("Lowest"),
+         "Oldest": selectedCategoryOptions.includes("Oldest"),
+         "Categories": ""
+      }
+
+      console.log(body)
+
+      try {
+        const response = await axios.post(`${url}/get_transaction_filters/`, body, {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-type": "Application/json"
+          },
+        });
+        setTransactionsArr(response.data.transactions_by_date)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetching()
   };
 
   const resetFilters = () => {
