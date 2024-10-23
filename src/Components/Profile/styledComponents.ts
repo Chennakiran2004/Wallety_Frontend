@@ -144,12 +144,12 @@ export const LogoutButtonsContaienr = styled.div`
 export const Button = styled.button`
   ${interSemiBold}
   display: flex;
-  width: 164px;
+  width: 45%;
   height: 56px;
   padding: 8px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   font-size: 18px;
   line-height: normal;
   border: none;

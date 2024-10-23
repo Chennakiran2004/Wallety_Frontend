@@ -113,6 +113,7 @@ export const ChangingTokens = () => {
 export const CategoriesMap: { [key: string]: string } = {
   Food: "/Images/food.svg",
   Travel: "/Images/transportation.svg",
+  Entertainment: "/Images/subscription.svg",
 };
 
 export const url = `http://10.18.106.222:8000`;
