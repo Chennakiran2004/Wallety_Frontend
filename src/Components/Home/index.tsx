@@ -22,7 +22,6 @@ import {
 } from "./styledComponents";
 import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import axios from "axios";
-import Transaction from "../Transaction";
 
 
 interface TransactionItem{

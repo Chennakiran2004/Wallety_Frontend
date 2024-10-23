@@ -22,6 +22,7 @@ const overlayVariants = {
     exit: { opacity: 0 },
 };
 
+
 interface TransactionInterface{
     amount: string,
     category: string,
