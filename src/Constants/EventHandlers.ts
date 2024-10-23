@@ -67,6 +67,10 @@ export const NavigationEvents = () => {
     navigate("/monthReview");
   };
 
+  const navigateToExpense = () => {
+    navigate("/expense");
+  };
+
   return {
     navigateSignIn,
     navigateLogin,
@@ -81,6 +85,7 @@ export const NavigationEvents = () => {
     navigateToSmartSpendingSuggestions,
     navigateToLogin,
     navigateToMonthReview,
+    navigateToExpense,
   };
 };
 
@@ -121,16 +126,17 @@ export const CategoriesMap: { [key: string]: string } = {
   Shopping: "/Images/shoppingicon.svg",
   Rent: "/Images/renticon.svg",
   Savings: "/Images/savingsicon.svg",
+  Miscellaneous: "/Images/miscellaneousicon.svg",
 };
 
-export const CategoriesColors: {[key: string]: string} = {
-    Food: "#FD3C4A",
-    Shopping: "#FCAC12",
-    Travel: "#0077FF",
-    Health: "#0077B6" ,
-    Entertainment: "#7F3DFF",
-    Miscellaneous: "red",
-    Rent: "#1E3A8A",
-}
+export const CategoriesColors: { [key: string]: string } = {
+  Food: "#FD3C4A",
+  Shopping: "#FCAC12",
+  Travel: "#0077FF",
+  Health: "#0077B6",
+  Entertainment: "#7F3DFF",
+  Miscellaneous: "red",
+  Rent: "#1E3A8A",
+};
 
 export const url = `http://10.18.106.222:8000`;
