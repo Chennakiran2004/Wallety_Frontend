@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RecenetTransactionItem from "../RecentTransactionItem";
 import {
   AccountBalanceContainer,
@@ -20,77 +20,110 @@ import {
   SeeAllButton,
   UserName,
 } from "./styledComponents";
-import { NavigationEvents } from "../../Constants/EventHandlers";
+import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import axios from "axios";
+import Transaction from "../Transaction";
 
 interface Transaction {
-  type: string;
+  category: string;
   description: string;
-  price: string;
+  amount: string;
   time: string;
-  image: string;
+  date?: string;
 }
 
 const recentTransactionsData: Transaction[] = [
   {
-    type: "Shopping",
+    category: "Shopping",
     description: "Buy some groceries",
-    price: "- ₹120",
+    amount: "- ₹120",
     time: "10:00 AM",
-    image: "/Images/shopping.svg",
   },
   {
-    type: "Subscription",
+    category: "Subscription",
     description: "Subscription",
-    price: "- ₹1500",
+    amount: "- ₹1500",
     time: "12:00 PM",
-    image: "/Images/subscription.svg",
   },
   {
-    type: "Shopping",
+    category: "Shopping",
     description: "Taxi Fare",
-    price: "- ₹300",
+    amount: "- ₹300",
     time: "2:30 PM",
-    image: "/Images/shopping.svg",
   },
   {
-    type: "Food",
+    category: "Food",
     description: "Movie Tickets",
-    price: "- ₹600",
+    amount: "- ₹600",
     time: "6:00 PM",
-    image: "/Images/food.svg",
   },
   {
-    type: "Food",
+    category: "Food",
     description: "Movie Tickets",
-    price: "- ₹600",
+    amount: "- ₹600",
     time: "6:00 PM",
-    image: "/Images/food.svg",
   },
   {
-    type: "Food",
+    category: "Food",
     description: "Movie Tickets",
-    price: "- ₹600",
+    amount: "- ₹600",
     time: "6:00 PM",
-    image: "/Images/food.svg",
   },
   {
-    type: "Food",
+    category: "Food",
     description: "Movie Tickets",
-    price: "- ₹600",
+    amount: "- ₹600",
     time: "6:00 PM",
-    image: "/Images/food.svg",
   },
   {
-    type: "Food",
+    category: "Food",
     description: "Movie Tickets",
-    price: "- ₹600",
+    amount: "- ₹600",
     time: "6:00 PM",
-    image: "/Images/food.svg",
   },
 ];
 
 const Home: React.FC = () => {
   const { navigateToTransaction } = NavigationEvents();
+
+  const [recentTransactionsArr, setRecentTransactionsArr] = useState<Transaction[] >([])
+  const {accessToken} = ChangingTokens();
+
+  useEffect(()=>{
+    const fetching = async()=>{
+      try{
+        const response = await axios.get(`${url}/update_user_expense/`, {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-type": "Application/json"
+          }});
+
+          console.log(response)
+      }catch(err){
+        console.log(err)
+      }
+    }
+
+    const recentTransactions = async () => {
+      try {
+        const response = await axios.post(`${url}/get_last_five_transactions/`, {}, {
+          headers: {
+            // c73dba9fbf5b480991fbfb404142d994
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-type": "Application/json"
+          },
+        });
+    
+        setRecentTransactionsArr(response.data.transactions) // Access the data here
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    // fetching()
+    recentTransactions()
+  }, [])
+
   return (
     <HomeMainContainer>
       <HomeContentContainer>
@@ -125,14 +158,13 @@ const Home: React.FC = () => {
         <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
       </RecentTransactionsContainer>
       <RecentItemsContainer>
-        {recentTransactionsData.map((transaction, index) => (
+        {recentTransactionsArr.map((transaction, index) => (
           <RecenetTransactionItem
             key={index}
-            type={transaction.type}
+            type={transaction.category}
             description={transaction.description}
-            price={transaction.price}
+            price={transaction.amount}
             time={transaction.time}
-            image={transaction.image}
           />
         ))}
       </RecentItemsContainer>
