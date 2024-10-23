@@ -116,4 +116,14 @@ export const CategoriesMap: { [key: string]: string } = {
   Entertainment: "/Images/subscription.svg",
 };
 
+export const CategoriesColors: {[key: string]: string} = {
+    Food: "#FD3C4A",
+    Shopping: "#FCAC12",
+    Travel: "#0077FF",
+    Health: "#0077B6" ,
+    Entertainment: "#7F3DFF",
+    Miscellaneous: "red",
+    Rent: "#1E3A8A",
+}
+
 export const url = `http://10.18.106.222:8000`;

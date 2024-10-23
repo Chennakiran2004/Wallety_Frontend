@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import DoughnutChart from "../DoughnutChart";
 import {
@@ -16,10 +16,11 @@ import {
   ExpensesBarsContainer,
 } from "./styledComponents";
 
-import { NavigationEvents } from "../../Constants/EventHandlers";
+import { CategoriesColors, ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import { IconContianer } from "../signup/signupstyled";
 import ExpensesItem from "../ExpensesItem";
 import SalayItem from "../SalaryItem";
+import axios from "axios";
 
 const dropdownVariants = {
   hidden: { opacity: 0, height: 0 },
@@ -49,9 +50,14 @@ const months = [
 
 const FinancialReport = () => {
   const { handleBack } = NavigationEvents();
+  const {accessToken} = ChangingTokens();
+
   const [activeTab, setActiveTab] = useState<"expense" | "income">("expense");
   const [isMonthDropdownOpen, setMonthDropdownOpen] = useState(false); // Dropdown state
   const [selectedMonth, setSelectedMonth] = useState("Month"); // Selected month state
+  const [expensesData, setExpensesData] = useState([]);
+
+  const [total, setTotal] = useState(0)
 
   const handleExpenseClick = () => {
     setActiveTab("expense");
@@ -66,29 +72,29 @@ const FinancialReport = () => {
     setMonthDropdownOpen(false); // Close dropdown after selection
   };
 
-  const expensesData = [
-    {
-      type: "Shopping",
-      amount: "-₹120",
-      icon: "/Images/shoppingcolor.svg",
-      progress: 70,
-      color: "#FCAC12",
-    },
-    {
-      type: "Subcription",
-      amount: "-₹250",
-      icon: "/Images/subscripitioncolor.svg",
-      progress: 50,
-      color: "#7F3DFF",
-    },
-    {
-      type: "Food",
-      amount: "-₹80",
-      icon: "/Images/foodcolor.svg",
-      progress: 40,
-      color: "#FD3C4A",
-    },
-  ];
+  // const expensesData = [
+  //   {
+  //     type: "Shopping",
+  //     amount: "-₹120",
+  //     icon: "/Images/shoppingcolor.svg",
+  //     progress: 70,
+  //     color: "#FCAC12",
+  //   },
+  //   {
+  //     type: "Subcription",
+  //     amount: "-₹250",
+  //     icon: "/Images/subscripitioncolor.svg",
+  //     progress: 50,
+  //     color: "#7F3DFF",
+  //   },
+  //   {
+  //     type: "Food",
+  //     amount: "-₹80",
+  //     icon: "/Images/foodcolor.svg",
+  //     progress: 40,
+  //     color: "#FD3C4A",
+  //   },
+  // ];
 
   const incomeData = [
     {
@@ -112,6 +118,40 @@ const FinancialReport = () => {
     Number(item.amount.replace(/[^0-9.-]+/g, ""))
   );
   const colors = currentData.map((item) => item.color);
+
+  useEffect(()=>{
+      const fetching = async()=>{
+
+        console.log(selectedMonth)
+        try{
+            const response = await axios.post(`${url}/get_user_pie_chart_financial_transactions/`, {
+              "month": "10"
+            }, {headers: {
+              "Authorization": `Bearer ${accessToken}`,
+              "Content-type": "Application/json"
+            }})
+
+            setTotal(response.data.total_expense)
+            const expenses = response.data.user_expenses_history.map((item: any) => {
+              const categoryTotal = Number(item.total);
+              const CategoryColor = CategoriesColors[item.category]
+              return {
+                type: item.category,
+                amount: `-₹${categoryTotal}`,
+                icon: "/Images/shoppingcolor.svg", 
+                progress: (Number(categoryTotal) / Number(response.data.total_expense)) * 100,
+                color: CategoryColor,
+              };
+            }); 
+            setExpensesData(expenses);
+        }catch(err){
+          console.log(err)
+        }
+        
+      }
+
+      fetching();
+  }, [selectedMonth])
 
   return (
     <FinancialReportMainContainer>
@@ -170,7 +210,7 @@ const FinancialReport = () => {
           </AnimatePresence>
         </MonthDropDownContainer>
         <DoughunChartContainer>
-          <DoughnutChart data={amounts} backgroundColors={colors} />
+          <DoughnutChart data={amounts} total={total} backgroundColors={colors} />
         </DoughunChartContainer>
         <IncomeAndExpenseTabs>
           <ExpenseAndIncomeButton
@@ -189,7 +229,7 @@ const FinancialReport = () => {
         </IncomeAndExpenseTabs>
         <ExpensesBarsContainer>
           {activeTab === "expense"
-            ? expensesData.map((expense, index) => (
+            ? expensesData.map((expense: any, index) => (
                 <ExpensesItem
                   key={index}
                   type={expense.type}

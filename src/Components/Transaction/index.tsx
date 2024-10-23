@@ -46,6 +46,7 @@ import FilterPopup from "../FilterPopUp";
 import CategoryPopup from "../CategoryPopUp";
 import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import axios from "axios";
+import NoTransactionsComponent from "../NoTransactions";
 
 const data = [
   {
@@ -162,6 +163,8 @@ const Transaction = () => {
     string[]
   >([]);
 
+  const [NoTransactions, setNoTransactions] = useState(false);
+
   const {accessToken} = ChangingTokens()
 
   const [numberOfFilters, setNumberofFilters] = useState(0);
@@ -215,8 +218,6 @@ const Transaction = () => {
          "Categories": ""
       }
 
-      console.log(body)
-
       try {
         const response = await axios.post(`${url}/get_transaction_filters/`, body, {
           headers: {
@@ -224,6 +225,10 @@ const Transaction = () => {
             "Content-type": "Application/json"
           },
         });
+
+        if(response.data.transactions_by_date === 0){
+        }
+
         setTransactionsArr(response.data.transactions_by_date)
       } catch (err) {
         console.log(err);
@@ -248,6 +253,12 @@ const Transaction = () => {
             "Content-type": "Application/json"
           },
         });
+
+        console.log(response.data.transactions_by_date.length)
+        if(response.data.transactions_by_date.length === 0){
+
+          setNoTransactions(true)
+      }
     
         setTransactionsArr(response.data.transactions_by_date)
       } catch (err) {
@@ -262,6 +273,8 @@ const Transaction = () => {
     <>
       <TransactionMainContainer>
         <TransactionSubContainer>
+          {!NoTransactions ?
+          <>
           <FilterContainer>
             <p>Month</p>
             <FilterButton onClick={togglePopUp}>
@@ -280,13 +293,14 @@ const Transaction = () => {
             <ArrowRight src="/Images/arrow-right-2.svg" />
           </FinancialReportContainer>
           <TransactionsContainer>
-            {transactionsArr.map((eachItem, index) => (
+            {!NoTransactions ?
+            transactionsArr.map((eachItem, index) => (
               <TransactionList
                 key={index}
                 date={eachItem.date}
                 details={eachItem.transactions}
               />
-            ))}
+            )): <NoTransactionsComponent/>}
           </TransactionsContainer>
 
           <AnimatePresence mode="wait">
@@ -326,6 +340,7 @@ const Transaction = () => {
               </Overlay>
             )}
           </AnimatePresence>
+          </>: <NoTransactionsComponent/>}
         </TransactionSubContainer>
       </TransactionMainContainer>
     </>

@@ -13,11 +13,13 @@ Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 interface DoughnutChartProps {
   data: number[];
+  total: number;
   backgroundColors: string[];
 }
 
 const DoughnutChart: React.FC<DoughnutChartProps> = ({
   data,
+  total,
   backgroundColors,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -65,7 +67,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
     id: "centerTextPlugin",
     afterDraw(chart) {
       const { ctx, chartArea } = chart;
-      const text = "₹365";
+      const text = total.toString()
 
       const fontSize = 32;
       const fontStyle = "normal";
