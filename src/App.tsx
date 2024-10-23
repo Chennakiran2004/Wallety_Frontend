@@ -21,6 +21,7 @@ import UserInfo from "./Components/UserInfo";
 import FinancialReport from "./Components/FinancialReport";
 import { SmartSpendingCardsContainer } from "./Components/SmartSpendingSuggestions/styledComponents";
 import SmartSpendingSuggestions from "./Components/SmartSpendingSuggestions";
+import MonthReview from "./Components/MonthReview";
 
 function App() {
   const location = useLocation();
@@ -53,6 +54,7 @@ function App() {
           path="/SmartSpendingSuggestions"
           element={<SmartSpendingSuggestions />}
         />
+        <Route path="/monthReview" element={<MonthReview />} />
       </Routes>
       {shouldShowTabBar && <TabBar />}
     </div>
