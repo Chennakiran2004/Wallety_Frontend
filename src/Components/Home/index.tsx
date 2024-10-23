@@ -169,9 +169,7 @@ const Home: React.FC = () => {
           </IncomeAndExpenseContainer>
         </HomeContentSubContainer>
       </HomeContentContainer>
-    
-        {!NoTransactions ?
-        <>
+            <>
           <RecentTransactionsContainer>
         <RecentTransactionText>Recent Transactions</RecentTransactionText>
         <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
@@ -192,7 +190,6 @@ const Home: React.FC = () => {
         ))}
       </RecentItemsContainer>
         </>
-      : <NoTransactionsComponent/>}
     </HomeMainContainer>
   );
 };
