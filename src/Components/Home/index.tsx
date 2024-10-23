@@ -22,6 +22,7 @@ import {
 } from "./styledComponents";
 import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import axios from "axios";
+import NoTransactionsComponent from "../NoTransactions";
 
 
 interface TransactionItem{
@@ -98,6 +99,7 @@ interface UserExpenseDetails{
 
 const Home: React.FC = () => {
   const { navigateToTransaction } = NavigationEvents();
+  const [NoTransactions, setNoTransactions] = useState(false)
 
   const [recentTransactionsArr, setRecentTransactionsArr] = useState<Transaction[] >([])
   const [userExpense, setUserExpense] = useState<UserExpenseDetails>()
@@ -129,7 +131,9 @@ const Home: React.FC = () => {
             "Content-type": "Application/json"
           },
         });
-        console.log(response.data.transactions_by_date)
+        if(response.data.transactions_by_date){
+          setNoTransactions(true)
+        }
         setRecentTransactionsArr(response.data.transactions_by_date)
       } catch (err) {
         console.log(err);
@@ -168,8 +172,10 @@ const Home: React.FC = () => {
           </IncomeAndExpenseContainer>
         </HomeContentSubContainer>
       </HomeContentContainer>
-
-      <RecentTransactionsContainer>
+    
+        {!NoTransactions ?
+        <>
+          <RecentTransactionsContainer>
         <RecentTransactionText>Recent Transactions</RecentTransactionText>
         <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
       </RecentTransactionsContainer>
@@ -188,6 +194,8 @@ const Home: React.FC = () => {
           
         ))}
       </RecentItemsContainer>
+        </>
+      : <NoTransactionsComponent/>}
     </HomeMainContainer>
   );
 };
