@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TabBar from "../TabBar";
 import {
   TransactionMainContainer,
@@ -44,7 +44,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import TransactionList from "../TransactionList";
 import FilterPopup from "../FilterPopUp";
 import CategoryPopup from "../CategoryPopUp";
-import { NavigationEvents } from "../../Constants/EventHandlers";
+import { NavigationEvents, url } from "../../Constants/EventHandlers";
+import axios from "axios";
 
 const data = [
   {
@@ -194,6 +195,26 @@ const Transaction = () => {
     setSelectedSortOptions([]);
     setSelectedCategoryOptions([]);
   };
+
+  useEffect(()=>{
+
+    const fetching = async()=>{
+      try {
+        const response = await axios.post(`${url}/get_last_all_transactions/`, {}, {
+          headers: {
+            "Authorization": `Bearer c73dba9fbf5b480991fbfb404142d994`,
+            "Content-type": "Application/json"
+          },
+        });
+    
+        console.log(response.data.transactions) // Access the data here
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetching()
+  }, [])
 
   return (
     <>

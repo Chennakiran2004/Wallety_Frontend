@@ -96,4 +96,10 @@ export const ChangingTokens = ()=>{
   return {setAccessToken, setRefreshToken, deleteAccessToken, deleteRefereshToken, accessToken, refreshToken}
 }
 
+export const CategoriesMap: { [key: string]: string } = {
+  "Food": "/Images/food.svg",
+  "Travel": "/Images/transportation.svg",
+
+} 
+
 export const url = `http://192.168.1.17:8000`

@@ -9,6 +9,7 @@ import {
   RecentTransactionItemText,
   RecentTransactionItemType,
 } from "./styledComponents";
+import { CategoriesMap } from "../../Constants/EventHandlers";
 
 // Define the props interface
 interface TransactionItemProps {
@@ -16,19 +17,13 @@ interface TransactionItemProps {
   description: string;
   price: string;
   time: string;
-  image: string;
 }
 
-const RecenetTransactionItem: React.FC<TransactionItemProps> = ({
-  type,
-  description,
-  price,
-  time,
-  image,
-}) => {
+const RecenetTransactionItem: React.FC<TransactionItemProps> = ({type,description,price,time,}) => {
+  const imageUrl = CategoriesMap[type]
   return (
     <RecentTransactionItemContainer>
-      <RecentTransactionItemImage src={image} />
+      <RecentTransactionItemImage src={imageUrl} />
       <RecentTransactionItemDescriptionContainer>
         <RecentTransactionItemText>
           <RecentTransactionItemType>{type}</RecentTransactionItemType>
@@ -37,7 +32,7 @@ const RecenetTransactionItem: React.FC<TransactionItemProps> = ({
           </RecentTransactionItemDescription>
         </RecentTransactionItemText>
         <RecentTransactionItemPriceAndTime>
-          <RecentTransactionItemPrice>{price}</RecentTransactionItemPrice>
+          <RecentTransactionItemPrice>-₹{price}</RecentTransactionItemPrice>
           <RecentTransactionItemDescription>
             {time}
           </RecentTransactionItemDescription>
