@@ -54,6 +54,10 @@ export const NavigationEvents = () => {
     navigate("/financialReport");
   };
 
+  const navigateToSmartSpendingSuggestions = () => {
+    navigate("/smartSpendingSuggestions");
+  };
+
   return {
     navigateSignIn,
     navigateLogin,
@@ -65,5 +69,6 @@ export const NavigationEvents = () => {
     navigateToTransactionDetails,
     navigateToUserInfo,
     navigateToFinancialReport,
+    navigateToSmartSpendingSuggestions,
   };
 };

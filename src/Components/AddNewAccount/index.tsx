@@ -87,7 +87,7 @@ const AddNewAccount = () => {
     setSpenderContents(false);
   };
 
-  const { naviagteToYouAreAllSet } = NavigationEvents();
+  const { navigateToSmartSpendingSuggestions } = NavigationEvents();
 
   return (
     <AddNewAccountMainContainer>
@@ -165,7 +165,7 @@ const AddNewAccount = () => {
               </AnimatePresence>
             </GenderContainer>
           </LocationContainer>
-          <ContinueButton onClick={naviagteToYouAreAllSet}>
+          <ContinueButton onClick={navigateToSmartSpendingSuggestions}>
             Continue
           </ContinueButton>
         </AccountDetailsSubContainer>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import DoughnutChart from "../DoughnutChart";
 import {
   FinancialReportContentContainer,
@@ -8,7 +9,6 @@ import {
   DoughunChartContainer,
   MonthDropDownContainer,
   MonthDropDown,
-  ArrowDown,
   DropDownText,
   IncomeAndExpenseTabs,
   ExpenseButton,
@@ -19,11 +19,39 @@ import {
 import { NavigationEvents } from "../../Constants/EventHandlers";
 import { IconContianer } from "../signup/signupstyled";
 import ExpensesItem from "../ExpensesItem";
-import SalayItem from "../SalaryItem"; // Import the SalaryItem component
+import SalayItem from "../SalaryItem";
+
+const dropdownVariants = {
+  hidden: { opacity: 0, height: 0 },
+  visible: { opacity: 1, height: "auto", transition: { duration: 0.3 } },
+  exit: { opacity: 0, height: 0, transition: { duration: 0.2 } },
+};
+
+const arrowVariants = {
+  open: { rotate: 180 },
+  closed: { rotate: 0 },
+};
+
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const FinancialReport = () => {
   const { handleBack } = NavigationEvents();
   const [activeTab, setActiveTab] = useState<"expense" | "income">("expense");
+  const [isMonthDropdownOpen, setMonthDropdownOpen] = useState(false); // Dropdown state
+  const [selectedMonth, setSelectedMonth] = useState("Month"); // Selected month state
 
   const handleExpenseClick = () => {
     setActiveTab("expense");
@@ -31,6 +59,11 @@ const FinancialReport = () => {
 
   const handleIncomeClick = () => {
     setActiveTab("income");
+  };
+
+  const handleMonthClick = (month: string) => {
+    setSelectedMonth(month);
+    setMonthDropdownOpen(false); // Close dropdown after selection
   };
 
   const expensesData = [
@@ -57,7 +90,6 @@ const FinancialReport = () => {
     },
   ];
 
-  // Dummy data for income
   const incomeData = [
     {
       type: "Salary",
@@ -75,7 +107,6 @@ const FinancialReport = () => {
     },
   ];
 
-  // Extract amounts and colors for the Doughnut chart based on active tab
   const currentData = activeTab === "expense" ? expensesData : incomeData;
   const amounts = currentData.map((item) =>
     Number(item.amount.replace(/[^0-9.-]+/g, ""))
@@ -90,10 +121,53 @@ const FinancialReport = () => {
           <FinancialReportHeading>Financial Report</FinancialReportHeading>
         </FinancialReportHeaderContainer>
         <MonthDropDownContainer>
-          <MonthDropDown>
-            <ArrowDown src="/Images/arrow down 2.svg" />
-            <DropDownText>Month</DropDownText>
+          <MonthDropDown
+            onClick={() => setMonthDropdownOpen(!isMonthDropdownOpen)}
+          >
+            <motion.img
+              src="/Images/arrow down 2.svg"
+              variants={arrowVariants}
+              animate={isMonthDropdownOpen ? "open" : "closed"}
+              transition={{ duration: 0.3 }}
+              style={{ marginRight: "8px" }}
+            />
+            <DropDownText>{selectedMonth}</DropDownText>
           </MonthDropDown>
+          <AnimatePresence>
+            {isMonthDropdownOpen && (
+              <motion.div
+                variants={dropdownVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                style={{
+                  position: "absolute",
+                  zIndex: 1,
+                  backgroundColor: "#fff",
+                  borderRadius: "8px",
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                  padding: "10px",
+                }}
+              >
+                {months.map((month) => (
+                  <div
+                    key={month}
+                    onClick={() => handleMonthClick(month)}
+                    style={{
+                      padding: "8px 16px",
+                      cursor: "pointer",
+                      borderRadius: "4px",
+                      backgroundColor:
+                        selectedMonth === month ? "#f0f0f0" : "#fff",
+                      transition: "background-color 0.2s",
+                    }}
+                  >
+                    {month}
+                  </div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </MonthDropDownContainer>
         <DoughunChartContainer>
           <DoughnutChart data={amounts} backgroundColors={colors} />
@@ -115,8 +189,7 @@ const FinancialReport = () => {
         </IncomeAndExpenseTabs>
         <ExpensesBarsContainer>
           {activeTab === "expense"
-            ? // Render expense items
-              expensesData.map((expense, index) => (
+            ? expensesData.map((expense, index) => (
                 <ExpensesItem
                   key={index}
                   type={expense.type}
@@ -126,8 +199,7 @@ const FinancialReport = () => {
                   color={expense.color}
                 />
               ))
-            : // Render income items
-              incomeData.map((income, index) => (
+            : incomeData.map((income, index) => (
                 <SalayItem
                   key={index}
                   progress={income.progress}

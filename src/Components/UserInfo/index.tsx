@@ -17,8 +17,8 @@ const UserInfo = () => {
   const { handleBack } = NavigationEvents();
 
   const [username, setUserName] = useState("Kiran_Kumar");
-  const [email, setEmail] = useState("kirankumar@gmail.com");
-  const [password, setPassword] = useState("********");
+  const Gender = "Male";
+  const [email, setEmail] = useState("kiraanchenna@gmail.com");
 
   const onChangeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value);
@@ -26,10 +26,6 @@ const UserInfo = () => {
 
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
-  };
-
-  const onChangePassword = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value);
   };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -51,17 +47,13 @@ const UserInfo = () => {
           </InputContainer>
 
           <InputContainer>
-            <InputLabel>EMAIL</InputLabel>
-            <InputElement value={email} onChange={onChangeEmail} />
+            <InputLabel>Gender</InputLabel>
+            <InputElement value={Gender} />
           </InputContainer>
 
           <InputContainer>
-            <InputLabel>PASSWORD</InputLabel>
-            <InputElement
-              type="password"
-              value={password}
-              onChange={onChangePassword}
-            />
+            <InputLabel>EMAIL</InputLabel>
+            <InputElement value={email} onChange={onChangeEmail} />
           </InputContainer>
           <Button>Submit</Button>
         </FormContainer>
