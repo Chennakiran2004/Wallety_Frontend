@@ -213,31 +213,26 @@ const Home: React.FC = () => {
           </IncomeAndExpenseContainer>
         </HomeContentSubContainer>
       </HomeContentContainer>
-
-      {!NoTransactions ? (
-        <>
-          <RecentTransactionsContainer>
-            <RecentTransactionText>Recent Transactions</RecentTransactionText>
-            <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
-          </RecentTransactionsContainer>
-          <RecentItemsContainer>
-            {recentTransactionsArr.map((Item) =>
-              Item.transactions.map((eachItem: TransactionItem) => (
-                <RecenetTransactionItem
-                  key={eachItem.transaction_id}
-                  type={eachItem.category}
-                  description={eachItem.description}
-                  price={eachItem.amount}
-                  time={eachItem.time}
-                  id={eachItem.transaction_id}
-                />
-              ))
-            )}
-          </RecentItemsContainer>
-        </>
-      ) : (
-        <NoTransactionsComponent />
-      )}
+      <>
+        <RecentTransactionsContainer>
+          <RecentTransactionText>Recent Transactions</RecentTransactionText>
+          <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
+        </RecentTransactionsContainer>
+        <RecentItemsContainer>
+          {recentTransactionsArr.map((Item) =>
+            Item.transactions.map((eachItem: TransactionItem) => (
+              <RecenetTransactionItem
+                key={eachItem.transaction_id}
+                type={eachItem.category}
+                description={eachItem.description}
+                price={eachItem.amount}
+                time={eachItem.time}
+                id={eachItem.transaction_id}
+              />
+            ))
+          )}
+        </RecentItemsContainer>
+      </>
     </HomeMainContainer>
   );
 };
