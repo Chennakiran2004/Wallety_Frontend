@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { interMedium, interSemiBold } from "../../Constants/fontStyles";
+import { Link } from "react-router-dom";
 
 export const RecentTransactionItemContainer = styled.div`
   display: flex;
@@ -7,6 +8,7 @@ export const RecentTransactionItemContainer = styled.div`
   width: 100%;
   margin: auto;
   gap: 4%;
+  text-decoration: none;
 `;
 
 export const RecentTransactionItemImage = styled.img``;

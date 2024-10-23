@@ -8,7 +8,7 @@ interface TransactionListProps{
 
 
   interface DetailsInterface{
-    id: number,
+    id: string,
     name: string
     money: string
     description: string

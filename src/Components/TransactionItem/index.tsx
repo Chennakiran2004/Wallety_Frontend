@@ -3,7 +3,7 @@ import { ListItem, ListItemContentsContainer, PriceContainer, CategoryHeading, P
 import { useNavigate } from 'react-router-dom';
 
 interface DetailsInterface{
-    id: number;
+    id: string;
     name: string
     money: string
     description: string
