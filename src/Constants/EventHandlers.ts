@@ -51,8 +51,8 @@ export const NavigationEvents = () => {
     navigate("/userInfo");
   };
 
-  const navigateToTransactionDetails = (id: number) => {
-    navigate(`/transaction/:${id}`);
+  const navigateToTransactionDetails = (id: string) => {
+    navigate(`/transaction/${id}`);
   };
 
   const navigateToFinancialReport = () => {

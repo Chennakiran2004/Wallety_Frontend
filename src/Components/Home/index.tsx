@@ -30,58 +30,59 @@ interface Transaction {
   amount: string;
   time: string;
   date?: string;
+  transaction_id: string;
 }
 
-const recentTransactionsData: Transaction[] = [
-  {
-    category: "Shopping",
-    description: "Buy some groceries",
-    amount: "- ₹120",
-    time: "10:00 AM",
-  },
-  {
-    category: "Subscription",
-    description: "Subscription",
-    amount: "- ₹1500",
-    time: "12:00 PM",
-  },
-  {
-    category: "Shopping",
-    description: "Taxi Fare",
-    amount: "- ₹300",
-    time: "2:30 PM",
-  },
-  {
-    category: "Food",
-    description: "Movie Tickets",
-    amount: "- ₹600",
-    time: "6:00 PM",
-  },
-  {
-    category: "Food",
-    description: "Movie Tickets",
-    amount: "- ₹600",
-    time: "6:00 PM",
-  },
-  {
-    category: "Food",
-    description: "Movie Tickets",
-    amount: "- ₹600",
-    time: "6:00 PM",
-  },
-  {
-    category: "Food",
-    description: "Movie Tickets",
-    amount: "- ₹600",
-    time: "6:00 PM",
-  },
-  {
-    category: "Food",
-    description: "Movie Tickets",
-    amount: "- ₹600",
-    time: "6:00 PM",
-  },
-];
+// const recentTransactionsData: Transaction[] = [
+//   {
+//     category: "Shopping",
+//     description: "Buy some groceries",
+//     amount: "- ₹120",
+//     time: "10:00 AM",
+//   },
+//   {
+//     category: "Subscription",
+//     description: "Subscription",
+//     amount: "- ₹1500",
+//     time: "12:00 PM",
+//   },
+//   {
+//     category: "Shopping",
+//     description: "Taxi Fare",
+//     amount: "- ₹300",
+//     time: "2:30 PM",
+//   },
+//   {
+//     category: "Food",
+//     description: "Movie Tickets",
+//     amount: "- ₹600",
+//     time: "6:00 PM",
+//   },
+//   {
+//     category: "Food",
+//     description: "Movie Tickets",
+//     amount: "- ₹600",
+//     time: "6:00 PM",
+//   },
+//   {
+//     category: "Food",
+//     description: "Movie Tickets",
+//     amount: "- ₹600",
+//     time: "6:00 PM",
+//   },
+//   {
+//     category: "Food",
+//     description: "Movie Tickets",
+//     amount: "- ₹600",
+//     time: "6:00 PM",
+//   },
+//   {
+//     category: "Food",
+//     description: "Movie Tickets",
+//     amount: "- ₹600",
+//     time: "6:00 PM",
+//   },
+// ];
 
 const Home: React.FC = () => {
   const { navigateToTransaction } = NavigationEvents();
@@ -165,6 +166,7 @@ const Home: React.FC = () => {
             description={transaction.description}
             price={transaction.amount}
             time={transaction.time}
+            id = {transaction.transaction_id}
           />
         ))}
       </RecentItemsContainer>

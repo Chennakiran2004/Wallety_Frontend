@@ -52,7 +52,7 @@ const data = [
     date: "Today",
     details: [
       {
-        id: 1,
+        id: "1",
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -60,7 +60,7 @@ const data = [
         imageUrl: "/Images/shoppingicon.svg",
       },
       {
-        id: 2,
+        id: "2",
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -68,7 +68,7 @@ const data = [
         imageUrl: "/Images/foodicon.svg",
       },
       {
-        id: 3,
+        id: "3",
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -76,7 +76,7 @@ const data = [
         imageUrl: "/Images/transportation.svg",
       },
       {
-        id: 4,
+        id: "4",
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -89,7 +89,7 @@ const data = [
     date: "Yesterday",
     details: [
       {
-        id: 5,
+        id: "5",
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -97,7 +97,7 @@ const data = [
         imageUrl: "/Images/foodicon.svg",
       },
       {
-        id: 6,
+        id: "6",
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -105,7 +105,7 @@ const data = [
         imageUrl: "/Images/transportation.svg",
       },
       {
-        id: 7,
+        id: "7",
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
@@ -113,7 +113,7 @@ const data = [
         imageUrl: "/Images/shoppingicon.svg",
       },
       {
-        id: 8,
+        id: "8",
         name: "Shopping",
         money: "120",
         description: "Buy Some grocerry",
