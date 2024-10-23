@@ -44,7 +44,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import TransactionList from "../TransactionList";
 import FilterPopup from "../FilterPopUp";
 import CategoryPopup from "../CategoryPopUp";
-import { NavigationEvents, url } from "../../Constants/EventHandlers";
+import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import axios from "axios";
 
 const data = [
@@ -135,10 +135,25 @@ const mainPopupExit = {
   exit: { x: "-100%", opacity: 0 },
 };
 
+interface TransactionItem{
+  category: string;
+  amount: string;
+  time: string;
+  transaction_id: string;
+  description: string;
+}
+
+interface Transaction {
+  date: string,
+  transactions: TransactionItem[]
+}
+
 const sortOptions = ["Highest", "Lowest", "Oldest"];
 const categoryOptions = ["Shopping", "Food", "Transport", "Entertainment"];
 
 const Transaction = () => {
+  const [transactionsArr, setTransactionsArr] = useState<Transaction[] >([])
+
   const [isPopupOpen, setIsPopUpOpen] = useState(false);
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
 
@@ -146,6 +161,8 @@ const Transaction = () => {
   const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<
     string[]
   >([]);
+
+  const {accessToken} = ChangingTokens()
 
   const [numberOfFilters, setNumberofFilters] = useState(0);
 
@@ -202,12 +219,12 @@ const Transaction = () => {
       try {
         const response = await axios.post(`${url}/get_last_all_transactions/`, {}, {
           headers: {
-            "Authorization": `Bearer c73dba9fbf5b480991fbfb404142d994`,
+            "Authorization": `Bearer ${accessToken}`,
             "Content-type": "Application/json"
           },
         });
     
-        console.log(response.data.transactions) // Access the data here
+        setTransactionsArr(response.data.transactions_by_date)
       } catch (err) {
         console.log(err);
       }
@@ -238,11 +255,11 @@ const Transaction = () => {
             <ArrowRight src="/Images/arrow-right-2.svg" />
           </FinancialReportContainer>
           <TransactionsContainer>
-            {data.map((eachItem, index) => (
+            {transactionsArr.map((eachItem, index) => (
               <TransactionList
                 key={index}
                 date={eachItem.date}
-                details={eachItem.details}
+                details={eachItem.transactions}
               />
             ))}
           </TransactionsContainer>

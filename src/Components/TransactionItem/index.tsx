@@ -1,14 +1,13 @@
-import { NavigationEvents } from '../../Constants/EventHandlers';
+import { CategoriesMap, NavigationEvents } from '../../Constants/EventHandlers';
 import { ListItem, ListItemContentsContainer, PriceContainer, CategoryHeading, PriceHeading, DescriptionContainer, DescriptionHeading, TimeElement } from '../Transaction/styledComponents';
 import { useNavigate } from 'react-router-dom';
 
 interface DetailsInterface{
-    id: string;
-    name: string
-    money: string
-    description: string
-    time: string
-    imageUrl: string
+    category: string;
+    amount: string;
+    time: string;
+    transaction_id: string;
+    description: string;
   }
 
 interface DetailsInterfaceProps{
@@ -19,14 +18,15 @@ const TransactionItem: React.FC<DetailsInterfaceProps> = ({ item }) => {
   const navigate = useNavigate();
 
   const {navigateToTransactionDetails} = NavigationEvents()
+  const imageUrl = CategoriesMap[item.category]
 
   return (
-    <ListItem onClick = {()=> navigateToTransactionDetails(item.id)}>
-      <img src={item.imageUrl} alt={item.name} />
+    <ListItem onClick = {()=> navigateToTransactionDetails(item.transaction_id)}>
+      <img src={imageUrl} alt={item.category} />
       <ListItemContentsContainer>
         <PriceContainer>
-          <CategoryHeading>{item.name}</CategoryHeading>
-          <PriceHeading>-${item.money}</PriceHeading>
+          <CategoryHeading>{item.category}</CategoryHeading>
+          <PriceHeading>-${item.amount}</PriceHeading>
         </PriceContainer>
         <DescriptionContainer>
           <DescriptionHeading>{item.description}</DescriptionHeading>

@@ -8,12 +8,11 @@ interface TransactionListProps{
 
 
   interface DetailsInterface{
-    id: string,
-    name: string
-    money: string
-    description: string
-    time: string
-    imageUrl: string
+    category: string;
+    amount: string;
+    time: string;
+    transaction_id: string;
+    description: string;
   }
 
 const TransactionList: React.FC<TransactionListProps> = ({date, details})=>{
