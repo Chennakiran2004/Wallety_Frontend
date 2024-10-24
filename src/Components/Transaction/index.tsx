@@ -213,7 +213,7 @@ const Transaction = () => {
          "Highest": selectedSortOptions.includes("Highest"),
          "Lowest": selectedSortOptions.includes("Lowest"),
          "Oldest": selectedCategoryOptions.includes("Oldest"),
-         "Categories": ""
+         "Categories": selectedCategoryOptions[0]
       }
 
       try {
