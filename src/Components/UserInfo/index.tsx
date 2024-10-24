@@ -85,7 +85,7 @@ const UserInfo = () => {
         });
 
         setUserData(response.data);
-        setUserName(response.data.username ?? "");
+        setUserName(response.data.full_name ?? "");
         setEmail(response.data.email ?? "");
       };
 

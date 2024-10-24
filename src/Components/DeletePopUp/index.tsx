@@ -60,9 +60,6 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({
 
         closePopUp();
         openSuccessPopUp();
-        setTimeout(() => {
-          navigateToHome();
-        }, 3000);
       } catch (err) {
         console.log(err);
       }

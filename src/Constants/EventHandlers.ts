@@ -71,6 +71,10 @@ export const NavigationEvents = () => {
     navigate("/expense");
   };
 
+  const navigateToMonthlyBudget = ()=>{
+    navigate("/monthReview");
+  }
+
   return {
     navigateSignIn,
     navigateLogin,
@@ -85,7 +89,7 @@ export const NavigationEvents = () => {
     navigateToSmartSpendingSuggestions,
     navigateToLogin,
     navigateToMonthReview,
-    navigateToExpense,
+    navigateToExpense, navigateToMonthlyBudget
   };
 };
 
