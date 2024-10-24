@@ -257,6 +257,11 @@ const Transaction = () => {
     setIsPopUpOpen(true);
   };
 
+  const handleMonthClick = (month: string) => {
+    setSelectedMonth(month);
+    setMonthDropdownOpen(false); // Close dropdown after selection
+  };
+
   const applyFilters = () => {
     const count = selectedSortOptions.length;
     const countB = selectedCategoryOptions.length > 0 ? 1 : 0;
