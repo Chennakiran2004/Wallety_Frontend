@@ -83,6 +83,7 @@ export const SmartSpendingType = styled.p`
   font-size: 18px;
   line-height: 23px; /* 143.75% */
   letter-spacing: -0.165px;
+  text-align: left;
 `;
 
 export const Suggestion = styled.span`
