@@ -24,6 +24,8 @@ import {
   LocationDropDownItem,
   LocationDropDownItemImage,
   LocationDropDownItemText,
+  RupeesAndInputContainer,
+  RupeesSymbol,
 } from "./styledComponents";
 
 import {
@@ -63,16 +65,52 @@ const dropdownVariants = {
 };
 
 const locations = [
+  "Alwal",
+  "Amberpet",
+  "Ameerpet",
+  "Attapur",
+  "Bachupally",
   "Banjara Hills",
-  "Jubilee Hills",
-  "Madhapur",
-  "Gachibowli",
-  "Kondapur",
   "Begumpet",
-  "Secunderabad",
-  "Hitech City",
   "Charminar",
+  "Dilsukhnagar",
+  "Ecil",
+  "Gachibowli",
+  "Hafiz Baba Nagar",
+  "Hayath Nagar",
+  "Himayatnagar",
+  "Jeedimetla",
+  "Jntu",
+  "Karkhana",
+  "Kompally",
+  "Kondapur",
+  "Kukatpally",
+  "Lb Nagar",
+  "Madhapur",
+  "Malakpet",
+  "Manikonda",
+  "Masab Tank",
+  "Medchal Road",
+  "Miyapur",
+  "Mokila",
+  "Moosapet",
+  "Nagole",
+  "Narayanguda",
+  "Nizampet",
+  "Patancheru",
+  "Peerzadiguda",
+  "Q City",
+  "Sainikpuri",
+  "Sangareddy",
+  "Saroor Nagar",
+  "Serilingampally",
   "Shamshabad",
+  "Sivarampalli",
+  "Suraram",
+  "Tarnaka",
+  "Toli Chowki",
+  "Uppal",
+  "Vanasthalipuram",
 ];
 
 const AddNewAccount = () => {
@@ -83,8 +121,14 @@ const AddNewAccount = () => {
   const [spender, setSpender] = useState("Select your spending pattern");
   const [location, setLocation] = useState("Location in HYD");
   const { accessToken } = ChangingTokens();
-
   const [salary, setSalary] = useState("");
+
+  // State to track validation errors
+  const [salaryError, setSalaryError] = useState("");
+  const [spenderError, setSpenderError] = useState("");
+  const [locationError, setLocationError] = useState("");
+
+  const { navigateToSmartSpendingSuggestions } = NavigationEvents();
 
   const openGenderDropDown = () => {
     setSpenderContents(!spenderContents);
@@ -96,9 +140,37 @@ const AddNewAccount = () => {
     setSpenderContents(false);
   };
 
-  const { navigateToSmartSpendingSuggestions } = NavigationEvents();
+  const validateFields = () => {
+    let valid = true;
+
+    if (!salary) {
+      setSalaryError("*Salary is required");
+      valid = false;
+    } else {
+      setSalaryError("");
+    }
+
+    if (spender === "Select your spending pattern") {
+      setSpenderError("*Please select your spending pattern");
+      valid = false;
+    } else {
+      setSpenderError("");
+    }
+
+    if (location === "Location in HYD") {
+      setLocationError("*Please select a location");
+      valid = false;
+    } else {
+      setLocationError("");
+    }
+
+    return valid;
+  };
 
   const confirmNewAccount = () => {
+    // Validate fields before proceeding
+    if (!validateFields()) return;
+
     const fetching = async () => {
       try {
         const spenderMap: { [key: string]: string } = {
@@ -141,10 +213,14 @@ const AddNewAccount = () => {
         <AccountDetailsSubContainer>
           <EnterYourSalaryContainer>
             <EnterYourSalaryHeading>Enter Your Salary</EnterYourSalaryHeading>
-            <EnterYourSalaryInput
-              type="number"
-              onChange={(e) => setSalary(e.target.value)}
-            />
+            <RupeesAndInputContainer>
+              <RupeesSymbol>₹</RupeesSymbol>
+              <EnterYourSalaryInput
+                type="number"
+                onChange={(e) => setSalary(e.target.value)}
+              />
+            </RupeesAndInputContainer>
+            {salaryError && <p style={{ color: "red" }}>{salaryError}</p>}
           </EnterYourSalaryContainer>
 
           <GenderContainer>
@@ -152,6 +228,9 @@ const AddNewAccount = () => {
               <ParaElement>{spender}</ParaElement>
               <GenderIconContainer size={24} isactive={spenderContents} />
             </GenderHeadingContainer>
+            {spenderError && (
+              <p style={{ color: "red", textAlign: "left" }}>{spenderError}</p>
+            )}
             <AnimatePresence mode="wait">
               {spenderContents && (
                 <motion.div
@@ -161,13 +240,28 @@ const AddNewAccount = () => {
                   exit="exit"
                 >
                   <GenderContents>
-                    <GenderButton onClick={() => setSpender("High Spender")}>
+                    <GenderButton
+                      onClick={() => {
+                        setSpender("High Spender");
+                        setSpenderContents(false);
+                      }}
+                    >
                       High Spender
                     </GenderButton>
-                    <GenderButton onClick={() => setSpender("Average Spender")}>
+                    <GenderButton
+                      onClick={() => {
+                        setSpender("Average Spender");
+                        setSpenderContents(false);
+                      }}
+                    >
                       Average Spender
                     </GenderButton>
-                    <GenderButton onClick={() => setSpender("Less Spender")}>
+                    <GenderButton
+                      onClick={() => {
+                        setSpender("Less Spender");
+                        setSpenderContents(false);
+                      }}
+                    >
                       Less Spender
                     </GenderButton>
                   </GenderContents>
@@ -183,6 +277,11 @@ const AddNewAccount = () => {
                 <ParaElement>{location}</ParaElement>
                 <GenderIconContainer size={24} isactive={locationContents} />
               </GenderHeadingContainer>
+              {locationError && (
+                <p style={{ color: "red", textAlign: "left" }}>
+                  {locationError}
+                </p>
+              )}
               <AnimatePresence mode="wait">
                 {locationContents && (
                   <motion.div
@@ -195,7 +294,10 @@ const AddNewAccount = () => {
                       {locations.map((loc, index) => (
                         <LocationDropDownItem
                           key={index}
-                          onClick={() => setLocation(loc)}
+                          onClick={() => {
+                            setLocation(loc);
+                            setLocationContents(false);
+                          }}
                         >
                           <LocationDropDownItemText>
                             {loc}
@@ -209,6 +311,7 @@ const AddNewAccount = () => {
               </AnimatePresence>
             </GenderContainer>
           </LocationContainer>
+
           <ContinueButton onClick={confirmNewAccount}>Continue</ContinueButton>
         </AccountDetailsSubContainer>
       </AccountDetailsContainer>

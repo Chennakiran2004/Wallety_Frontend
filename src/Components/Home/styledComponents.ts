@@ -7,7 +7,15 @@ export const HomeMainContainer = styled.div`
   align-items: center;
   width: 100%;
   margin: auto;
-  height: 100dvh;
+  height: 91dvh;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+    height: 72vh;
+  }
 `;
 
 export const HomeContentContainer = styled.div`
@@ -125,11 +133,8 @@ export const RecentTransactionsContainer = styled.div`
   padding: 8px;
   align-items: center;
   gap: 10px;
-  flex: 1 0 0;
-  align-self: stretch;
   width: 90%;
   justify-content: space-between;
-  margin: auto;
 `;
 
 export const RecentTransactionText = styled.p`
@@ -169,6 +174,7 @@ export const RecentItemsContainer = styled.div`
   padding-top: 16px;
   -ms-overflow-style: none;
   scrollbar-width: none;
+  margin-top: 0px;
 `;
 
 export const NoTransactionsMainContainer = styled.div``;

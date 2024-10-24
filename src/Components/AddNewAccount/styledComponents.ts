@@ -14,6 +14,14 @@ export const AddNewAccountMainContainer = styled.div`
   width: 100%;
   background-size: cover;
   height: 90vh;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+    height: 70vh;
+  }
 `;
 
 // export const AddNewAccountSubContainer = styled.div`
@@ -35,14 +43,18 @@ export const AddNewAccountIconContainer = styled(IconContianer)`
 `;
 
 export const AccountDetailsContainer = styled.div`
-  border-radius: 32px 32px 0px 0px;
+  border-radius: 32px 32px 16px 16px;
   background: #fff;
   width: 100%;
   height: auto;
   position: absolute;
   bottom: 0;
   left: 0;
-  padding-bottom: 16px; 
+  padding-bottom: 16px;
+
+  @media screen and (min-width: 768px) {
+    position: relative;
+  }
 `;
 
 export const AccountDetailsSubContainer = styled.div`
@@ -78,7 +90,7 @@ export const EnterYourSalaryInput = styled.input`
   width: 100%;
   border: none;
   outline: none;
-`; 
+`;
 
 export const LocationContainer = styled.div`
   display: flex;
@@ -88,6 +100,17 @@ export const LocationContainer = styled.div`
   margin: auto;
   margin-top: 12px;
   gap: 12px;
+`;
+
+export const RupeesAndInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const RupeesSymbol = styled.p`
+  ${interSemiBold}
+  color: #272626;
+  font-size: 40px;
 `;
 
 export const CityLocation = styled.div`

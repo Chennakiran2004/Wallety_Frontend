@@ -24,6 +24,7 @@ export const RecentTransactionItemText = styled.div`
   flex-direction: column;
   align-content: space-between;
   gap: 16px;
+  align-items: flex-start;
 `;
 
 export const RecentTransactionItemType = styled.p`

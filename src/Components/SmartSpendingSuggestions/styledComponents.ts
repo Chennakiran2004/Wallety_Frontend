@@ -8,6 +8,14 @@ import {
 export const SmartSpendingSuggestionsMainContainer = styled.div`
   display: flex;
   width: 100%;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+    height: 70vh;
+  }
 `;
 
 export const SmartSpendingSuggestionsSubContainer = styled.div`
@@ -39,6 +47,11 @@ export const SmartSpendingCardsContainer = styled.div`
   margin-top: 24px;
   overflow: scroll;
   max-height: 60vh;
+  scrollbar-width: none;
+
+  @media screen and (min-width: 768px) {
+    height: 46vh;
+  }
 `;
 
 export const SmartSpendingItemCard = styled.div`
@@ -53,7 +66,7 @@ export const SmartSpendingItemCard = styled.div`
 export const SmartSpendingItemContentContainer = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12%;
   padding: 16px;
 `;
 
@@ -61,12 +74,13 @@ export const SmartSpendingContentTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  align-items: flex-start;
 `;
 
 export const SmartSpendingType = styled.p`
   ${interSemiBold}
   color: #010101;
-  font-size: 16px;
+  font-size: 18px;
   line-height: 23px; /* 143.75% */
   letter-spacing: -0.165px;
 `;
@@ -74,12 +88,22 @@ export const SmartSpendingType = styled.p`
 export const Suggestion = styled.span`
   ${interRegular}
   color: #000;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 23px;
   letter-spacing: -0.165px;
 `;
 
-export const SmartSpendingIcon = styled.img``;
+export const SmartSpendingIcon = styled.img`
+  padding-top: 10px;
+  height: 32px;
+  width: 32px;
+`;
+
+export const ViewMoreButtonImage = styled.img<{ isExpanded: boolean }>`
+  transition: transform 0.3s ease;
+  transform: ${({ isExpanded }) =>
+    isExpanded ? "rotate(180deg)" : "rotate(0deg)"};
+`;
 
 export const ButtonContainer = styled.div`
   width: 100%;
@@ -91,18 +115,17 @@ export const ButtonContainer = styled.div`
 export const ViewMoreButton = styled.button`
   ${interMedium}
   color: var(--Violet-Violet-100, #7f3dff);
-  text-align: center;
-  font-size: 10px;
+  text-align: right;
+  font-size: 12px;
   line-height: 10px; /* 100% */
-  text-decoration-line: underline;
   border: none;
   background: none;
   cursor: none;
 `;
 
 export const LetsGoContainer = styled.div`
-  position: absolute;
+  position: relative;
   bottom: 0;
-  width: 90%;
+  width: 100%;
   padding-bottom: 16px;
 `;

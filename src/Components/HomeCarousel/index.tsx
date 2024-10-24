@@ -6,6 +6,7 @@
 // import GainTotalControlOfYourMoney from "../GainTotalControlOfYourMoney";
 // import KnowWhereYourMoneyGoes from "../KnowWhereYourMoneyGoes";
 // import PlanningAhead from "../PlanningAhead";
+// import withAuthRedirect from "../../Constants/WithAuthRedirect";
 
 // // Custom Arrow Components
 // const NextArrow = (props: any) => {
@@ -13,7 +14,11 @@
 //   return (
 //     visible && (
 //       <div className="slick-arrow slick-next" onClick={onClick}>
-//         <img src="/Images/carouselfrontarrow.svg" alt="Next" />
+//         <img
+//           src="/Images/carouselfrontarrow.svg"
+//           alt="Next"
+//           style={{ position: "absolute", top: "1500%", right: "70%" }}
+//         />
 //       </div>
 //     )
 //   );
@@ -24,7 +29,11 @@
 //   return (
 //     visible && (
 //       <div className="slick-arrow slick-prev" onClick={onClick}>
-//         <img src="/Images/carouselbackarrow.svg" alt="Previous" />
+//         <img
+//           src="/Images/carouselbackarrow.svg"
+//           alt="Previous"
+//           style={{ position: "absolute", top: "1500%" }}
+//         />
 //       </div>
 //     )
 //   );
@@ -58,7 +67,7 @@
 //       },
 //     ],
 //     appendDots: (dots: React.ReactElement) => (
-//       <div style={{ position: "absolute", top: "74%" }}>{dots}</div>
+//       <div style={{ position: "absolute", bottom: "20%" }}>{dots}</div>
 //     ),
 //     dotsClass: "slick-dots custom-dots",
 //   };
@@ -80,9 +89,9 @@
 //   );
 // }
 
-// export default HomeCarousel;
+// export default withAuthRedirect(HomeCarousel);
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -125,6 +134,17 @@ const PrevArrow = (props: any) => {
 
 function HomeCarousel() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isWideScreen, setIsWideScreen] = useState(window.innerWidth >= 768);
+
+  // Update screen size state on resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsWideScreen(window.innerWidth >= 768);
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const settings = {
     dots: true,
@@ -151,7 +171,11 @@ function HomeCarousel() {
       },
     ],
     appendDots: (dots: React.ReactElement) => (
-      <div style={{ position: "absolute", bottom: "20%" }}>{dots}</div>
+      <div
+        style={{ position: "absolute", bottom: isWideScreen ? "25%" : "20%" }}
+      >
+        {dots}
+      </div>
     ),
     dotsClass: "slick-dots custom-dots",
   };

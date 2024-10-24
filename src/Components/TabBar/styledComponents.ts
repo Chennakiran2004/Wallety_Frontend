@@ -8,8 +8,13 @@ export const TabBarMainContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  position: absolute;
-  bottom: 0;
+  position: relative;
+  height: 9dvh;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    bottom: 16%;
+  }
 `;
 
 export const TabBarSubContainer = styled.div`
@@ -19,6 +24,10 @@ export const TabBarSubContainer = styled.div`
   background: #fff;
   align-items: baseline;
   padding-bottom: 16px;
+
+  @media screen and (min-width: 768px) {
+    border-radius: 0px 0px 16px 16px;
+  }
 `;
 
 export const TabBarItemContainer = styled.div`
@@ -39,12 +48,31 @@ export const TabBarItemText = styled.p`
 `;
 
 export const AddButtonContainer = styled.div`
-  position: relative;
-  bottom: 0px;
+  position: absolute;
+  bottom: 8%;
+
+  @media screen and (min-width: 768px) {
+    position: relative;
+    bottom: 10%;
+  }
 `;
 
 export const CustomLink = styled(Link)`
   text-decoration: none;
   color: inherit;
   cursor: none;
+`;
+
+export const TabBarContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  bottom: -5%;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    bottom: 20%;
+  }
 `;

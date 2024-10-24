@@ -12,7 +12,7 @@ const NoTransactionsComponent = () => {
     <NoTransactionsContainer>
       <NoTransactionsImage src="/Images/notransactionsicon.svg" />
       <NoTransactionsHeading>No Transactions Found</NoTransactionsHeading>
-      <GlobalButton1 onClick={navigateToExpense}>Add Transaction</GlobalButton1>
+      {/* <GlobalButton1 onClick={navigateToExpense}>Add Transaction</GlobalButton1> */}
     </NoTransactionsContainer>
   );
 };

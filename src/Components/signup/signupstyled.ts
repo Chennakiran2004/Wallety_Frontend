@@ -1,4 +1,4 @@
-import styled, {keyframes} from "styled-components";
+import styled, { keyframes } from "styled-components";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { IoEyeOutline } from "react-icons/io5";
 import { IoIosArrowDown } from "react-icons/io";
@@ -20,8 +20,15 @@ export const slideIn = keyframes`
 
 export const SignUpContainer = styled.div`
   padding-bottom: 40px;
-  
+
   animation: ${slideIn} 0.35s;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+  }
 `;
 
 export const SignUpSubContainer = styled(motion.div)`
@@ -76,9 +83,13 @@ export const InputFieldContainerWrapper = styled.div`
 `;
 
 export const EyeIconContainer = styled(IoEyeOutline)`
-  position: fixed;
+  position: absolute;
   right: 30px;
   color: #91919f;
+
+  @media screen and (min-width: 768px) {
+    right: 8%;
+  }
 `;
 interface GenderIconContainerProps {
   isactive: boolean;
@@ -88,12 +99,16 @@ export const GenderIconContainer = styled(
   IoIosArrowDown
 )<GenderIconContainerProps>`
   opacity: 0.6;
-  position: fixed;
-  right: 30px;
+  position: absolute; /* Change from fixed to absolute */
+  right: 16px; /* Adjust position to right side */
   color: black;
   transition: transform 0.3s ease;
   transform: ${({ isactive }) =>
     isactive ? "rotate(180deg)" : "rotate(0deg)"};
+
+  @media screen and (min-width: 768px) {
+    right: 16px; /* Adjust as needed for larger screens */
+  }
 `;
 
 export const GenderContainer = styled.div`
@@ -107,6 +122,7 @@ export const GenderContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   gap: 28px;
+  position: relative;
 `;
 
 export const ParaElement = styled.p`
@@ -117,6 +133,7 @@ export const ParaElement = styled.p`
 export const GenderHeadingContainer = styled.div`
   display: flex;
   align-items: center;
+
   padding-left: 8px;
 `;
 
@@ -146,9 +163,13 @@ export const SignUpButton = styled(GlobalButton1)`
 `;
 
 export const HidePassword = styled(FaRegEyeSlash)`
-  position: fixed;
+  position: absolute;
   right: 30px;
   color: #91919f;
+
+  @media screen and (min-width: 768px) {
+    right: 8%;
+  }
 `;
 
 export const AlreadyHaveAnAccout = styled.p`
