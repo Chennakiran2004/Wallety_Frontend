@@ -96,8 +96,6 @@ const Profile = () => {
           headers: {
             Authorization: `Bearer ${accessToken}`,
           }});
-
-          console.log(response.data)
           setUserData(response.data)
       }
 
@@ -112,7 +110,7 @@ const Profile = () => {
       <ProfileContentContainer>
         <ProfileHeadingContainer>
           <ProfileHeadingIcon>
-            <ProfileHeadingIconSymbol>N</ProfileHeadingIconSymbol>
+            <ProfileHeadingIconSymbol>{userData?.username[0]}</ProfileHeadingIconSymbol>
           </ProfileHeadingIcon>
           <ProfileHeadingTextContainer>
             <UserNameText>Useraname</UserNameText>

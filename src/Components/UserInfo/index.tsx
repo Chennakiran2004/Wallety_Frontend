@@ -30,9 +30,8 @@ interface ProfileInterface {
 const UserInfo = () => {
   const { handleBack } = NavigationEvents();
 
-  const [username, setUserName] = useState("Kiran_Kumar");
-  const Gender = "Male";
-  const [email, setEmail] = useState("kiraanchenna@gmail.com");
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
 
   const { accessToken, refreshToken, deleteAccessToken, deleteRefereshToken } =
     ChangingTokens();
@@ -67,7 +66,6 @@ const UserInfo = () => {
             },
           }
         );
-        console.log(response);
       };
 
       fetching();
@@ -111,8 +109,8 @@ const UserInfo = () => {
           </InputContainer>
 
           <InputContainer>
-            <InputLabel>Gender</InputLabel>
-            <InputElement value={Gender} />
+            <InputLabel>Email</InputLabel>
+            <InputElement value={email} onChange = {(e)=> setEmail(e.target.value)}/>
           </InputContainer>
 
           {/* <InputContainer>
