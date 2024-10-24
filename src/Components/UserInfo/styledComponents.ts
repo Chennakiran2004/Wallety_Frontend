@@ -106,3 +106,8 @@ export const EditProfileMainContianer = styled.div`
     border-radius: 16px;
   }
 `
+
+
+export const ProfileError = styled.p`
+ color: green;
+`

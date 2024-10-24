@@ -233,9 +233,9 @@ const Transaction = () => {
 
   const handleSortSelection = (option: string) => {
     if (option === selectedSortOptions[0]) {
-      return setTempSortOptions([]);
+      return setSelectedSortOptions([]);
     }
-    setTempSortOptions([option]);
+    setSelectedSortOptions([option]);
   };
 
   const handleCategorySelection = (option: string) => {
