@@ -140,5 +140,4 @@ export const CategoriesColors: { [key: string]: string } = {
   Rent: "#1E3A8A",
 };
 
-export const url = `http://139.84.155.74:8000/
-`;
+export const url = `http://139.84.155.74:8000`;
