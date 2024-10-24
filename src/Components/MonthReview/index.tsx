@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ButtonContainer, ViewMoreButton, ViewMoreButtonImage } from "../SmartSpendingSuggestions/styledComponents";
 import {
     MonthReviewContainer,
@@ -22,6 +22,8 @@ import {
     ListItemReview,
     ExpenseButtonContainer,
 } from "./styledcomponent";
+import axios from 'axios';
+import { ChangingTokens, url } from '../../Constants/EventHandlers';
 
 const MonthReview = () => {
     const [expandedCard, setExpandedCard] = useState(null);
@@ -29,6 +31,32 @@ const MonthReview = () => {
     const toggleCard = (cardIndex: any) => {
         setExpandedCard(expandedCard === cardIndex ? null : cardIndex);
     };
+
+    const {accessToken} = ChangingTokens()
+
+    useEffect(()=>{
+        const fetching = async()=>{
+            try{
+                const response = await axios.post(
+                    `${url}/get_user_expenses_comparison_at_eom/`, {
+                        month: "10"
+                    }, {
+                        headers: {
+                          Authorization: `Bearer ${accessToken}`,
+                          "Content-type": "Application/json",
+                        },
+                      }
+                  )
+                  console.log(response)
+            }catch(e){
+                console.log(e)
+            }
+
+        }
+        ;
+
+        fetching()
+    }, [])
 
     return (
         <MonthReviewContainer>
