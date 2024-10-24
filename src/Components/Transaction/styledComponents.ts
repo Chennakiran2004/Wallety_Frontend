@@ -285,6 +285,13 @@ export const CategoryPopupContainer = styled(motion.div)`
   z-index: 1000;
   padding-bottom: 6%;
   padding-top: 8%;
+
+  @media screen and (min-width: 768px) {
+    top: 58%;
+    width: 760px;
+    margin: auto;
+    position: relative;
+  }
 `;
 
 export const CategoryItemsContainer = styled.div`

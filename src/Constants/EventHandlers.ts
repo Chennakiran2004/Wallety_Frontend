@@ -122,7 +122,7 @@ export const ChangingTokens = () => {
 export const CategoriesMap: { [key: string]: string } = {
   Food: "/Images/food.svg",
   Travel: "/Images/transportation.svg",
-  Entertainment: "/Images/subscription.svg",
+  Entertainment: "/Images/Frame 6.svg",
   Shopping: "/Images/shoppingicon.svg",
   Rent: "/Images/renticon1.svg",
   Savings: "/Images/savingsicon.svg",
@@ -140,5 +140,4 @@ export const CategoriesColors: { [key: string]: string } = {
   Rent: "#1E3A8A",
 };
 
-export const url = `http://139.84.155.74:8000/
-`;
+export const url = `http://139.84.155.74:8000`;

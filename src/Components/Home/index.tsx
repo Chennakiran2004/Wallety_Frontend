@@ -202,13 +202,17 @@ const Home: React.FC = () => {
     incomePointValues = income[1];
   }
 
-  const expense = userExpense?.Income.split(".");
+  const expense = userExpense?.Expense.split(".");
+  console.log(expense);
   let expenseDecimalValues = "";
   let expensePointValues = "";
   if (expense) {
     expenseDecimalValues = expense[0];
     expensePointValues = expense[1];
   }
+
+  console.log(userExpense?.Account_Balance);
+  console.log(userExpense?.Expense);
 
   return (
     <HomeMainContainer>
