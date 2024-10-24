@@ -17,6 +17,14 @@ export const ExpenseContainer = styled.div`
   background-color: #fd3c4a;
   padding-top: 8%;
   background-size: cover;
+  position: relative;
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    height: 72vh;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+  }
 `;
 
 export const ExpenseSubContainer = styled.div`

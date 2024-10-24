@@ -56,6 +56,8 @@ const FinancialReport = () => {
   const [isMonthDropdownOpen, setMonthDropdownOpen] = useState(false); // Dropdown state
   const [selectedMonth, setSelectedMonth] = useState("Month"); // Selected month state
   const [expensesData, setExpensesData] = useState([]);
+  const [incomeData, setIncomeData] = useState<
+  { type: string; amount: string; icon: string; progress: number; color: string }[]>([]);
 
   const [total, setTotal] = useState(0)
 
@@ -96,22 +98,22 @@ const FinancialReport = () => {
   //   },
   // ];
 
-  const incomeData = [
-    {
-      type: "Salary",
-      amount: "+₹5000",
-      icon: "/Images/salarycolor.svg",
-      progress: 80,
-      color: "#4CAF50",
-    },
-    {
-      type: "Freelance",
-      amount: "+₹1500",
-      icon: "/Images/salarycolor.svg",
-      progress: 60,
-      color: "#4CAF50",
-    },
-  ];
+  // const incomeData = [
+  //   {
+  //     type: "Salary",
+  //     amount: "+₹5000",
+  //     icon: "/Images/salarycolor.svg",
+  //     progress: 80,
+  //     color: "#4CAF50",
+  //   },
+  //   {
+  //     type: "Freelance",
+  //     amount: "+₹1500",
+  //     icon: "/Images/salarycolor.svg",
+  //     progress: 60,
+  //     color: "#4CAF50",
+  //   },
+  // ];
 
   const currentData = activeTab === "expense" ? expensesData : incomeData;
   const amounts = currentData.map((item) =>
@@ -150,6 +152,32 @@ const FinancialReport = () => {
         
       }
 
+      const fetchIncome = async()=>{
+        try{
+          const response = await axios.get(`${url}/get_user_income_pie_chart/`, {headers: {
+            "Authorization": `Bearer ${accessToken}`,
+            "Content-type": "Application/json"
+          }})
+          
+          const incomeDataObj = [
+            {
+              type: "Salary",
+              amount: `+₹${response.data.user_income}`,
+              icon: "/Images/salarycolor.svg",
+              progress: 100,
+              color: "#4CAF50",
+            }
+          ];
+          console.log(incomeDataObj)
+          setIncomeData(incomeDataObj)
+          
+      }catch(err){
+        console.log(err)
+      }
+      }
+
+
+      fetchIncome();
       fetching();
   }, [selectedMonth])
 

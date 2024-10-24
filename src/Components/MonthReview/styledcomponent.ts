@@ -3,8 +3,14 @@ import { interMedium, interRegular, interSemiBold } from "../../Constants/fontSt
 import { ButtonContainer, ViewMoreButton } from "../SmartSpendingSuggestions/styledComponents";
 
 export const MonthReviewContainer = styled.div`
-    width: 100vw;
-    height: 100vh;
+    @media screen and (min-width: 768px) {
+        width: 768px;
+        margin: auto;
+        height: auto;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+        border-radius: 16px;
+    }
+    
 `
 
 export const MonthReviewSubContainer = styled.div`

@@ -42,7 +42,6 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/setup" element={<SetUp />} />
-        <Route path="/userInfo" element={<UserInfo />} />
         
         <Route
             path="/SmartSpendingSuggestions"
@@ -55,7 +54,7 @@ function App() {
           <Route path="/transaction" element={<Transaction />} />
           <Route path="/budget" element={<Budget />} />
           <Route path="/youAreAllSet" element={<YouAreAllSet />} />
-          {/* <Route path="/userInfo" element={<UserInfo />} /> */}
+          <Route path="/userInfo" element={<UserInfo />} />
           <Route path="/expense" element={<ExpenseComponent />} />
           <Route path="/transaction/:id" element={<TransactionDetails />} />
           <Route path="/financialReport" element={<FinancialReport />} />

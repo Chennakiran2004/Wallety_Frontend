@@ -140,8 +140,8 @@ const ExpenseComponent = () => {
         console.log(response);
       } catch (err: any) {
         if (err.response) {
-          if (err.response.data.error_message) {
-              setError("Insufficient Amount")
+          if (err.response.data.message) {
+              setError(err.response.data.message)
           }
         }
       }
