@@ -6,6 +6,14 @@ export const FinancialReportMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+    height: 72vh;
+  }
 `;
 
 export const FinancialReportContentContainer = styled.div`
@@ -98,4 +106,10 @@ export const ExpensesBarsContainer = styled.div`
   align-items: center;
   gap: 16px;
   margin-top: 8%;
+  height: auto;
+  scrollbar-width: none;
+  overflow: scroll;
+  @media screen and (min-width: 768px) {
+    height: 23dvh;
+  }
 `;

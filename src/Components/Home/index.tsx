@@ -23,6 +23,10 @@ import {
   IconAndTextContainer,
 } from "./styledComponents";
 import {
+  AddButtonContainer,
+  TabBarItemImage,
+} from "../TabBar/styledComponents";
+import {
   ChangingTokens,
   NavigationEvents,
   url,
@@ -181,15 +185,41 @@ const Home: React.FC = () => {
     fetching();
   }, [navigate]);
 
+  const account_balance = userExpense?.Account_Balance.split(".");
+  let pointValues = "";
+  let decimalValues = "";
+  if (account_balance) {
+    decimalValues = account_balance[0];
+    pointValues = account_balance[1];
+    console.log(pointValues);
+  }
+
+  const income = userExpense?.Income.split(".");
+  let incomeDecimalValues = "";
+  let incomePointValues = "";
+  if (income) {
+    incomeDecimalValues = income[0];
+    incomePointValues = income[1];
+  }
+
+  const expense = userExpense?.Income.split(".");
+  let expenseDecimalValues = "";
+  let expensePointValues = "";
+  if (expense) {
+    expenseDecimalValues = expense[0];
+    expensePointValues = expense[1];
+  }
+
   return (
     <HomeMainContainer>
       <HomeContentContainer>
         <HomeContentSubContainer>
-          <UserName>Hello 👋 {userExpense?.user_name},</UserName>
+          <UserName>Hello {userExpense?.user_name} 👋,</UserName>
           <AccountBalanceContainer>
             <AccountBalanceText>Account Balance</AccountBalanceText>
             <AccountBalanceMoney>
-              ₹{userExpense?.Account_Balance}
+              ₹<span>{decimalValues}</span>
+              <span style={{ fontSize: "12px" }}>.{pointValues}</span>
             </AccountBalanceMoney>
           </AccountBalanceContainer>
           <IncomeAndExpenseContainer>
@@ -199,18 +229,20 @@ const Home: React.FC = () => {
                 <IncomeAndExpenseHeading>Income</IncomeAndExpenseHeading>
               </IconAndTextContainer>
               <IncomeAndExpenseMoney>
-                ₹{userExpense?.Income}100
+                ₹<span>{incomeDecimalValues}</span>
+                <span style={{ fontSize: "12px" }}>.{incomePointValues}</span>
               </IncomeAndExpenseMoney>
             </IncomeContainer>
 
             <ExpenseContainer>
               <IconAndTextContainer>
                 <IncomeAndExpenseImage src="/Images/expenses.svg" />
-                <IncomeAndExpenseHeading>Income</IncomeAndExpenseHeading>
+                <IncomeAndExpenseHeading>Expense</IncomeAndExpenseHeading>
               </IconAndTextContainer>
 
               <IncomeAndExpenseMoney>
-                ₹{userExpense?.Income}100
+                ₹<span>{expenseDecimalValues}</span>
+                <span style={{ fontSize: "12px" }}>.{expensePointValues}</span>
               </IncomeAndExpenseMoney>
             </ExpenseContainer>
           </IncomeAndExpenseContainer>
@@ -242,6 +274,9 @@ const Home: React.FC = () => {
           )}
         </RecentItemsContainer>
       </>
+      <AddButtonContainer onClick={() => navigate("/expense")}>
+        <TabBarItemImage src="/Images/Add.svg" />
+      </AddButtonContainer>
     </HomeMainContainer>
   );
 };

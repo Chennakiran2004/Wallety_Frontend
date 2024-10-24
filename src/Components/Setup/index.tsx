@@ -1,14 +1,14 @@
-import { AnimatePresence } from "framer-motion";
 import {
   AccountSetUpContainer,
   AccountSubContainer,
   AccountSetUpHeading,
-  AccountSideHeading,
   AccountSetUpContents,
   LetsGo,
+  TextContainer,
+  TextImage,
+  Text,
 } from "./setupstyled";
 import { NavigationEvents } from "../../Constants/EventHandlers";
-import withAuthRedirect from "../../Constants/WithAuthRedirect";
 
 const SetUp = () => {
   const { navigateAddNewAccount } = NavigationEvents();
@@ -21,9 +21,13 @@ const SetUp = () => {
             Let’s setup your <br />
             account!
           </AccountSetUpHeading>
-          <AccountSideHeading>
-            Account can be your bank, credit card or your wallet.
-          </AccountSideHeading>
+          <TextContainer>
+            <TextImage src="/Images/infoicon.svg" />
+            <Text>
+              We want to assure you that this application does not require you
+              to enter any bank details.
+            </Text>
+          </TextContainer>
         </AccountSetUpContents>
         <LetsGo onClick={navigateAddNewAccount}>Let's go</LetsGo>
       </AccountSubContainer>

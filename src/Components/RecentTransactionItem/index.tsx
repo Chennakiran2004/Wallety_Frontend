@@ -13,19 +13,28 @@ import { CategoriesMap, NavigationEvents } from "../../Constants/EventHandlers";
 
 // Define the props interface
 interface TransactionItemProps {
-  id: string
+  id: string;
   type: string;
   description: string;
   price: string;
   time: string;
 }
 
-const RecenetTransactionItem: React.FC<TransactionItemProps> = ({type,description,price,time,id}) => {
-  const imageUrl = CategoriesMap[type]
-  
-  const {navigateToTransactionDetails} = NavigationEvents()
+const RecenetTransactionItem: React.FC<TransactionItemProps> = ({
+  type,
+  description,
+  price,
+  time,
+  id,
+}) => {
+  const imageUrl = CategoriesMap[type];
+
+  const { navigateToTransactionDetails } = NavigationEvents();
+
   return (
-    <RecentTransactionItemContainer onClick = {()=> navigateToTransactionDetails(id)}>
+    <RecentTransactionItemContainer
+      onClick={() => navigateToTransactionDetails(id)}
+    >
       <RecentTransactionItemImage src={imageUrl} />
       <RecentTransactionItemDescriptionContainer>
         <RecentTransactionItemText>

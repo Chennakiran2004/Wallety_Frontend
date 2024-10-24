@@ -1,10 +1,16 @@
 .App {
   text-align: center;
+  height: 100dvh;
+  overflow: scroll;
 }
 
 @media screen and (min-width: 768px) {
   .App {
-    width: 768px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 }
 

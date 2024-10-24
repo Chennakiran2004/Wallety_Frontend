@@ -7,6 +7,7 @@ import {
   TabBarItemText,
   TabBarMainContainer,
   TabBarSubContainer,
+  TabBarContainer,
 } from "./styledComponents";
 import { useLocation } from "react-router-dom";
 
@@ -78,10 +79,8 @@ const TabBar = () => {
             </TabBarItemText>
           </TabBarItemContainer>
         </CustomLink>
-        <AddButtonContainer onClick = {()=> navigate("/expense")}>
-          <TabBarItemImage src="/Images/Add.svg" />
-        </AddButtonContainer>
-        <CustomLink to="/budget" onClick={() => handleTabClick("/budget")}>
+
+        {/* <CustomLink to="/budget" onClick={() => handleTabClick("/budget")}>
           <TabBarItemContainer>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +102,7 @@ const TabBar = () => {
               Budget
             </TabBarItemText>
           </TabBarItemContainer>
-        </CustomLink>
+        </CustomLink> */}
         <CustomLink to="/profile" onClick={() => handleTabClick("/profile")}>
           <TabBarItemContainer>
             <svg

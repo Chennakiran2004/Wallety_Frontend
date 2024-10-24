@@ -124,9 +124,10 @@ export const CategoriesMap: { [key: string]: string } = {
   Travel: "/Images/transportation.svg",
   Entertainment: "/Images/subscription.svg",
   Shopping: "/Images/shoppingicon.svg",
-  Rent: "/Images/renticon.svg",
+  Rent: "/Images/renticon1.svg",
   Savings: "/Images/savingsicon.svg",
   Miscellaneous: "/Images/miscellaneousicon.svg",
+  Health: "/Images/health.svg",
 };
 
 export const CategoriesColors: { [key: string]: string } = {

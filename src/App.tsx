@@ -19,12 +19,11 @@ import ExpenseComponent from "./Components/Expense";
 import TransactionDetails from "./Components/TransactionDetails";
 import UserInfo from "./Components/UserInfo";
 import FinancialReport from "./Components/FinancialReport";
-import { SmartSpendingCardsContainer } from "./Components/SmartSpendingSuggestions/styledComponents";
 import SmartSpendingSuggestions from "./Components/SmartSpendingSuggestions";
 import MonthReview from "./Components/MonthReview";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
-import "./index.css";
+import "./App.css";
 
 function App() {
   const location = useLocation();

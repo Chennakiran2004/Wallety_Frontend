@@ -146,7 +146,7 @@ const Login = () => {
                 <HidePassword onClick={() => setIsPassword(true)} size={24} />
               )}
             </InputFieldContainerWrapper>
-            {error && <p>{error}</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
             <SignUpButton type="submit" onClick={submitForm}>
               Login
             </SignUpButton>

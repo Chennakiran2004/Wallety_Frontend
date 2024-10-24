@@ -14,6 +14,14 @@ export const OuterAllSetContainer = styled.div`
   align-items: center;
   justify-content: center;
   margin: auto;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+    height: 70vh;
+  }
 `;
 
 export const CombinedGifAndtextDiv = styled.div`

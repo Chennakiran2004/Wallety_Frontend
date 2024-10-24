@@ -9,6 +9,15 @@ import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
 
 export const TransactionMainContainer = styled.div`
   width: 100vw;
+  height: 91dvh;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+    height: 72vh;
+  }
 `;
 
 export const TransactionSubContainer = styled.div`
@@ -100,6 +109,7 @@ export const DateHeading = styled.p`
   ${interSemiBold}
   font-size: 20px;
   margin-bottom: 8px;
+  text-align: left;
 `;
 
 export const CategoryHeading = styled.p`
@@ -145,6 +155,13 @@ export const PopupContainer = styled(motion.div)`
   z-index: 1000;
   padding-bottom: 6%;
   padding-top: 8%;
+
+  @media screen and (min-width: 768px) {
+    top: 58%;
+    width: 760px;
+    margin: auto;
+    position: relative;
+  }
 `;
 
 export const PopUpSubContainer = styled.div`

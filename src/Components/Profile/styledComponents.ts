@@ -10,9 +10,17 @@ export const ProfileMainContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: 90vh;
+  height: 91dvh;
   /* background-color: #f6f6f6; */
   align-items: center;
+
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+    height: 72vh;
+  }
 `;
 
 export const ProfileContentContainer = styled.div`
