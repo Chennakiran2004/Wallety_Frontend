@@ -276,7 +276,7 @@ const Transaction = () => {
         Highest: selectedSortOptions.includes("Highest"),
         Lowest: selectedSortOptions.includes("Lowest"),
         Oldest: selectedCategoryOptions.includes("Oldest"),
-        Categories: selectedCategoryOptions[0],
+        Categories: tempSortOptions[0],
       };
 
       try {
@@ -486,7 +486,7 @@ const Transaction = () => {
                     exit="exit"
                   >
                     <FilterPopup
-                      selectedSortOptions={setSelectedSortOptions}
+                      selectedSortOptions={tempSortOptions}
                       selectedCategoryOptions={selectedCategoryOptions}
                       handleSortSelection={handleSortSelection}
                       togglePopUp={togglePopUp}
