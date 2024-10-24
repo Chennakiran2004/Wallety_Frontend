@@ -126,12 +126,12 @@ const Login = () => {
               e.preventDefault();
             }}
           >
-            <InputFieldContainerWrapper>
+            <input>
               <InputField
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
               />
-            </InputFieldContainerWrapper>
+            </input>
             <InputFieldContainerWrapper>
               <InputField
                 placeholder="Password"
