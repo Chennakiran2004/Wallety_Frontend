@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { interMedium, interRegular, interSemiBold } from "../../Constants/fontStyles";
+import { interBlack, interBold, interMedium, interRegular, interSemiBold } from "../../Constants/fontStyles";
 import { ButtonContainer, ViewMoreButton } from "../SmartSpendingSuggestions/styledComponents";
 
 export const MonthReviewContainer = styled.div`
@@ -78,7 +78,7 @@ export const ItemSubContainerMonthReview = styled.div`
 export const OverviewContainer = styled.div`
     display: flex;
     justify-content: flex-start;
-    gap: 12px;
+    gap: 16px;
 `
 
 export const OverviewContents = styled.div`
@@ -97,7 +97,7 @@ export const ContentsAlignment = styled.div`
 `
 
 export const MonthReviewContainerHeading = styled.p`
-    ${interSemiBold}
+    ${interMedium}
     font-size: 20px;
     text-align: left;
 `
@@ -174,4 +174,41 @@ export const ExpenseViewMoreButton = styled(ViewMoreButton)`
 
 export const ExpenseButtonContainer = styled(ButtonContainer)`
     padding-bottom: 0px;
+`
+
+export const ActualAmount = styled.span`
+    color: red;
+    ${interMedium}
+`
+
+export const CategoryItem = styled.span`
+    ${interBold}
+`
+
+export const AmountMinus = styled.span`
+    ${interBold}
+`
+
+export const RecommentAmount = styled.span`
+    color: green;
+    ${interMedium}
+`
+
+export const TextCategory = styled.li`
+    text-align: left;
+    line-height: 1.6;
+    border: 1px solid black;
+    border-radius: 16px;
+    list-style-type:none;
+    padding: 16px;
+
+`
+
+export const TextCategoryItems = styled.ul`
+    display: flex;
+    flex-direction: column;
+    padding-left: 0px;
+    width: 95%;
+    margin: auto;
+    gap: 18px;
 `

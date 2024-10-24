@@ -47,6 +47,7 @@ import CategoryPopup from "../CategoryPopUp";
 import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import axios from "axios";
 import NoTransactionsComponent from "../NoTransactions";
+import MonthReviewPopUp from "../MonthReviewPopUp";
 
 const data = [
   {
@@ -173,6 +174,12 @@ const Transaction = () => {
 
   const { navigateToFinancialReport } = NavigationEvents();
 
+  const [showMonthReview, setShowMonthReview] = useState(false);
+
+  const toggleMontlyPopUp = ()=>{
+    setShowMonthReview(false)
+  }
+
   const handleSortSelection = (option: string) => {
     if (option === selectedSortOptions[0]) {
       return setTempSortOptions([])
@@ -241,31 +248,43 @@ const Transaction = () => {
     setSelectedCategoryOptions([]);
   };
 
-  useEffect(()=>{
 
-    const fetching = async()=>{
+  useEffect(() => {
+    const today = new Date();
+    const currentDate = today.getDate();
+
+    console.log("Current Date:", currentDate);
+    console.log("LocalStorage monthReviewPopUp:", localStorage.getItem("monthReviewPopUp"));
+
+    // Check if it's between 25-31 and if the popup hasn't been shown before
+    if (currentDate >= 24 && currentDate <= 31 && localStorage.getItem("monthReviewPopUp") === null) {
+      localStorage.setItem("monthReviewPopUp", "true");
+      setShowMonthReview(true);
+      console.log("Month Review Popup is now set to show.");
+    }
+
+    // Fetch transactions
+    const fetching = async () => {
       try {
         const response = await axios.post(`${url}/get_last_all_transactions/`, {}, {
           headers: {
-            "Authorization": `Bearer ${accessToken}`,
-            "Content-type": "Application/json"
+            Authorization: `Bearer ${accessToken}`,
+            "Content-type": "Application/json",
           },
         });
 
-        console.log(response.data.transactions_by_date.length)
-        if(response.data.transactions_by_date.length === 0){
-
-          setNoTransactions(true)
-      }
-    
-        setTransactionsArr(response.data.transactions_by_date)
+        if (response.data.transactions_by_date.length === 0) {
+          setNoTransactions(true);
+        } else {
+          setTransactionsArr(response.data.transactions_by_date);
+        }
       } catch (err) {
         console.log(err);
       }
-    }
+    };
 
-    fetching()
-  }, [])
+    fetching();
+  }, [accessToken]);
 
   return (
     <>
@@ -341,8 +360,11 @@ const Transaction = () => {
           </>: <NoTransactionsComponent/>}
         </TransactionSubContainer>
       </TransactionMainContainer>
+      {showMonthReview && <MonthReviewPopUp toggleMontlyPopUp = {toggleMontlyPopUp}/>}
     </>
   );
 };
 
 export default Transaction;
+
+
