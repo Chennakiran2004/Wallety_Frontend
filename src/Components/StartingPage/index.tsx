@@ -16,15 +16,20 @@ const scaleIn = keyframes`
 `;
 
 const IntroStartingContainer = styled.div`
-  width: 100vw;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media screen and (min-width: 768px) {
+    width: 100vw;
+  }
 `;
 
 const IntroSubContainer = styled.div`
+  width: 100vw;
   height: 100%;
   background-color: #7f3dff;
   display: flex;
