@@ -225,6 +225,8 @@ const Transaction = () => {
 
   const [showMonthReview, setShowMonthReview] = useState(false);
 
+  const [overSpent, setOverSpent] = useState(0);
+
   const toggleMontlyPopUp = () => {
     setShowMonthReview(false);
   };
@@ -289,9 +291,6 @@ const Transaction = () => {
           }
         );
 
-        if (response.data.transactions_by_date === 0) {
-        }
-
         setTransactionsArr(response.data.transactions_by_date);
       } catch (err) {
         console.log(err);
@@ -315,6 +314,44 @@ const Transaction = () => {
       "LocalStorage monthReviewPopUp:",
       localStorage.getItem("monthReviewPopUp")
     );
+
+    const checkOverSpent = async () => {
+      try {
+        const response = await axios.post(
+          `${url}/get_user_expenses_comparison_at_eom/`,
+          {
+            month: "10",
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-type": "Application/json",
+            },
+          }
+        );
+        const categories = response.data.under_spent.map(
+          (eachItem: any) => eachItem.category
+        );
+        const overSpentCategories = response.data.over_spent.map(
+          (eachItem: any) => eachItem.category
+        );
+        if (response.data.over_spent.length > 0) {
+          if (
+            currentDate >= 24 &&
+            currentDate <= 31 &&
+            localStorage.getItem("monthReviewPopUp") === null
+          ) {
+            localStorage.setItem("monthReviewPopUp", "true");
+            setShowMonthReview(true);
+            console.log("Month Review Popup is now set to show.");
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    checkOverSpent();
 
     // Check if it's between 25-31 and if the popup hasn't been shown before
     if (

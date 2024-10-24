@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled, { keyframes } from 'styled-components';
-import { interBold } from '../../Constants/fontStyles';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import styled, { keyframes } from "styled-components";
+import { interBold } from "../../Constants/fontStyles";
 
 // Define the scale-in animation using keyframes
 const scaleIn = keyframes`
@@ -16,7 +16,7 @@ const scaleIn = keyframes`
 `;
 
 const IntroStartingContainer = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,7 @@ const IntroStartingContainer = styled.div`
 
 const IntroSubContainer = styled.div`
   height: 100%;
-  background-color: #7F3DFF;
+  background-color: #7f3dff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -53,7 +53,7 @@ const StartingPage = () => {
   useEffect(() => {
     // Redirect to another page after 2 seconds
     const timer = setTimeout(() => {
-      navigate('/intro'); // Replace '/intro' with the route you want to redirect to
+      navigate("/intro"); // Replace '/intro' with the route you want to redirect to
     }, 2000);
 
     // Cleanup the timer when the component is unmounted
