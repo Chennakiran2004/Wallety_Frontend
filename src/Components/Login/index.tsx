@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import {
   SignUpContainer,
   SignUpSubContainer,
@@ -9,12 +8,6 @@ import {
   InputField,
   InputFieldContainerWrapper,
   EyeIconContainer,
-  GenderIconContainer,
-  GenderContainer,
-  ParaElement,
-  GenderHeadingContainer,
-  GenderContents,
-  GenderButton,
   SignUpButton,
   HidePassword,
   AlreadyHaveAnAccout,
@@ -29,33 +22,32 @@ import {
   NavigationEvents,
   url,
 } from "../../Constants/EventHandlers";
-import { motion } from "framer-motion";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import withAuthRedirect from "../../Constants/WithAuthRedirect";
 
-const dropdownVariants = {
-  hidden: {
-    opacity: 0,
-    height: 0,
-    transition: {
-      duration: 0.2,
-    },
-  },
-  visible: {
-    opacity: 1,
-    height: "auto",
-    transition: {
-      duration: 0.2,
-    },
-  },
-  exit: {
-    opacity: 0,
-    height: 0,
-    transition: {
-      duration: 0.2,
-    },
-  },
-};
+// const dropdownVariants = {
+//   hidden: {
+//     opacity: 0,
+//     height: 0,
+//     transition: {
+//       duration: 0.2,
+//     },
+//   },
+//   visible: {
+//     opacity: 1,
+//     height: "auto",
+//     transition: {
+//       duration: 0.2,
+//     },
+//   },
+//   exit: {
+//     opacity: 0,
+//     height: 0,
+//     transition: {
+//       duration: 0.2,
+//     },
+//   },
+// };
 
 const Login = () => {
   const navigate = useNavigate();
