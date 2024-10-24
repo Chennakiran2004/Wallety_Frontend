@@ -136,7 +136,7 @@ const AddNewAccount = () => {
         <AddNewAccountIconContainer onClick={handleBack} size={40} />
         <AddNewAccountHeading>Add New Account</AddNewAccountHeading>
       </AddNewAccountHeadingContainer>
-      <CarouselItemImage src="/Images/home1.svg" />
+      <CarouselItemImage src="/Images/addnewaccounticon.svg" />
       <AccountDetailsContainer>
         <AccountDetailsSubContainer>
           <EnterYourSalaryContainer>

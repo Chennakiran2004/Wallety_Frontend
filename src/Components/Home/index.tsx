@@ -14,11 +14,13 @@ import {
   IncomeAndExpenseImage,
   IncomeAndExpenseMoney,
   IncomeContainer,
+  NoTransactionsMainContainer,
   RecentItemsContainer,
   RecentTransactionsContainer,
   RecentTransactionText,
   SeeAllButton,
   UserName,
+  IconAndTextContainer,
 } from "./styledComponents";
 import {
   ChangingTokens,
@@ -192,23 +194,24 @@ const Home: React.FC = () => {
           </AccountBalanceContainer>
           <IncomeAndExpenseContainer>
             <IncomeContainer>
-              <IncomeAndExpenseImage src="/Images/income.svg" />
-              <IncomeAndExpenseContentContainer>
+              <IconAndTextContainer>
+                <IncomeAndExpenseImage src="/Images/income.svg" />
                 <IncomeAndExpenseHeading>Income</IncomeAndExpenseHeading>
-                <IncomeAndExpenseMoney>
-                  {userExpense?.Income}
-                </IncomeAndExpenseMoney>
-              </IncomeAndExpenseContentContainer>
+              </IconAndTextContainer>
+              <IncomeAndExpenseMoney>
+                ₹{userExpense?.Income}100
+              </IncomeAndExpenseMoney>
             </IncomeContainer>
 
             <ExpenseContainer>
-              <IncomeAndExpenseImage src="/Images/expenses.svg" />
-              <IncomeAndExpenseContentContainer>
-                <IncomeAndExpenseHeading>Expenses</IncomeAndExpenseHeading>
-                <IncomeAndExpenseMoney>
-                  ₹{userExpense?.Expense}
-                </IncomeAndExpenseMoney>
-              </IncomeAndExpenseContentContainer>
+              <IconAndTextContainer>
+                <IncomeAndExpenseImage src="/Images/expenses.svg" />
+                <IncomeAndExpenseHeading>Income</IncomeAndExpenseHeading>
+              </IconAndTextContainer>
+
+              <IncomeAndExpenseMoney>
+                ₹{userExpense?.Income}100
+              </IncomeAndExpenseMoney>
             </ExpenseContainer>
           </IncomeAndExpenseContainer>
         </HomeContentSubContainer>
@@ -233,7 +236,9 @@ const Home: React.FC = () => {
               ))
             )
           ) : (
-            <NoTransactionsComponent />
+            <NoTransactionsMainContainer>
+              <NoTransactionsComponent />
+            </NoTransactionsMainContainer>
           )}
         </RecentItemsContainer>
       </>

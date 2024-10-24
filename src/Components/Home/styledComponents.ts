@@ -7,6 +7,7 @@ export const HomeMainContainer = styled.div`
   align-items: center;
   width: 100%;
   margin: auto;
+  height: 100dvh;
 `;
 
 export const HomeContentContainer = styled.div`
@@ -65,6 +66,7 @@ export const AccountBalanceMoney = styled.p`
 
 export const IncomeAndExpenseContainer = styled.div`
   display: flex;
+
   align-items: center;
   width: 100%;
   padding-top: 8%;
@@ -74,15 +76,25 @@ export const IncomeAndExpenseContainer = styled.div`
 
 export const IncomeContainer = styled.div`
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  align-items: flex-start;
   width: 45%;
   background-color: #00a86b;
   border-radius: 16px;
-  gap: 12px;
+  gap: 8px;
   padding: 16px;
 `;
 
-export const IncomeAndExpenseImage = styled.img``;
+export const IconAndTextContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
+
+export const IncomeAndExpenseImage = styled.img`
+  height: 24px;
+  width: 24px;
+`;
 
 export const IncomeAndExpenseContentContainer = styled.div`
   display: flex;
@@ -152,9 +164,11 @@ export const RecentItemsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 32px;
-  max-height: 50vh;
+  max-height: 50dvh;
   overflow: scroll;
   padding-top: 16px;
   -ms-overflow-style: none;
   scrollbar-width: none;
 `;
+
+export const NoTransactionsMainContainer = styled.div``;
