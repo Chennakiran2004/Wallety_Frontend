@@ -44,9 +44,9 @@ function App() {
         <Route path="/setup" element={<SetUp />} />
         <Route path="/monthReview" element={<MonthReview />} />
         <Route
-            path="/SmartSpendingSuggestions"
-            element={<SmartSpendingSuggestions />}
-          />
+          path="/SmartSpendingSuggestions"
+          element={<SmartSpendingSuggestions />}
+        />
         <Route element={<ProtectedRoute />}>
           <Route path="/addNewAccount" element={<AddNewAccount />} />
           <Route path="/home" element={<Home />} />
