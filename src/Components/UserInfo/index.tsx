@@ -9,6 +9,7 @@ import {
   BackImage,
   Button,
   InputContainer,
+  EditProfileMainContianer,
 } from "./styledComponents";
 import { useEffect, useState } from "react";
 import {
@@ -95,7 +96,7 @@ const UserInfo = () => {
   }, []);
 
   return (
-    <>
+    <EditProfileMainContianer>
       <SignAndLoginInHeadingContainer>
         <BackImage onClick={handleBack} size={40} />
         <SignAndLoginHeading>Edit Profile</SignAndLoginHeading>
@@ -124,7 +125,7 @@ const UserInfo = () => {
           <Button onClick={updateProfile}>Submit</Button>
         </FormContainer>
       </ProfileInfoMainContainer>
-    </>
+    </EditProfileMainContianer>
   );
 };
 
