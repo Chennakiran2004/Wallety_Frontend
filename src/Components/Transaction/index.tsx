@@ -486,7 +486,7 @@ const Transaction = () => {
                     exit="exit"
                   >
                     <FilterPopup
-                      selectedSortOptions={tempSortOptions}
+                      selectedSortOptions={setSelectedSortOptions}
                       selectedCategoryOptions={selectedCategoryOptions}
                       handleSortSelection={handleSortSelection}
                       togglePopUp={togglePopUp}
