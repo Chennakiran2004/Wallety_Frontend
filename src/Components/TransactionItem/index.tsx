@@ -26,7 +26,7 @@ const TransactionItem: React.FC<DetailsInterfaceProps> = ({ item }) => {
       <ListItemContentsContainer>
         <PriceContainer>
           <CategoryHeading>{item.category}</CategoryHeading>
-          <PriceHeading>-${item.amount}</PriceHeading>
+          <PriceHeading>-₹{item.amount}</PriceHeading>
         </PriceContainer>
         <DescriptionContainer>
           <DescriptionHeading>{item.description}</DescriptionHeading>

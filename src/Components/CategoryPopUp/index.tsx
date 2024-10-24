@@ -27,7 +27,7 @@ const CategoryPopup: React.FC<CategoryPopupProps> = ({
   closeCategoryPopup,
 }) => {
   return (
-    <CategoryPopupContainer
+    <CategoryPopupContainer onClick = {(e)=> e.stopPropagation()}
       variants={categoryPopupVariants}
       initial="hidden"
       animate="visible"

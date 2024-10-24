@@ -24,6 +24,8 @@ import SmartSpendingSuggestions from "./Components/SmartSpendingSuggestions";
 import MonthReview from "./Components/MonthReview";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
+import "./index.css";
+
 function App() {
   const location = useLocation();
 
