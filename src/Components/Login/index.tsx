@@ -127,10 +127,7 @@ const Login = () => {
             }}
           >
             <input>
-              <InputField
-                placeholder="Email"
-                onChange={(e) => setEmail(e.target.value)}
-              />
+              <InputField placeholder="Email" onChange={(e) => setEmail(e.target.value)}/>
             </input>
             <InputFieldContainerWrapper>
               <InputField

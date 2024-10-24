@@ -168,7 +168,7 @@ const Transaction = () => {
 
   const [NoTransactions, setNoTransactions] = useState(false);
 
-  const {accessToken} = ChangingTokens()
+  const {accessToken} = ChangingTokens();
 
   const [numberOfFilters, setNumberofFilters] = useState(0);
 
@@ -184,9 +184,9 @@ const Transaction = () => {
 
   const handleSortSelection = (option: string) => {
     if (option === selectedSortOptions[0]) {
-      return setTempSortOptions([])
+      return setSelectedSortOptions([])
     }
-    setTempSortOptions([option]);
+    setSelectedSortOptions([option]);
   };
 
   const handleCategorySelection = (option: string) => {
@@ -287,8 +287,6 @@ const Transaction = () => {
 
     // Check if it's between 25-31 and if the popup hasn't been shown before
     
-    
-
     // Fetch transactions
     const fetching = async () => {
       try {
