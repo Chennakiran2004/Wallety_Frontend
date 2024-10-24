@@ -88,8 +88,21 @@ export const SignAndLoginInHeadingContainer = styled.div`
   width: 100%;
   position: relative;
   margin-top: 8%;
+  
 `;
 
 export const Button = styled(GlobalButton1)`
-  margin-top: 16%;
+  margin-top: 32px;
 `;
+
+
+export const EditProfileMainContianer = styled.div`
+  @media screen and (min-width: 768px) {
+    width: 768px;
+    height: auto;
+    padding-bottom: 16px;
+    margin: auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
+    border-radius: 16px;
+  }
+`
