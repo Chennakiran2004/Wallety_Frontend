@@ -24,6 +24,7 @@ import MonthReview from "./Components/MonthReview";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
 import "./App.css";
+import StartingPage from "./Components/StartingPage";
 
 function App() {
   const location = useLocation();
@@ -38,10 +39,11 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<HomeCarousel />} />
+        <Route path="/intro" element={<HomeCarousel />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/setup" element={<SetUp />} />
+        <Route path="/" element={<StartingPage />} />
         
         <Route
           path="/SmartSpendingSuggestions"
