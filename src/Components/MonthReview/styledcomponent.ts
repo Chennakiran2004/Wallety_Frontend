@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { interMedium, interRegular, interSemiBold } from "../../Constants/fontStyles";
+import { ButtonContainer, ViewMoreButton } from "../SmartSpendingSuggestions/styledComponents";
 
 export const MonthReviewContainer = styled.div`
     width: 100vw;
@@ -29,6 +30,7 @@ export const MonthReviewHeading = styled.p`
     font-size: 36px;
     line-height: 1.5;
     color: black;
+    text-align: left;
 `
 
 export const MonthReviewBottomContainer = styled.div`
@@ -44,12 +46,19 @@ export const MonthReviewItemsContainer = styled.div`
     gap: 16px;
 `
 
-export const ItemContainerMonthReview = styled.div`
+interface MonthReviewProp {
+    isOpen: boolean
+}
+
+export const ItemContainerMonthReview = styled.div<MonthReviewProp>`
     border: 1px #C5B0EE solid;
     border-radius: 12px;
     padding-top: 8%;
     padding-bottom: 8%;
     box-shadow: 0px 4px 24px 0px #00000014;
+    height: auto;
+    transition: height 0.3s ease-in;
+
 `
 
 export const ItemSubContainerMonthReview = styled.div`
@@ -84,11 +93,13 @@ export const ContentsAlignment = styled.div`
 export const MonthReviewContainerHeading = styled.p`
     ${interSemiBold}
     font-size: 20px;
+    text-align: left;
 `
 
 export const MonthReviewContainerSubHeading = styled.p`
     ${interRegular}
     font-size: 16px;
+    text-align: left;
     line-height: 1.6;
 `
 
@@ -119,6 +130,7 @@ export const MoreContentsReview = styled.div`
 export const TipsReviewSideHeading = styled.p`
     ${interSemiBold}
     font-size: 16px;
+    text-align: left;
 `
 
 export const UlElementReview = styled.ul`
@@ -132,6 +144,7 @@ export const UlElementReview = styled.ul`
 
 export const ListItemReview = styled.li`
     line-height: 1.8;
+    text-align: left;
 `
 
 export const TipsHeadingContainer = styled.div`
@@ -143,4 +156,16 @@ export const TipsHeadingContainer = styled.div`
 export const SideIcon = styled.img`
     width: 15px;
     height: 15px;
+`
+
+export const ViewMoreButtonExpense = styled(ViewMoreButton)`
+    text-align: center;
+`
+
+export const ExpenseViewMoreButton = styled(ViewMoreButton)`
+    margin-top: 8px;
+`
+
+export const ExpenseButtonContainer = styled(ButtonContainer)`
+    padding-bottom: 0px;
 `

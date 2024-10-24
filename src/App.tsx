@@ -42,6 +42,11 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
         <Route path="/setup" element={<SetUp />} />
+        <Route path="/monthReview" element={<MonthReview />} />
+        <Route
+            path="/SmartSpendingSuggestions"
+            element={<SmartSpendingSuggestions />}
+          />
         <Route element={<ProtectedRoute />}>
           <Route path="/addNewAccount" element={<AddNewAccount />} />
           <Route path="/home" element={<Home />} />
@@ -53,11 +58,11 @@ function App() {
           <Route path="/expense" element={<ExpenseComponent />} />
           <Route path="/transaction/:id" element={<TransactionDetails />} />
           <Route path="/financialReport" element={<FinancialReport />} />
-          <Route
+          {/* <Route
             path="/SmartSpendingSuggestions"
             element={<SmartSpendingSuggestions />}
-          />
-          <Route path="/monthReview" element={<MonthReview />} />
+          /> */}
+          {/* <Route path="/monthReview" element={<MonthReview />} /> */}
         </Route>
       </Routes>
       {shouldShowTabBar && <TabBar />}

@@ -9,7 +9,7 @@ import {
   ParaElement,
 } from "../signup/signupstyled";
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
-import { EnterYourSalaryInput } from "../AddNewAccount/styledComponents";
+import { EnterYourSalaryInput, RupeesSymbol } from "../AddNewAccount/styledComponents";
 
 export const ExpenseContainer = styled.div`
   height: 85vh;
@@ -120,7 +120,7 @@ export const InputHeading = styled.p`
 `;
 
 export const InputExpense = styled.input`
-  text-align: center;
+  text-align: left;
   border: none;
   outline: none;
   background: none;
@@ -134,3 +134,16 @@ export const InputExpense = styled.input`
     color: white;
   }
 `;
+
+
+export const RupeesSymbolExpense = styled(RupeesSymbol)`
+  color: white;
+`
+
+export const ErrorMessage = styled.p`
+  font-size: 14px;
+  text-align: left;
+  width: 90%;
+  margin: auto;
+  color: #fd3c4a;
+`

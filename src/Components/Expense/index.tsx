@@ -24,6 +24,8 @@ import {
   CategoryButton,
   InputExpense,
   InputHeading,
+  RupeesSymbolExpense,
+  ErrorMessage,
 } from "./styledComponents";
 import { useState } from "react";
 import {
@@ -32,6 +34,7 @@ import {
   url,
 } from "../../Constants/EventHandlers";
 import axios from "axios";
+import { EnterYourSalaryInput, RupeesAndInputContainer, RupeesSymbol } from "../AddNewAccount/styledComponents";
 
 const dropdownVariants = {
   hidden: {
@@ -76,6 +79,7 @@ const ExpenseComponent = () => {
   const [genderContents, setGenderContents] = useState(false);
   const [gender, setGender] = useState("Category");
   const [description, setDescription] = useState("");
+  const [error, setError] = useState("")
 
   const [selectedCategory, setSelectedCategory] = useState<String[]>([]);
 
@@ -94,20 +98,29 @@ const ExpenseComponent = () => {
       setGender("Category");
       return setSelectedCategory(filteredArr);
     }
-
-    // setGenderContents(false);
+    setGenderContents(false);
     return setSelectedCategory([category]);
   };
 
   const expenseAdd = () => {
     const fetching = async () => {
+      if(amount === "0"){
+        return setError("Please enter amount greater than 0")
+      }
+
+      if(gender === "Category"){
+        return setError("Please select a category")
+      }
+
+      if(description.length === 0){
+        return setError("Please enter description")
+      }
 
       const data = {
         category: selectedCategory[0].toLocaleUpperCase(),
         expense_amount: amount,
         description: description,
       }
-      console.log(data)
       try {
         const response = await axios.post(
           `${url}/update_user_expense`,
@@ -128,7 +141,7 @@ const ExpenseComponent = () => {
       } catch (err: any) {
         if (err.response) {
           if (err.response.data.error_message) {
-            console.log("Insuffiecient Amount");
+              setError("Insufficient Amount")
           }
         }
       }
@@ -136,6 +149,16 @@ const ExpenseComponent = () => {
 
     fetching();
   };
+
+  const changeDescription = (e: any)=>{
+    if(e.target.value.length < 15){
+      setError("")
+        return setDescription(e.target.value)
+    }
+
+    setError("Description should be less than 15 characters")
+    
+  }
 
   return (
     <ExpenseContainer>
@@ -146,12 +169,14 @@ const ExpenseComponent = () => {
         </ExpenseHeader>
         <InputContainer>
           <InputHeading>How much?</InputHeading>
-          <InputExpense
-            placeholder="₹"
-            type="number"
-            onChange={(e) => setAmount(e.target.value)}
-            max="1000"
-          />
+          <RupeesAndInputContainer>
+              <RupeesSymbolExpense>₹</RupeesSymbolExpense>
+              <InputExpense
+                type="number"
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </RupeesAndInputContainer>
+          
         </InputContainer>
         <ExpenseBottomContainer>
           <ExpenseBottomSubContainer>
@@ -175,7 +200,7 @@ const ExpenseComponent = () => {
                         return (
                           <CategoryButton
                             isselected={selectedCategory.includes(eachItem)}
-                            onClick={() => handleCategoryChange(eachItem)}
+                            onClick={() => {handleCategoryChange(eachItem)} }
                           >
                             {eachItem}
                           </CategoryButton>
@@ -187,10 +212,11 @@ const ExpenseComponent = () => {
               </AnimatePresence>
             </GenderContainer>
             <DescriptionField
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={changeDescription} onFocus={()=> setGenderContents(false)}
               value={description}
               placeholder="Description"
             />
+            {error.length > 0 && <ErrorMessage>*{error}</ErrorMessage>}
             <ContinueButton onClick={expenseAdd}>Continue</ContinueButton>
           </ExpenseBottomSubContainer>
         </ExpenseBottomContainer>
