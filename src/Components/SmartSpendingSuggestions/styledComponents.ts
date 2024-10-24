@@ -122,6 +122,10 @@ export const ViewMoreButton = styled.button`
   border: none;
   background: none;
   cursor: none;
+
+  @media screen and (min-width: 768px) {
+    cursor: pointer;
+  }
 `;
 
 export const LetsGoContainer = styled.div`
