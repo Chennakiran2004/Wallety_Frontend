@@ -176,7 +176,6 @@ const ExpenseComponent = () => {
             <RupeesSymbolExpense>₹</RupeesSymbolExpense>
             <InputExpense
               type="number"
-              placeholder="Enter amount"
               onChange={(e) => setAmount(e.target.value)}
             />
           </RupeesAndInputContainer>
@@ -221,7 +220,6 @@ const ExpenseComponent = () => {
               onFocus={() => setGenderContents(false)}
               value={description}
               type="text"
-              placeholder="Description"
             />
             {error.length > 0 && <ErrorMessage>*{error}</ErrorMessage>}
             <ContinueButton onClick={expenseAdd}>Continue</ContinueButton>

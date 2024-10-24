@@ -60,9 +60,9 @@
 //   const [activeTab, setActiveTab] = useState<"expense" | "income">("expense");
 //   const [isMonthDropdownOpen, setMonthDropdownOpen] = useState(false); // Dropdown state
 //   const today = new Date();
-//   const todayMonth = today.getMonth();
+//   const todayMonth = today.getMonth(); // Get current month index
 //   const [selectedMonth, setSelectedMonth] = useState(todayMonth); // Selected month state
-//   const [expensesData, setExpensesData] = useState([]);
+//   const [expensesData, setExpensesData] = useState<any[]>([]); // Correctly type the state
 //   const [incomeData, setIncomeData] = useState<
 //     {
 //       type: string;
@@ -84,50 +84,10 @@
 //   };
 
 //   const handleMonthClick = (month: string) => {
-//     setSelectedMonth(month);
+//     const monthIndex = months.indexOf(month); // Get the month index
+//     setSelectedMonth(monthIndex);
 //     setMonthDropdownOpen(false); // Close dropdown after selection
 //   };
-
-//   // const expensesData = [
-//   //   {
-//   //     type: "Shopping",
-//   //     amount: "-₹120",
-//   //     icon: "/Images/shoppingcolor.svg",
-//   //     progress: 70,
-//   //     color: "#FCAC12",
-//   //   },
-//   //   {
-//   //     type: "Subcription",
-//   //     amount: "-₹250",
-//   //     icon: "/Images/subscripitioncolor.svg",
-//   //     progress: 50,
-//   //     color: "#7F3DFF",
-//   //   },
-//   //   {
-//   //     type: "Food",
-//   //     amount: "-₹80",
-//   //     icon: "/Images/foodcolor.svg",
-//   //     progress: 40,
-//   //     color: "#FD3C4A",
-//   //   },
-//   // ];
-
-//   // const incomeData = [
-//   //   {
-//   //     type: "Salary",
-//   //     amount: "+₹5000",
-//   //     icon: "/Images/salarycolor.svg",
-//   //     progress: 80,
-//   //     color: "#4CAF50",
-//   //   },
-//   //   {
-//   //     type: "Freelance",
-//   //     amount: "+₹1500",
-//   //     icon: "/Images/salarycolor.svg",
-//   //     progress: 60,
-//   //     color: "#4CAF50",
-//   //   },
-//   // ];
 
 //   const currentData = activeTab === "expense" ? expensesData : incomeData;
 //   const amounts = currentData.map((item) =>
@@ -135,6 +95,7 @@
 //   );
 //   const colors = currentData.map((item) => item.color);
 
+//   // Fetching Expense Data
 //   useEffect(() => {
 //     const fetching = async () => {
 //       console.log(selectedMonth);
@@ -142,7 +103,7 @@
 //         const response = await axios.post(
 //           `${url}/get_user_pie_chart_financial_transactions/`,
 //           {
-//             month: "10",
+//             month: selectedMonth + 1, // Use the correct month number (1-based)
 //           },
 //           {
 //             headers: {
@@ -152,15 +113,15 @@
 //           }
 //         );
 
-//         setTotal(response.data.total_expense);
+//         setTotal(response.data.total_expense || 0); // Handle undefined total expense
 //         const expenses = response.data.user_expenses_history.map(
 //           (item: any) => {
 //             const categoryTotal = Number(item.total);
-//             const CategoryColor = CategoriesColors[item.category];
+//             const CategoryColor = CategoriesColors[item.category] || "#000"; // Default color if not found
 //             return {
 //               type: item.category,
 //               amount: `-₹${categoryTotal}`,
-//               icon: "/Images/shoppingcolor.svg",
+//               icon: "/Images/shoppingcolor.svg", // Set default icon
 //               progress:
 //                 (Number(categoryTotal) / Number(response.data.total_expense)) *
 //                 100,
@@ -186,13 +147,12 @@
 //         const incomeDataObj = [
 //           {
 //             type: "Salary",
-//             amount: `+₹${response.data.user_income}`,
+//             amount: `+₹${response.data.user_income || 0}`, // Handle undefined income
 //             icon: "/Images/salarycolor.svg",
 //             progress: 100,
 //             color: "#4CAF50",
 //           },
 //         ];
-//         console.log(incomeDataObj);
 //         setIncomeData(incomeDataObj);
 //       } catch (err) {
 //         console.log(err);
@@ -201,7 +161,7 @@
 
 //     fetchIncome();
 //     fetching();
-//   }, [selectedMonth]);
+//   }, [selectedMonth, accessToken]);
 
 //   return (
 //     <FinancialReportMainContainer>
@@ -210,6 +170,7 @@
 //           <IconContianer onClick={handleBack} size={40} />
 //           <FinancialReportHeading>Financial Report</FinancialReportHeading>
 //         </FinancialReportHeaderContainer>
+
 //         <MonthDropDownContainer>
 //           <MonthDropDown
 //             onClick={() => setMonthDropdownOpen(!isMonthDropdownOpen)}
@@ -221,8 +182,9 @@
 //               transition={{ duration: 0.3 }}
 //               style={{ marginRight: "8px" }}
 //             />
-//             <DropDownText>{selectedMonth}</DropDownText>
+//             <DropDownText>{months[selectedMonth]}</DropDownText>
 //           </MonthDropDown>
+
 //           <AnimatePresence>
 //             {isMonthDropdownOpen && (
 //               <motion.div
@@ -248,7 +210,7 @@
 //                       cursor: "pointer",
 //                       borderRadius: "4px",
 //                       backgroundColor:
-//                         selectedMonth === month ? "#f0f0f0" : "#fff",
+//                         months[selectedMonth] === month ? "#f0f0f0" : "#fff",
 //                       transition: "background-color 0.2s",
 //                     }}
 //                   >
@@ -259,6 +221,7 @@
 //             )}
 //           </AnimatePresence>
 //         </MonthDropDownContainer>
+
 //         <DoughunChartContainer>
 //           <DoughnutChart
 //             data={amounts}
@@ -266,6 +229,7 @@
 //             backgroundColors={colors}
 //           />
 //         </DoughunChartContainer>
+
 //         <IncomeAndExpenseTabs>
 //           <ExpenseAndIncomeButton
 //             as={activeTab === "expense" ? ExpenseButton : "button"}
@@ -281,6 +245,7 @@
 //             Income
 //           </ExpenseAndIncomeButton>
 //         </IncomeAndExpenseTabs>
+
 //         <ExpensesBarsContainer>
 //           {activeTab === "expense"
 //             ? expensesData.map((expense: any, index) => (
@@ -384,8 +349,14 @@ const FinancialReport = () => {
       color: string;
     }[]
   >([]);
+  const [expenseTotal, setExpenseTotal] = useState(0); // Expense total
+  const [incomeTotal, setIncomeTotal] = useState(0); // Income total
 
-  const [total, setTotal] = useState(0);
+  const income = incomeTotal.toString();
+  const totalIncome = parseInt(income);
+
+  const expense = expenseTotal.toString();
+  const totalExpense = parseInt(expense);
 
   const handleExpenseClick = () => {
     setActiveTab("expense");
@@ -425,7 +396,7 @@ const FinancialReport = () => {
           }
         );
 
-        setTotal(response.data.total_expense || 0); // Handle undefined total expense
+        setExpenseTotal(response.data.total_expense || 0); // Handle undefined total expense
         const expenses = response.data.user_expenses_history.map(
           (item: any) => {
             const categoryTotal = Number(item.total);
@@ -456,6 +427,7 @@ const FinancialReport = () => {
           },
         });
 
+        setIncomeTotal(response.data.user_income || 0); // Handle undefined total income
         const incomeDataObj = [
           {
             type: "Salary",
@@ -483,7 +455,7 @@ const FinancialReport = () => {
           <FinancialReportHeading>Financial Report</FinancialReportHeading>
         </FinancialReportHeaderContainer>
 
-        <MonthDropDownContainer>
+        {/* <MonthDropDownContainer>
           <MonthDropDown
             onClick={() => setMonthDropdownOpen(!isMonthDropdownOpen)}
           >
@@ -532,14 +504,23 @@ const FinancialReport = () => {
               </motion.div>
             )}
           </AnimatePresence>
-        </MonthDropDownContainer>
+        </MonthDropDownContainer> */}
 
         <DoughunChartContainer>
-          <DoughnutChart
-            data={amounts}
-            total={total}
-            backgroundColors={colors}
-          />
+          {/* Conditionally render the Doughnut Chart for either Income or Expense */}
+          {activeTab === "expense" ? (
+            <DoughnutChart
+              data={amounts}
+              total={totalExpense}
+              backgroundColors={colors}
+            />
+          ) : (
+            <DoughnutChart
+              data={[incomeTotal]} // Show total income as a whole
+              total={totalIncome}
+              backgroundColors={["#4CAF50"]} // Green color for income
+            />
+          )}
         </DoughunChartContainer>
 
         <IncomeAndExpenseTabs>

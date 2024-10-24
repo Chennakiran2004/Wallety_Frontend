@@ -398,7 +398,7 @@ const Transaction = () => {
           {!NoTransactions ? (
             <>
               <FilterContainer>
-                <MonthDropDownContainer>
+                {/* <MonthDropDownContainer>
                   <MonthDropDown
                     onClick={() => setMonthDropdownOpen(!isMonthDropdownOpen)}
                   >
@@ -446,7 +446,7 @@ const Transaction = () => {
                       </motion.div>
                     )}
                   </AnimatePresence>
-                </MonthDropDownContainer>
+                </MonthDropDownContainer> */}
                 <FilterButton onClick={togglePopUp}>
                   <FilterImage src="/Images/filtericon.svg" />
                   {numberOfFilters > 0 && (
