@@ -6,7 +6,7 @@ import { ChangingTokens, NavigationEvents } from "./EventHandlers";
 
 export const handleAxiosError = (error: any) => {
     const { deleteAccessToken, deleteRefereshToken } = ChangingTokens();
-const { navigateLogin } = NavigationEvents();
+    const { navigateLogin } = NavigationEvents();
   if (error.response) {
     switch (error.response.status) {
       case 400:

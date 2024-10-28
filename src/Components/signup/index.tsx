@@ -230,7 +230,7 @@ const SignUp = () => {
           setRefreshToken(response.data.refresh_token);
           console.log(response.data);
         } catch (err) {
-          handleAxiosError(err)
+          // handleAxiosError(err)
         }
       };
       fetching();
