@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
 import { FaRegEyeSlash } from "react-icons/fa";
+import { interRegular, interSemiBold } from "../../Constants/fontStyles";
 
 export const slideIn = keyframes`
   0% {
@@ -112,7 +113,7 @@ export const GenderIconContainer = styled(
 `;
 
 export const GenderContainer = styled.div`
-  width: 90%;
+  width: 92%;
   padding-top: 16px;
   padding-bottom: 16px;
   margin: auto;
@@ -180,4 +181,30 @@ export const AlreadyHaveAnAccout = styled.p`
 export const LoginLink = styled(Link)`
   color: #7f3dff;
   text-decoration: none;
+`;
+
+export const RadioElementsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  width: 90%;
+  margin: auto;
+`;
+
+export const RadioElementsSubContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;
+
+export const GenderInput = styled.input``;
+
+export const GenderLabel = styled.label`
+  ${interRegular}
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #91919f;
 `;

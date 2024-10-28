@@ -74,9 +74,13 @@ export const InputFieldContainerWrapper = styled.div`
 `;
 
 export const EyeIconContainer = styled(IoEyeOutline)`
-  position: relative;
-  right: 30px;
+  position: absolute;
+  right: 8%;
   color: #91919f;
+
+  @media screen and (min-width: 768px) {
+    right: 8%;
+  }
 `;
 interface GenderIconContainerProps {
   isactive: boolean;

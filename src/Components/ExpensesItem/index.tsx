@@ -6,6 +6,7 @@ import {
   ExpensesType,
   ExpensesTypeText,
   ExpensesMoney,
+  SmallIcon,
 } from "./styledComponents";
 
 interface ExpensesItemProps {
@@ -27,7 +28,7 @@ const ExpensesItem: React.FC<ExpensesItemProps> = ({
     <ExpenseItemContainer>
       <ExpensesItemTextContainer>
         <MonthDropDown>
-          <ExpensesType src={icon} />
+          <SmallIcon color = {color}></SmallIcon>
           <ExpensesTypeText>{type}</ExpensesTypeText>
         </MonthDropDown>
         <ExpensesMoney>{amount}</ExpensesMoney>

@@ -44,9 +44,20 @@ import { motion, AnimatePresence } from "framer-motion";
 import TransactionList from "../TransactionList";
 import FilterPopup from "../FilterPopUp";
 import CategoryPopup from "../CategoryPopUp";
-import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import {
+  ChangingTokens,
+  NavigationEvents,
+  url,
+} from "../../Constants/EventHandlers";
 import axios from "axios";
 import NoTransactionsComponent from "../NoTransactions";
+import MonthReviewPopUp from "../MonthReviewPopUp";
+
+import {
+  MonthDropDownContainer,
+  MonthDropDown,
+  DropDownText,
+} from "../FinancialReport/styledComponents";
 
 const data = [
   {
@@ -125,6 +136,32 @@ const data = [
   },
 ];
 
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const dropdownVariants = {
+  hidden: { opacity: 0, height: 0 },
+  visible: { opacity: 1, height: "auto", transition: { duration: 0.3 } },
+  exit: { opacity: 0, height: 0, transition: { duration: 0.2 } },
+};
+
+const arrowVariants = {
+  open: { rotate: 180 },
+  closed: { rotate: 0 },
+};
+
 const overlayVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
@@ -136,7 +173,7 @@ const mainPopupExit = {
   exit: { x: "-100%", opacity: 0 },
 };
 
-interface TransactionItem{
+interface TransactionItem {
   category: string;
   amount: string;
   time: string;
@@ -145,15 +182,23 @@ interface TransactionItem{
 }
 
 interface Transaction {
-  date: string,
-  transactions: TransactionItem[]
+  date: string;
+  transactions: TransactionItem[];
 }
 
 const sortOptions = ["Highest", "Lowest", "Oldest"];
-const categoryOptions = ["Shopping", "Food", "Travel", "Health", "Entertainment", "Rent", "Miscellaneous"];
+const categoryOptions = [
+  "Shopping",
+  "Food",
+  "Travel",
+  "Health",
+  "Entertainment",
+  "Rent",
+  "Miscellaneous",
+];
 
 const Transaction = () => {
-  const [transactionsArr, setTransactionsArr] = useState<Transaction[] >([])
+  const [transactionsArr, setTransactionsArr] = useState<Transaction[]>([]);
 
   const [tempSortOptions, setTempSortOptions] = useState<string[]>([]);
 
@@ -162,27 +207,40 @@ const Transaction = () => {
 
   const [selectedSortOptions, setSelectedSortOptions] = useState<string[]>([]);
   const [finalSortOptions, setFinalSortOptions] = useState<string[]>([]);
+  const [selectedMonth, setSelectedMonth] = useState("Month");
 
-  const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<string[]>([]);
+  const [isMonthDropdownOpen, setMonthDropdownOpen] = useState(false);
+
+  const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<
+    string[]
+  >([]);
 
   const [NoTransactions, setNoTransactions] = useState(false);
 
-  const {accessToken} = ChangingTokens()
+  const { accessToken } = ChangingTokens();
 
   const [numberOfFilters, setNumberofFilters] = useState(0);
 
   const { navigateToFinancialReport } = NavigationEvents();
 
+  const [showMonthReview, setShowMonthReview] = useState(false);
+
+  const [overSpent, setOverSpent] = useState(0);
+
+  const toggleMontlyPopUp = () => {
+    setShowMonthReview(false);
+  };
+
   const handleSortSelection = (option: string) => {
     if (option === selectedSortOptions[0]) {
-      return setTempSortOptions([])
+      return setSelectedSortOptions([]);
     }
-    setTempSortOptions([option]);
+    setSelectedSortOptions([option]);
   };
 
   const handleCategorySelection = (option: string) => {
     if (option === selectedCategoryOptions[0]) {
-      return setSelectedCategoryOptions([])
+      return setSelectedCategoryOptions([]);
     }
     setSelectedCategoryOptions([option]);
   };
@@ -201,6 +259,11 @@ const Transaction = () => {
     setIsPopUpOpen(true);
   };
 
+  const handleMonthClick = (month: string) => {
+    setSelectedMonth(month);
+    setMonthDropdownOpen(false); // Close dropdown after selection
+  };
+
   const applyFilters = () => {
     const count = selectedSortOptions.length;
     const countB = selectedCategoryOptions.length > 0 ? 1 : 0;
@@ -208,32 +271,33 @@ const Transaction = () => {
     togglePopUp();
     setFinalSortOptions(sortOptions);
 
-    const fetching = async()=>{
+    const fetching = async () => {
       const body = {
-         "Highest": selectedSortOptions.includes("Highest"),
-         "Lowest": selectedSortOptions.includes("Lowest"),
-         "Oldest": selectedCategoryOptions.includes("Oldest"),
-         "Categories": selectedCategoryOptions[0]
-      }
+        Highest: selectedSortOptions.includes("Highest"),
+        Lowest: selectedSortOptions.includes("Lowest"),
+        Oldest: selectedCategoryOptions.includes("Oldest"),
+        Categories: tempSortOptions[0],
+      };
 
       try {
-        const response = await axios.post(`${url}/get_transaction_filters/`, body, {
-          headers: {
-            "Authorization": `Bearer ${accessToken}`,
-            "Content-type": "Application/json"
-          },
-        });
+        const response = await axios.post(
+          `${url}/get_transaction_filters/`,
+          body,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-type": "Application/json",
+            },
+          }
+        );
 
-        if(response.data.transactions_by_date === 0){
-        }
-
-        setTransactionsArr(response.data.transactions_by_date)
+        setTransactionsArr(response.data.transactions_by_date);
       } catch (err) {
         console.log(err);
       }
-    }
+    };
 
-    fetching()
+    fetching();
   };
 
   const resetFilters = () => {
@@ -241,106 +305,225 @@ const Transaction = () => {
     setSelectedCategoryOptions([]);
   };
 
-  useEffect(()=>{
+  useEffect(() => {
+    const today = new Date();
+    const currentDate = today.getDate();
 
-    const fetching = async()=>{
+    console.log("Current Date:", currentDate);
+    console.log(
+      "LocalStorage monthReviewPopUp:",
+      localStorage.getItem("monthReviewPopUp")
+    );
+
+    const checkOverSpent = async () => {
       try {
-        const response = await axios.post(`${url}/get_last_all_transactions/`, {}, {
-          headers: {
-            "Authorization": `Bearer ${accessToken}`,
-            "Content-type": "Application/json"
+        const response = await axios.post(
+          `${url}/get_user_expenses_comparison_at_eom/`,
+          {
+            month: "10",
           },
-        });
-
-        console.log(response.data.transactions_by_date.length)
-        if(response.data.transactions_by_date.length === 0){
-
-          setNoTransactions(true)
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-type": "Application/json",
+            },
+          }
+        );
+        const categories = response.data.under_spent.map(
+          (eachItem: any) => eachItem.category
+        );
+        const overSpentCategories = response.data.over_spent.map(
+          (eachItem: any) => eachItem.category
+        );
+        if (response.data.over_spent.length > 0) {
+          if (
+            currentDate >= 24 &&
+            currentDate <= 31 &&
+            localStorage.getItem("monthReviewPopUp") === null
+          ) {
+            localStorage.setItem("monthReviewPopUp", "true");
+            setShowMonthReview(true);
+            console.log("Month Review Popup is now set to show.");
+          }
+        }
+      } catch (e) {
+        console.log(e);
       }
-    
-        setTransactionsArr(response.data.transactions_by_date)
+    };
+
+    checkOverSpent();
+
+    // Check if it's between 25-31 and if the popup hasn't been shown before
+    if (
+      currentDate >= 24 &&
+      currentDate <= 31 &&
+      localStorage.getItem("monthReviewPopUp") === null
+    ) {
+      localStorage.setItem("monthReviewPopUp", "true");
+      setShowMonthReview(true);
+      console.log("Month Review Popup is now set to show.");
+    }
+
+    // Fetch transactions
+    const fetching = async () => {
+      try {
+        const response = await axios.post(
+          `${url}/get_last_all_transactions/`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-type": "Application/json",
+            },
+          }
+        );
+
+        if (response.data.transactions_by_date.length === 0) {
+          setNoTransactions(true);
+        } else {
+          setTransactionsArr(response.data.transactions_by_date);
+        }
       } catch (err) {
         console.log(err);
       }
-    }
+    };
 
-    fetching()
-  }, [])
+    fetching();
+  }, [accessToken]);
 
   return (
     <>
       <TransactionMainContainer>
         <TransactionSubContainer>
-          {!NoTransactions ?
-          <>
-          <FilterContainer>
-            <p>Month</p>
-            <FilterButton onClick={togglePopUp}>
-              <FilterImage src="/Images/filtericon.svg" />
-              {numberOfFilters > 0 && (
-                <NumberOfFiltersContainer>
-                  <NumberOfFilters>{numberOfFilters}</NumberOfFilters>
-                </NumberOfFiltersContainer>
-              )}
-            </FilterButton>
-          </FilterContainer>
-          <FinancialReportContainer onClick={navigateToFinancialReport}>
-            <FinancialReportHeading>
-              See your financial report
-            </FinancialReportHeading>
-            <ArrowRight src="/Images/arrow-right-2.svg" />
-          </FinancialReportContainer>
-          <TransactionsContainer>
-            {!NoTransactions ?
-            transactionsArr.map((eachItem, index) => (
-              <TransactionList
-                key={index}
-                date={eachItem.date}
-                details={eachItem.transactions}
-              />
-            )): <NoTransactionsComponent/>}
-          </TransactionsContainer>
+          {!NoTransactions ? (
+            <>
+              <FilterContainer>
+                {/* <MonthDropDownContainer>
+                  <MonthDropDown
+                    onClick={() => setMonthDropdownOpen(!isMonthDropdownOpen)}
+                  >
+                    <motion.img
+                      src="/Images/arrow down 2.svg"
+                      variants={arrowVariants}
+                      animate={isMonthDropdownOpen ? "open" : "closed"}
+                      transition={{ duration: 0.3 }}
+                      style={{ marginRight: "8px" }}
+                    />
+                    <DropDownText>{selectedMonth}</DropDownText>
+                  </MonthDropDown>
+                  <AnimatePresence>
+                    {isMonthDropdownOpen && (
+                      <motion.div
+                        variants={dropdownVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        style={{
+                          position: "absolute",
+                          zIndex: 1,
+                          backgroundColor: "#fff",
+                          borderRadius: "8px",
+                          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                          padding: "10px",
+                        }}
+                      >
+                        {months.map((month) => (
+                          <div
+                            key={month}
+                            onClick={() => handleMonthClick(month)}
+                            style={{
+                              padding: "8px 16px",
+                              cursor: "pointer",
+                              borderRadius: "4px",
+                              backgroundColor:
+                                selectedMonth === month ? "#f0f0f0" : "#fff",
+                              transition: "background-color 0.2s",
+                            }}
+                          >
+                            {month}
+                          </div>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </MonthDropDownContainer> */}
+                <FilterButton onClick={togglePopUp}>
+                  <FilterImage src="/Images/filtericon.svg" />
+                  {numberOfFilters > 0 && (
+                    <NumberOfFiltersContainer>
+                      <NumberOfFilters>{numberOfFilters}</NumberOfFilters>
+                    </NumberOfFiltersContainer>
+                  )}
+                </FilterButton>
+              </FilterContainer>
+              <FinancialReportContainer onClick={navigateToFinancialReport}>
+                <FinancialReportHeading>
+                  See your financial report
+                </FinancialReportHeading>
+                <ArrowRight src="/Images/arrow-right-2.svg" />
+              </FinancialReportContainer>
+              <TransactionsContainer>
+                {!NoTransactions ? (
+                  transactionsArr.map((eachItem, index) => (
+                    <TransactionList
+                      key={index}
+                      date={eachItem.date}
+                      details={eachItem.transactions}
+                    />
+                  ))
+                ) : (
+                  <NoTransactionsComponent />
+                )}
+              </TransactionsContainer>
 
-          <AnimatePresence mode="wait">
-            {isPopupOpen && (
-              <Overlay onClick = {togglePopUp}
-                variants={overlayVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-              >
-                <FilterPopup
-                  selectedSortOptions={tempSortOptions}
-                  selectedCategoryOptions={selectedCategoryOptions}
-                  handleSortSelection={handleSortSelection}
-                  togglePopUp={togglePopUp}
-                  applyFilters={applyFilters}
-                  resetFilters={resetFilters}
-                  openCategoryPopup={openCategoryPopup}
-                  sortOptions={sortOptions}
-                />
-              </Overlay>
-            )}
+              <AnimatePresence mode="wait">
+                {isPopupOpen && (
+                  <Overlay
+                    onClick={togglePopUp}
+                    variants={overlayVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                  >
+                    <FilterPopup
+                      selectedSortOptions={tempSortOptions}
+                      selectedCategoryOptions={selectedCategoryOptions}
+                      handleSortSelection={handleSortSelection}
+                      togglePopUp={togglePopUp}
+                      applyFilters={applyFilters}
+                      resetFilters={resetFilters}
+                      openCategoryPopup={openCategoryPopup}
+                      sortOptions={sortOptions}
+                    />
+                  </Overlay>
+                )}
 
-            {isCategoryPopupOpen && (
-              <Overlay
-                variants={overlayVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit" onClick = {closeCategoryPopup}
-              >
-                <CategoryPopup
-                  selectedCategoryOptions={selectedCategoryOptions}
-                  handleCategorySelection={handleCategorySelection}
-                  categoryOptions={categoryOptions}
-                  closeCategoryPopup={closeCategoryPopup}
-                />
-              </Overlay>
-            )}
-          </AnimatePresence>
-          </>: <NoTransactionsComponent/>}
+                {isCategoryPopupOpen && (
+                  <Overlay
+                    variants={overlayVariants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    onClick={closeCategoryPopup}
+                  >
+                    <CategoryPopup
+                      selectedCategoryOptions={selectedCategoryOptions}
+                      handleCategorySelection={handleCategorySelection}
+                      categoryOptions={categoryOptions}
+                      closeCategoryPopup={closeCategoryPopup}
+                    />
+                  </Overlay>
+                )}
+              </AnimatePresence>
+            </>
+          ) : (
+            <NoTransactionsComponent />
+          )}
         </TransactionSubContainer>
       </TransactionMainContainer>
+      {showMonthReview && (
+        <MonthReviewPopUp toggleMontlyPopUp={toggleMontlyPopUp} />
+      )}
     </>
   );
 };

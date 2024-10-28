@@ -132,17 +132,32 @@ export const CityLocation = styled.div`
   line-height: 18px; /* 112.5% */
 `;
 
-export const LocationDropDownItem = styled.div`
+// export const LocationDropDownItem = styled.div`
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   align-self: stretch;
+//   width: 90%;
+//   margin: auto;
+// `;
+
+export const LocationDropDownItem = styled.div<{ isSelected: boolean }>`
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  align-self: stretch;
-  width: 90%;
-  margin: auto;
+  padding: 8px;
+  cursor: pointer;
+  background-color: ${({ isSelected }) =>
+    isSelected ? "var(--Violet-Violet-100, #7f3dff)" : "transparent"};
+  color: ${({ isSelected }) => (isSelected ? "#fff" : "#000")};
+  border-radius: 4px;
+
+  &:hover {
+    background-color: var(--Violet-Violet-100, #7f3dff);
+    color: #fff;
+  }
 `;
 
 export const LocationDropDownItemText = styled.p`
-  color: #000;
   font-family: Inter;
   font-size: 16px;
   font-style: normal;
@@ -167,4 +182,23 @@ export const ContinueButton = styled(GlobalButton1)`
   width: 90%;
   margin: auto;
   margin-top: 16px;
+`;
+
+export const GenderButton = styled.button<{ isSelected: boolean }>`
+  width: 95%;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 16px;
+  background-color: ${({ isSelected }) =>
+    isSelected ? "var(--Violet-Violet-100, #7f3dff)" : "transparent"};
+  color: ${({ isSelected }) => (isSelected ? "#fff" : "#000")};
+  border: 1px solid #afafaf;
+  margin: auto;
+  padding: 14px;
+  border-radius: 8px;
+  &:hover {
+    background-color: var(--Violet-Violet-100, #7f3dff);
+    color: #fff;
+  }
 `;

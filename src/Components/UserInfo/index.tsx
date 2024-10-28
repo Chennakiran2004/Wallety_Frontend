@@ -9,6 +9,8 @@ import {
   BackImage,
   Button,
   InputContainer,
+  EditProfileMainContianer,
+  ProfileError,
 } from "./styledComponents";
 import { useEffect, useState } from "react";
 import {
@@ -32,6 +34,8 @@ const UserInfo = () => {
 
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
+
+  const [profileError ,setProfileError] = useState("")
 
   const { accessToken, refreshToken, deleteAccessToken, deleteRefereshToken } =
     ChangingTokens();
@@ -83,10 +87,14 @@ const UserInfo = () => {
           },
         });
 
+        setProfileError("Profile Edited Successful")
+
         setUserData(response.data);
-        setUserName(response.data.username ?? "");
+        setUserName(response.data.full_name ?? "");
         setEmail(response.data.email ?? "");
       };
+
+
 
       fetching();
     } catch (err) {
@@ -95,7 +103,7 @@ const UserInfo = () => {
   }, []);
 
   return (
-    <>
+    <EditProfileMainContianer>
       <SignAndLoginInHeadingContainer>
         <BackImage onClick={handleBack} size={40} />
         <SignAndLoginHeading>Edit Profile</SignAndLoginHeading>
@@ -121,10 +129,11 @@ const UserInfo = () => {
               onChange={onChangePassword}
             />
           </InputContainer> */}
+          {profileError.length > 0 && <ProfileError>{profileError}</ProfileError>}
           <Button onClick={updateProfile}>Submit</Button>
         </FormContainer>
       </ProfileInfoMainContainer>
-    </>
+    </EditProfileMainContianer>
   );
 };
 

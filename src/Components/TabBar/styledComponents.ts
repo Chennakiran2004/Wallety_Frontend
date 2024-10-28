@@ -61,6 +61,10 @@ export const CustomLink = styled(Link)`
   text-decoration: none;
   color: inherit;
   cursor: none;
+
+  @media screen and (min-width: 768px) {
+    cursor: pointer;
+  }
 `;
 
 export const TabBarContainer = styled.div`

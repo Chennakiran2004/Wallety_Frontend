@@ -110,7 +110,7 @@ const TransactionDetails = () => {
           </TransactionDetailsHeader>
           <TransactionContentsDetails>
             <TransactionContentsContainer>
-              <TransactionAmount>${data?.amount}</TransactionAmount>
+              <TransactionAmount>₹{data?.amount}</TransactionAmount>
               <SalaryMonth>Salary for July</SalaryMonth>
             </TransactionContentsContainer>
             <DateTimeDetails>

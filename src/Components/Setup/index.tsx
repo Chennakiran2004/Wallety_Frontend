@@ -9,6 +9,7 @@ import {
   Text,
 } from "./setupstyled";
 import { NavigationEvents } from "../../Constants/EventHandlers";
+import { CarouselItemImage } from "../GainTotalControlOfYourMoney/styledComponents";
 
 const SetUp = () => {
   const { navigateAddNewAccount } = NavigationEvents();
@@ -21,6 +22,7 @@ const SetUp = () => {
             Let’s setup your <br />
             account!
           </AccountSetUpHeading>
+          <CarouselItemImage src="/Images/lets'ssetup.svg" />
           <TextContainer>
             <TextImage src="/Images/infoicon.svg" />
             <Text>

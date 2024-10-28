@@ -30,3 +30,16 @@ export const ExpensesType = styled.img``;
 export const ExpensesTypeText = styled(DropDownText)`
   font-size: 16px;
 `;
+
+
+interface SmallIconProps{
+  color: string
+}
+
+export const SmallIcon = styled.div<SmallIconProps>`
+  width: 20px;
+  height: 20px;
+  background-color: ${({color})=> color};
+  border-radius: 100px;
+  margin-right: 8px;
+`

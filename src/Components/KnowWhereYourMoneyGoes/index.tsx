@@ -11,9 +11,11 @@ const KnowWhereYourMoneyGoes = () => {
     <CarouseItemMainContainer>
       <CarouselItemImage src="/Images/home2.svg" />
       <CarouselItemTextContainer>
-        <CarouselItemHeading>Know where your money goes </CarouselItemHeading>
+        <CarouselItemHeading>
+          Track Your Spending Effortlessly{" "}
+        </CarouselItemHeading>
         <CarouselItemDescription>
-          Track your transaction easily, with categories and financial report{" "}
+          Track your transactions with clear categories and simple reports.{" "}
         </CarouselItemDescription>
       </CarouselItemTextContainer>
     </CarouseItemMainContainer>
