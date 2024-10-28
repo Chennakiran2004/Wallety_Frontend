@@ -14,7 +14,7 @@ export const SmartSpendingSuggestionsMainContainer = styled.div`
     margin: auto;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
     border-radius: 16px;
-    height: 78vh;
+    height: 78dvh;
     position: relative;
   }
 `;
@@ -47,11 +47,11 @@ export const SmartSpendingCardsContainer = styled.div`
   flex-shrink: 0;
   margin-top: 24px;
   overflow: scroll;
-  max-height: 72vh;
+  max-height: 72dvh;
   scrollbar-width: none;
 
   @media screen and (min-width: 768px) {
-    height: 50vh;
+    height: 50dvh;
   }
 `;
 
