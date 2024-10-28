@@ -68,8 +68,8 @@ const splitCurrency = (value: string | undefined) => {
 const LoaderSpinner: React.FC = () => (
   <HomeMainContainer style={{ justifyContent: "center" }}>
     <Oval
-      height={80}
-      width={80}
+      height={40}
+      width={40}
       color="#7f3dff"
       visible={true}
       ariaLabel="loading"
@@ -163,7 +163,7 @@ const Home: React.FC = () => {
   const { accessToken } = ChangingTokens();
   const { navigateToTransaction } = NavigationEvents();
 
-  const [isLoading, setIsLoading] = useState<boolean>(true); // Single loading state for entire page
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [recentTransactionsArr, setRecentTransactionsArr] = useState<
     Transaction[]
   >([]);
