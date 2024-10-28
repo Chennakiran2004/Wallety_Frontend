@@ -26,7 +26,11 @@ import {
   PopupContainer,
   PopUpSubContainer,
 } from "../Transaction/styledComponents";
-import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import {
+  ChangingTokens,
+  NavigationEvents,
+  url,
+} from "../../Constants/EventHandlers";
 import axios from "axios";
 import { handleAxiosError } from "../../Constants/errorHandler";
 
@@ -42,22 +46,24 @@ const overlayVariants = {
   exit: { opacity: 0 },
 };
 
-interface ProfileInterface{
-  email: string
-  full_name: string
-  gender: string
-  role: string
-  salary: string
-  username: string
+interface ProfileInterface {
+  email: string;
+  full_name: string;
+  gender: string;
+  role: string;
+  salary: string;
+  username: string;
 }
 
 const Profile = () => {
   const [isPopupOpen, setIsPopUpOpen] = useState(false);
+  const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
   const { navigateToUserInfo, navigateToLogin } = NavigationEvents();
-  const {accessToken, refreshToken, deleteAccessToken, deleteRefereshToken} = ChangingTokens();
+  const { accessToken, refreshToken, deleteAccessToken, deleteRefereshToken } =
+    ChangingTokens();
 
-  const [userData, setUserData] = useState<ProfileInterface | null>()
+  const [userData, setUserData] = useState<ProfileInterface | null>();
 
   const handleLogoutClick = () => {
     setIsPopUpOpen(true);
@@ -67,51 +73,63 @@ const Profile = () => {
     setIsPopUpOpen(false);
   };
 
-  const handleLogout = () => {
-    const data = {
-      "access_token": accessToken,
-      "refresh_token": refreshToken
-    }
-     const fetching = async()=>{
-      try{
-        const response = await axios.post(`${url}/user_account/logout/v1`, data, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          }});
-
-          deleteAccessToken()
-          deleteRefereshToken()
-          navigateToLogin()
-      }catch(err){
-        console.log(err)
-      }
-     }
-
-     fetching()
+  const hanleFeedbackClick = () => {
+    setIsFeedbackOpen(true);
   };
 
-  useEffect(()=>{
-    try{
-      const fetching = async()=>{
+  const handleLogout = () => {
+    const data = {
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    };
+    const fetching = async () => {
+      try {
+        const response = await axios.post(
+          `${url}/user_account/logout/v1`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+
+        deleteAccessToken();
+        deleteRefereshToken();
+        navigateToLogin();
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetching();
+  };
+
+  useEffect(() => {
+    try {
+      const fetching = async () => {
         const response = await axios.get(`${url}/get/user_profile/v1`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-          }});
-          setUserData(response.data)
-      }
+          },
+        });
+        setUserData(response.data);
+      };
 
-      fetching()
-    }catch(err){
-      handleAxiosError(err)
+      fetching();
+    } catch (err) {
+      handleAxiosError(err);
     }
-  }, [])
+  }, []);
 
   return (
     <ProfileMainContainer>
       <ProfileContentContainer>
         <ProfileHeadingContainer>
           <ProfileHeadingIcon>
-            <ProfileHeadingIconSymbol>{userData?.username[0]}</ProfileHeadingIconSymbol>
+            <ProfileHeadingIconSymbol>
+              {userData?.username[0]}
+            </ProfileHeadingIconSymbol>
           </ProfileHeadingIcon>
           <ProfileHeadingTextContainer>
             <UserNameText>Useraname</UserNameText>
@@ -129,6 +147,26 @@ const Profile = () => {
             <ProfileItemText>Logout</ProfileItemText>
           </ProfileInfoItemContainer>
         </ProfileInfoItemsContainer>
+
+        <AnimatePresence mode="wait">
+          <Overlay
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={handleClosePopup}
+          >
+            <PopupContainer
+              onClick={(e) => e.stopPropagation()}
+              variants={popupVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <PopUpSubContainer>hello</PopUpSubContainer>
+            </PopupContainer>
+          </Overlay>
+        </AnimatePresence>
 
         <AnimatePresence mode="wait">
           {isPopupOpen && (
