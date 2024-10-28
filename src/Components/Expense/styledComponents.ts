@@ -15,7 +15,7 @@ import {
 } from "../AddNewAccount/styledComponents";
 
 export const ExpenseContainer = styled.div`
-  height: 85vh;
+  height: 94vh;
   width: 100vw;
   background-color: #fd3c4a;
   padding-top: 8%;

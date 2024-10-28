@@ -60,7 +60,7 @@ const Login = () => {
   const [error, setError] = useState<String | undefined>(undefined);
 
   const { changePassword } = ChangeEvents();
-  const { handleBack } = NavigationEvents();
+  const { navigateSignIn } = NavigationEvents();
 
   const submitForm = () => {
     if (email === "" || password === "") {
@@ -118,7 +118,7 @@ const Login = () => {
       <SignUpContainer>
         <SignUpSubContainer>
           <HeaderContainer>
-            <IconContianer onClick={handleBack} size={40} />
+            <IconContianer onClick={navigateSignIn} size={40} />
             <SignUpHeading>Login</SignUpHeading>
           </HeaderContainer>
           <FieldsContainer
