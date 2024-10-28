@@ -1,5 +1,18 @@
 *{
   margin: 0px;
+  
+}
+
+p {
+  user-select: none; 
+}
+
+h1{
+  user-select: none;
+}
+
+h2{
+  user-select: none;
 }
 
 body {
