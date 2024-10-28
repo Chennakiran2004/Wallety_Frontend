@@ -81,16 +81,17 @@ export const ListItem = styled.li`
 `;
 
 export const TransactionsContainer = styled.div`
-  max-height: 62dvh;
+  max-height: 60vh;
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
   gap: 16px;
   padding-bottom: 26px;
-
-  @media(min-width: 768px){
+  scrollbar-width: none;
+  @media screen and (min-width: 768px) {
     max-height: 40vh;
   }
+  
 `;
 
 export const ListItemContentsContainer = styled.div`
