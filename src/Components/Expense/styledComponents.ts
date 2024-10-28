@@ -78,11 +78,11 @@ export const CategoryContents = styled(GenderContents)`
 `;
 
 export const DescriptionField = styled(InputField)`
-  width: 88%;
+  width: 90%;
 `;
 
 export const ExpenseBottomSubContainer = styled.div`
-  width: 95%;
+  width: 100%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -143,6 +143,16 @@ export const InputExpense = styled.input`
 
   &::placeholder {
     color: white;
+  }
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  & {
+    -moz-appearance: textfield; /* Remove spin buttons in Firefox */
   }
 `;
 

@@ -47,11 +47,11 @@ export const SmartSpendingCardsContainer = styled.div`
   flex-shrink: 0;
   margin-top: 24px;
   overflow: scroll;
-  max-height: 76vh;
+  max-height: 72vh;
   scrollbar-width: none;
 
   @media screen and (min-width: 768px) {
-    height: 56vh;
+    height: 50vh;
   }
 `;
 
