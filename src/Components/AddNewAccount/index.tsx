@@ -186,6 +186,7 @@ const AddNewAccount = () => {
           user_preference: selectedSpender,
           location: location.toUpperCase(),
         };
+        
 
         console.log(bodyData)
 
