@@ -9,7 +9,6 @@ import {
   HomeContentSubContainer,
   HomeMainContainer,
   IncomeAndExpenseContainer,
-  IncomeAndExpenseContentContainer,
   IncomeAndExpenseHeading,
   IncomeAndExpenseImage,
   IncomeAndExpenseMoney,
@@ -34,8 +33,10 @@ import {
 import axios from "axios";
 import NoTransactionsComponent from "../NoTransactions";
 import { useNavigate } from "react-router-dom";
-import {handleAxiosError} from '../../Constants/errorHandler'
+import { handleAxiosError } from "../../Constants/errorHandler";
+import { Oval } from "react-loader-spinner";
 
+// Define interfaces
 interface TransactionItem {
   category: string;
   amount: string;
@@ -56,216 +57,187 @@ interface UserExpenseDetails {
   user_name: string;
 }
 
-// const recentTransactionsData: Transaction[] = [
-//   {
-//     category: "Shopping",
-//     description: "Buy some groceries",
-//     amount: "- ₹120",
-//     time: "10:00 AM",
-//   },
-//   {
-//     category: "Subscription",
-//     description: "Subscription",
-//     amount: "- ₹1500",
-//     time: "12:00 PM",
-//   },
-//   {
-//     category: "Shopping",
-//     description: "Taxi Fare",
-//     amount: "- ₹300",
-//     time: "2:30 PM",
-//   },
-//   {
-//     category: "Food",
-//     description: "Movie Tickets",
-//     amount: "- ₹600",
-//     time: "6:00 PM",
-//   },
-//   {
-//     category: "Food",
-//     description: "Movie Tickets",
-//     amount: "- ₹600",
-//     time: "6:00 PM",
-//   },
-//   {
-//     category: "Food",
-//     description: "Movie Tickets",
-//     amount: "- ₹600",
-//     time: "6:00 PM",
-//   },
-//   {
-//     category: "Food",
-//     description: "Movie Tickets",
-//     amount: "- ₹600",
-//     time: "6:00 PM",
-//   },
-//   {
-//     category: "Food",
-//     description: "Movie Tickets",
-//     amount: "- ₹600",
-//     time: "6:00 PM",
-//   },
-// ];
+// Helper function to split currency values
+const splitCurrency = (value: string | undefined) => {
+  if (!value) return { decimal: "", point: "" };
+  const [decimal, point] = value.split(".");
+  return { decimal, point };
+};
 
+// Loader component
+const LoaderSpinner: React.FC = () => (
+  <HomeMainContainer style={{ justifyContent: "center" }}>
+    <Oval
+      height={80}
+      width={80}
+      color="#7f3dff"
+      visible={true}
+      ariaLabel="loading"
+    />
+  </HomeMainContainer>
+);
+
+// Component for User Balance
+const UserBalance: React.FC<{ userExpense: UserExpenseDetails | null }> = ({
+  userExpense,
+}) => {
+  const { decimal: balanceDecimal, point: balancePoint } = splitCurrency(
+    userExpense?.Account_Balance
+  );
+  const { decimal: incomeDecimal, point: incomePoint } = splitCurrency(
+    userExpense?.Income
+  );
+  const { decimal: expenseDecimal, point: expensePoint } = splitCurrency(
+    userExpense?.Expense
+  );
+
+  return (
+    <HomeContentContainer>
+      <HomeContentSubContainer>
+        <UserName>Hello {userExpense?.user_name} 👋,</UserName>
+        <AccountBalanceContainer>
+          <AccountBalanceText>Account Balance</AccountBalanceText>
+          <AccountBalanceMoney>
+            ₹<span>{balanceDecimal}</span>
+            <span style={{ fontSize: "12px" }}>.{balancePoint}</span>
+          </AccountBalanceMoney>
+        </AccountBalanceContainer>
+        <IncomeAndExpenseContainer>
+          <IncomeContainer>
+            <IconAndTextContainer>
+              <IncomeAndExpenseImage src="/Images/income.svg" />
+              <IncomeAndExpenseHeading>Income</IncomeAndExpenseHeading>
+            </IconAndTextContainer>
+            <IncomeAndExpenseMoney>
+              ₹<span>{incomeDecimal}</span>
+              <span style={{ fontSize: "12px" }}>.{incomePoint}</span>
+            </IncomeAndExpenseMoney>
+          </IncomeContainer>
+
+          <ExpenseContainer>
+            <IconAndTextContainer>
+              <IncomeAndExpenseImage src="/Images/expenses.svg" />
+              <IncomeAndExpenseHeading>Expense</IncomeAndExpenseHeading>
+            </IconAndTextContainer>
+
+            <IncomeAndExpenseMoney>
+              ₹<span>{expenseDecimal}</span>
+              <span style={{ fontSize: "12px" }}>.{expensePoint}</span>
+            </IncomeAndExpenseMoney>
+          </ExpenseContainer>
+        </IncomeAndExpenseContainer>
+      </HomeContentSubContainer>
+    </HomeContentContainer>
+  );
+};
+
+// Component for Recent Transactions
+const RecentTransactions: React.FC<{ transactions: Transaction[] }> = ({
+  transactions,
+}) => (
+  <RecentItemsContainer>
+    {transactions.length > 0 ? (
+      transactions.map((item) =>
+        item.transactions.map((eachItem: TransactionItem) => (
+          <RecenetTransactionItem
+            key={eachItem.transaction_id}
+            type={eachItem.category}
+            description={eachItem.description}
+            price={eachItem.amount}
+            time={eachItem.time}
+            id={eachItem.transaction_id}
+          />
+        ))
+      )
+    ) : (
+      <NoTransactionsMainContainer>
+        <NoTransactionsComponent />
+      </NoTransactionsMainContainer>
+    )}
+  </RecentItemsContainer>
+);
+
+// Main Home Component
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const { accessToken } = ChangingTokens();
   const { navigateToTransaction } = NavigationEvents();
-  const [NoTransactions, setNoTransactions] = useState(false);
 
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Single loading state for entire page
   const [recentTransactionsArr, setRecentTransactionsArr] = useState<
     Transaction[]
   >([]);
-  const [userExpense, setUserExpense] = useState<UserExpenseDetails>();
-  const { navigateLogin } = NavigationEvents();
-  const { accessToken, deleteAccessToken, deleteRefereshToken } =
-    ChangingTokens();
-
-  const isSalaryAdded = localStorage.getItem("isSalaryAdded");
+  const [userExpense, setUserExpense] = useState<UserExpenseDetails | null>(
+    null
+  );
+  const [noTransactions, setNoTransactions] = useState(false);
 
   useEffect(() => {
-    if (isSalaryAdded !== "true") {
-      navigate("/addNewAccount");
-    }
-    const fetching = async () => {
+    const fetchData = async () => {
+      setIsLoading(true);
       try {
-        const response = await axios.get(`${url}/get_user_details/`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-type": "Application/json",
-          },
-        });
+        const userDetailsResponse = await axios.get(
+          `${url}/get_user_details/`,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        setUserExpense(userDetailsResponse.data);
 
-        setUserExpense(response.data);
-
-        console.log(response.data);
-      } catch (err) {
-        handleAxiosError(err)
-      }
-    };
-
-    const recentTransactions = async () => {
-      try {
-        const response = await axios.post(
+        const transactionsResponse = await axios.post(
           `${url}/get_last_five_transactions/`,
           {},
           {
             headers: {
-              // c73dba9fbf5b480991fbfb404142d994
               Authorization: `Bearer ${accessToken}`,
-              "Content-type": "Application/json",
             },
           }
         );
-        if (response.data.transactions_by_date) {
+        if (transactionsResponse.data.transactions_by_date) {
           setNoTransactions(true);
         }
-        setRecentTransactionsArr(response.data.transactions_by_date);
-      } catch (err: any) {
-        handleAxiosError(err)
+        setRecentTransactionsArr(
+          transactionsResponse.data.transactions_by_date
+        );
+      } catch (error) {
+        handleAxiosError(error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    recentTransactions();
-    fetching();
-  }, [navigate]);
+    fetchData();
+  }, [accessToken]);
 
-  const account_balance = userExpense?.Account_Balance.split(".");
-  let pointValues = "";
-  let decimalValues = "";
-  if (account_balance) {
-    decimalValues = account_balance[0];
-    pointValues = account_balance[1];
-    console.log(pointValues);
+  if (isLoading) {
+    return <LoaderSpinner />;
   }
-
-  const income = userExpense?.Income.split(".");
-  let incomeDecimalValues = "";
-  let incomePointValues = "";
-  if (income) {
-    incomeDecimalValues = income[0];
-    incomePointValues = income[1];
-  }
-
-  const expense = userExpense?.Expense.split(".");
-  console.log(expense);
-  let expenseDecimalValues = "";
-  let expensePointValues = "";
-  if (expense) {
-    expenseDecimalValues = expense[0];
-    expensePointValues = expense[1];
-  }
-
-  console.log(userExpense?.Account_Balance);
-  console.log(userExpense?.Expense);
 
   return (
-    <HomeMainContainer>
-      <HomeContentContainer>
-        <HomeContentSubContainer>
-          <UserName>Hello {userExpense?.user_name} 👋,</UserName>
-          <AccountBalanceContainer>
-            <AccountBalanceText>Account Balance</AccountBalanceText>
-            <AccountBalanceMoney>
-              ₹<span>{decimalValues}</span>
-              <span style={{ fontSize: "12px" }}>.{pointValues}</span>
-            </AccountBalanceMoney>
-          </AccountBalanceContainer>
-          <IncomeAndExpenseContainer>
-            <IncomeContainer>
-              <IconAndTextContainer>
-                <IncomeAndExpenseImage src="/Images/income.svg" />
-                <IncomeAndExpenseHeading>Income</IncomeAndExpenseHeading>
-              </IconAndTextContainer>
-              <IncomeAndExpenseMoney>
-                ₹<span>{incomeDecimalValues}</span>
-                <span style={{ fontSize: "12px" }}>.{incomePointValues}</span>
-              </IncomeAndExpenseMoney>
-            </IncomeContainer>
+    <>
+      {isLoading ? (
+        <>
+          <LoaderSpinner />
+        </>
+      ) : (
+        <HomeMainContainer>
+          <UserBalance userExpense={userExpense} />
 
-            <ExpenseContainer>
-              <IconAndTextContainer>
-                <IncomeAndExpenseImage src="/Images/expenses.svg" />
-                <IncomeAndExpenseHeading>Expense</IncomeAndExpenseHeading>
-              </IconAndTextContainer>
+          <RecentTransactionsContainer>
+            <RecentTransactionText>Recent Transactions</RecentTransactionText>
+            <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
+          </RecentTransactionsContainer>
 
-              <IncomeAndExpenseMoney>
-                ₹<span>{expenseDecimalValues}</span>
-                <span style={{ fontSize: "12px" }}>.{expensePointValues}</span>
-              </IncomeAndExpenseMoney>
-            </ExpenseContainer>
-          </IncomeAndExpenseContainer>
-        </HomeContentSubContainer>
-      </HomeContentContainer>
-      <>
-        <RecentTransactionsContainer>
-          <RecentTransactionText>Recent Transactions</RecentTransactionText>
-          <SeeAllButton onClick={navigateToTransaction}>See All</SeeAllButton>
-        </RecentTransactionsContainer>
-        <RecentItemsContainer>
-          {recentTransactionsArr.length > 0 ? (
-            recentTransactionsArr.map((item) =>
-              item.transactions.map((eachItem: TransactionItem) => (
-                <RecenetTransactionItem
-                  key={eachItem.transaction_id}
-                  type={eachItem.category}
-                  description={eachItem.description}
-                  price={eachItem.amount}
-                  time={eachItem.time}
-                  id={eachItem.transaction_id}
-                />
-              ))
-            )
-          ) : (
-            <NoTransactionsMainContainer>
-              <NoTransactionsComponent />
-            </NoTransactionsMainContainer>
-          )}
-        </RecentItemsContainer>
-      </>
-      <AddButtonContainer onClick={() => navigate("/expense")}>
-        <TabBarItemImage src="/Images/Add.svg" />
-      </AddButtonContainer>
-    </HomeMainContainer>
+          <RecentTransactions transactions={recentTransactionsArr} />
+
+          <AddButtonContainer onClick={() => navigate("/expense")}>
+            <TabBarItemImage src="/Images/Add.svg" />
+          </AddButtonContainer>
+        </HomeMainContainer>
+      )}
+    </>
   );
 };
 
