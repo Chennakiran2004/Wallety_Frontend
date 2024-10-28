@@ -142,6 +142,12 @@ const AddNewAccount = () => {
     setSpenderContents(false);
   };
 
+  const preventInvalidInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "-" || e.key === "e" || e.key === "E") {
+      e.preventDefault(); // Prevent entering "-" or exponential notation
+    }
+  };
+
   const validateFields = () => {
     let valid = true;
 
@@ -222,6 +228,8 @@ const AddNewAccount = () => {
               <EnterYourSalaryInput
                 type="number"
                 onChange={(e) => setSalary(parseInt(e.target.value))}
+                onKeyDown={preventInvalidInput}
+                min="0"
               />
             </RupeesAndInputContainer>
             {salaryError && <p style={{ color: "red" }}>{salaryError}</p>}

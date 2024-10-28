@@ -149,9 +149,8 @@ const ExpenseComponent = () => {
             setError(err.response.data.message);
           }
         }
-        handleAxiosError(err)
+        handleAxiosError(err);
       }
-      
     };
 
     fetching();
@@ -180,6 +179,7 @@ const ExpenseComponent = () => {
             <InputExpense
               type="number"
               onChange={(e) => setAmount(e.target.value)}
+              min="0"
             />
           </RupeesAndInputContainer>
         </InputContainer>

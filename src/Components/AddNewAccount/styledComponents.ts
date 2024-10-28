@@ -91,6 +91,16 @@ export const EnterYourSalaryInput = styled.input`
   width: 100%;
   border: none;
   outline: none;
+
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  & {
+    -moz-appearance: textfield; /* Remove spin buttons in Firefox */
+  }
 `;
 
 export const LocationContainer = styled.div`
