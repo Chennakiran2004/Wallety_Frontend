@@ -47,7 +47,7 @@ export const SmartSpendingCardsContainer = styled.div`
   flex-shrink: 0;
   margin-top: 24px;
   overflow: scroll;
-  max-height: 72dvh;
+  max-height: 60dvh;
   scrollbar-width: none;
 
   @media screen and (min-width: 768px) {
