@@ -48,7 +48,7 @@ export const ContinueButtonInAllSet = styled(GlobalButton1)`
 
 export const GifWrapper = styled.div<GifWrapperProps>`
   width: 300px;
-  height: 200px;
+  height: 300px;
   background: ${(props) => `url(${props.gifUrl})`};
   background-size: cover;
   background-repeat: no-repeat;

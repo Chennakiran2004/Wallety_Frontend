@@ -91,7 +91,6 @@ export const TransactionsContainer = styled.div`
   @media screen and (min-width: 768px) {
     max-height: 40vh;
   }
-  
 `;
 
 export const ListItemContentsContainer = styled.div`
@@ -150,11 +149,11 @@ export const Overlay = styled(motion.div)`
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9;
 
-  @media(min-width: 768px){
-      position: fixed;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+  @media (min-width: 768px) {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -198,7 +197,6 @@ export const FilterPopUpHeading = styled.p`
   ${interSemiBold}
   font-size: 20px;
   text-align: left;
-
 `;
 
 export const ResetButton = styled.button`
@@ -261,7 +259,6 @@ export const CategoryButtonContainer = styled.div`
 export const CategorySideHeading = styled.p`
   ${interMedium}
   font-size: 16px;
-  
 `;
 
 export const CategoryItemSelectedContainer = styled.div`
@@ -325,10 +322,17 @@ export const CategoryItemsContainer = styled.div`
   gap: 8px;
 `;
 
-
 export const NoTransactionMain = styled.div`
-  height: 72vh;;
+  height: 72vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
+
+export const Loader = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 65dvh;
+`;

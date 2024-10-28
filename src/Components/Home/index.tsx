@@ -20,6 +20,8 @@ import {
   SeeAllButton,
   UserName,
   IconAndTextContainer,
+  HeadingContainer,
+  BulbImage,
 } from "./styledComponents";
 import {
   AddButtonContainer,
@@ -91,10 +93,20 @@ const UserBalance: React.FC<{ userExpense: UserExpenseDetails | null }> = ({
     userExpense?.Expense
   );
 
+  const { navigateToSmartSpendingSuggestions } = NavigationEvents();
+
   return (
     <HomeContentContainer>
       <HomeContentSubContainer>
-        <UserName>Hello {userExpense?.user_name} 👋,</UserName>
+        <HeadingContainer>
+          <UserName>Hello {userExpense?.user_name} 👋,</UserName>
+          <BulbImage
+            onClick={navigateToSmartSpendingSuggestions}
+            src="/Images/light-bulb.svg"
+            height="60px"
+            width="60px"
+          />
+        </HeadingContainer>
         <AccountBalanceContainer>
           <AccountBalanceText>Account Balance</AccountBalanceText>
           <AccountBalanceMoney>

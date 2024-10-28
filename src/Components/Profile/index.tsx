@@ -26,7 +26,11 @@ import {
   PopupContainer,
   PopUpSubContainer,
 } from "../Transaction/styledComponents";
-import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import {
+  ChangingTokens,
+  NavigationEvents,
+  url,
+} from "../../Constants/EventHandlers";
 import axios from "axios";
 import { handleAxiosError } from "../../Constants/errorHandler";
 
@@ -42,22 +46,24 @@ const overlayVariants = {
   exit: { opacity: 0 },
 };
 
-interface ProfileInterface{
-  email: string
-  full_name: string
-  gender: string
-  role: string
-  salary: string
-  username: string
+interface ProfileInterface {
+  email: string;
+  full_name: string;
+  gender: string;
+  role: string;
+  salary: string;
+  username: string;
 }
 
 const Profile = () => {
   const [isPopupOpen, setIsPopUpOpen] = useState(false);
 
-  const { navigateToUserInfo, navigateToLogin } = NavigationEvents();
-  const {accessToken, refreshToken, deleteAccessToken, deleteRefereshToken} = ChangingTokens();
+  const { navigateToUserInfo, navigateToLogin, navigateToMonthReview } =
+    NavigationEvents();
+  const { accessToken, refreshToken, deleteAccessToken, deleteRefereshToken } =
+    ChangingTokens();
 
-  const [userData, setUserData] = useState<ProfileInterface | null>()
+  const [userData, setUserData] = useState<ProfileInterface | null>();
 
   const handleLogoutClick = () => {
     setIsPopUpOpen(true);
@@ -69,49 +75,57 @@ const Profile = () => {
 
   const handleLogout = () => {
     const data = {
-      "access_token": accessToken,
-      "refresh_token": refreshToken
-    }
-     const fetching = async()=>{
-      try{
-        const response = await axios.post(`${url}/user_account/logout/v1`, data, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          }});
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    };
+    const fetching = async () => {
+      try {
+        const response = await axios.post(
+          `${url}/user_account/logout/v1`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
 
-          deleteAccessToken()
-          deleteRefereshToken()
-          navigateToLogin()
-      }catch(err){
-        console.log(err)
+        deleteAccessToken();
+        deleteRefereshToken();
+        navigateToLogin();
+      } catch (err) {
+        console.log(err);
       }
-     }
+    };
 
-     fetching()
+    fetching();
   };
 
-  useEffect(()=>{
-    try{
-      const fetching = async()=>{
+  useEffect(() => {
+    try {
+      const fetching = async () => {
         const response = await axios.get(`${url}/get/user_profile/v1`, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
-          }});
-          setUserData(response.data)
-      }
+          },
+        });
+        setUserData(response.data);
+      };
 
-      fetching()
-    }catch(err){
-      handleAxiosError(err)
+      fetching();
+    } catch (err) {
+      handleAxiosError(err);
     }
-  }, [])
+  }, []);
 
   return (
     <ProfileMainContainer>
       <ProfileContentContainer>
         <ProfileHeadingContainer>
           <ProfileHeadingIcon>
-            <ProfileHeadingIconSymbol>{userData?.username[0]}</ProfileHeadingIconSymbol>
+            <ProfileHeadingIconSymbol>
+              {userData?.username[0]}
+            </ProfileHeadingIconSymbol>
           </ProfileHeadingIcon>
           <ProfileHeadingTextContainer>
             <UserNameText>Useraname</UserNameText>
@@ -122,6 +136,19 @@ const Profile = () => {
           <ProfileInfoItemContainer onClick={navigateToUserInfo}>
             <ProfileItemImage src="/Images/userinfo.svg" alt="userinfo pic" />
             <ProfileItemText>Edit Profile</ProfileItemText>
+          </ProfileInfoItemContainer>
+          <HorizontalLine />
+          <ProfileInfoItemContainer onClick={navigateToMonthReview}>
+            <ProfileItemImage
+              src="/Images/mothlyreviewicon.svg"
+              alt="userinfo pic"
+            />
+            <ProfileItemText>Monthly Report</ProfileItemText>
+          </ProfileInfoItemContainer>
+          <HorizontalLine />
+          <ProfileInfoItemContainer onClick={navigateToMonthReview}>
+            <ProfileItemImage src="/Images/feedback.svg" alt="userinfo pic" />
+            <ProfileItemText>Feedback</ProfileItemText>
           </ProfileInfoItemContainer>
           <HorizontalLine />
           <ProfileInfoItemContainer onClick={handleLogoutClick}>

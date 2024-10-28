@@ -173,6 +173,12 @@ const ExpenseComponent = () => {
     fetching();
   };
 
+  const preventInvalidInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "-" || e.key === "e" || e.key === "E") {
+      e.preventDefault(); // Prevent entering "-" or exponential notation
+    }
+  };
+
   const changeDescription = (e: any) => {
     if (e.target.value.length < 15) {
       setError("");
@@ -199,6 +205,7 @@ const ExpenseComponent = () => {
               value={amount}
               onChange={handleAmountChange}
               style={{ width: `${inputWidth}px` }}
+              onKeyDown={preventInvalidInput}
               min="0"
             />
           </RupeesAndInputContainer>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   ChangingTokens,
   NavigationEvents,
@@ -130,6 +130,8 @@ const AddNewAccount = () => {
   const [spenderError, setSpenderError] = useState("");
   const [locationError, setLocationError] = useState("");
 
+  const amountInputRef = useRef<HTMLInputElement>(null);
+
   const { navigateToSmartSpendingSuggestions } = NavigationEvents();
 
   const openGenderDropDown = () => {
@@ -230,6 +232,7 @@ const AddNewAccount = () => {
                 onChange={(e) => setSalary(parseInt(e.target.value))}
                 onKeyDown={preventInvalidInput}
                 min="0"
+                ref={amountInputRef}
               />
             </RupeesAndInputContainer>
             {salaryError && <p style={{ color: "red" }}>{salaryError}</p>}

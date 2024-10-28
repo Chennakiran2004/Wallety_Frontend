@@ -13,6 +13,7 @@ import {
   NumberOfFilters,
   NumberOfFiltersContainer,
   NoTransactionMain,
+  Loader,
 } from "./styledComponents";
 import { AnimatePresence } from "framer-motion";
 import TransactionList from "../TransactionList";
@@ -167,17 +168,9 @@ const Transaction = () => {
       <TransactionMainContainer>
         <TransactionSubContainer>
           {isLoading ? (
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                height: "65dvh",
-              }}
-            >
+            <Loader>
               <Oval height={40} width={40} color="#7f3dff" visible={true} />
-            </div>
+            </Loader>
           ) : !NoTransactions ? (
             <>
               <FilterContainer>
