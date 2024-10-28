@@ -39,6 +39,7 @@ import {
   NumberOfFilters,
   NumberOfFiltersContainer,
   CategoryItemsContainer,
+  NoTransactionMain,
 } from "./styledComponents";
 import { motion, AnimatePresence } from "framer-motion";
 import TransactionList from "../TransactionList";
@@ -58,6 +59,7 @@ import {
   MonthDropDown,
   DropDownText,
 } from "../FinancialReport/styledComponents";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 const data = [
   {
@@ -297,7 +299,7 @@ const Transaction = () => {
 
         setTransactionsArr(response.data.transactions_by_date);
       } catch (err) {
-        console.log(err);
+        handleAxiosError(err)
       }
     };
 
@@ -351,7 +353,7 @@ const Transaction = () => {
           }
         }
       } catch (e) {
-        console.log(e);
+        handleAxiosError(e)
       }
     };
 
@@ -388,7 +390,7 @@ const Transaction = () => {
           setTransactionsArr(response.data.transactions_by_date);
         }
       } catch (err) {
-        console.log(err);
+        handleAxiosError(err)
       }
     };
 
@@ -521,7 +523,10 @@ const Transaction = () => {
               </AnimatePresence>
             </>
           ) : (
-            <NoTransactionsComponent />
+            <NoTransactionMain>
+                  <NoTransactionsComponent />
+            </NoTransactionMain>
+            
           )}
         </TransactionSubContainer>
       </TransactionMainContainer>

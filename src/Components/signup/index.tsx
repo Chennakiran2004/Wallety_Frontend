@@ -33,6 +33,7 @@ import { motion } from "framer-motion";
 import axios from "axios";
 import withAuthRedirect from "../../Constants/WithAuthRedirect";
 import styled from "styled-components";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 // Styled Components for Password Strength Meter
 const StrengthMeterContainer = styled.div`
@@ -229,8 +230,7 @@ const SignUp = () => {
           setRefreshToken(response.data.refresh_token);
           console.log(response.data);
         } catch (err) {
-          console.log(err);
-          console.log("Error");
+          handleAxiosError(err)
         }
       };
       fetching();

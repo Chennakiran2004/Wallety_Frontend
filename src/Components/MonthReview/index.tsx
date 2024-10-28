@@ -190,6 +190,7 @@ import {
 } from "./styledcomponent";
 import axios from 'axios';
 import { ChangingTokens, url } from '../../Constants/EventHandlers';
+import { handleAxiosError } from '../../Constants/errorHandler';
 
 const MonthReview = () => {
     const [expandedCard, setExpandedCard] = useState<number | null>(null);
@@ -230,7 +231,7 @@ const MonthReview = () => {
 
                 console.log(response.data);
             } catch (e) {
-                console.log(e);
+                handleAxiosError(e)
             }
         };
 

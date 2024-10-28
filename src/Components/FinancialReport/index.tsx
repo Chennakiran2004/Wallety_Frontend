@@ -303,6 +303,7 @@ import { IconContianer } from "../signup/signupstyled";
 import ExpensesItem from "../ExpensesItem";
 import SalayItem from "../SalaryItem";
 import axios from "axios";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 const dropdownVariants = {
   hidden: { opacity: 0, height: 0 },
@@ -414,7 +415,7 @@ const FinancialReport = () => {
         );
         setExpensesData(expenses);
       } catch (err) {
-        console.log(err);
+        handleAxiosError(err)
       }
     };
 
@@ -439,7 +440,7 @@ const FinancialReport = () => {
         ];
         setIncomeData(incomeDataObj);
       } catch (err) {
-        console.log(err);
+        handleAxiosError(err)
       }
     };
 

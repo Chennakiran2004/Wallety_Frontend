@@ -28,6 +28,7 @@ import {
 } from "../Transaction/styledComponents";
 import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
 import axios from "axios";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 const popupVariants = {
   hidden: { opacity: 0, y: "100%" },
@@ -101,7 +102,7 @@ const Profile = () => {
 
       fetching()
     }catch(err){
-      console.log(err)
+      handleAxiosError(err)
     }
   }, [])
 

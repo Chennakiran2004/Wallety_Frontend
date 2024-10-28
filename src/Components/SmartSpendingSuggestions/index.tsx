@@ -23,6 +23,7 @@ import {
 
 import { url } from "../../Constants/EventHandlers";
 import { useState, useEffect } from "react";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 interface UserSpendingSuggestions {
   salary: number;
@@ -65,6 +66,7 @@ const SmartSpendingSuggestions = () => {
       setSpendingData(response.data);
       console.log(response.data);
     } catch (error) {
+      handleAxiosError(error)
       console.error("Error fetching data:", error);
     }
   };

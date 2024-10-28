@@ -33,6 +33,7 @@ import { AnimatePresence } from "framer-motion";
 import DeleteSuccessPopUp from "../DeleteSuccessFullPopUp";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 const overlayVariants = {
   hidden: { opacity: 0 },
@@ -92,7 +93,7 @@ const TransactionDetails = () => {
 
         console.log(response);
       } catch (err) {
-        console.log(err);
+        handleAxiosError(err)
       }
     };
 
