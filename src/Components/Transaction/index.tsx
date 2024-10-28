@@ -1,5 +1,463 @@
+// import { useEffect, useState } from "react";
+// import {
+//   TransactionMainContainer,
+//   TransactionSubContainer,
+//   FilterContainer,
+//   FilterImage,
+//   FilterButton,
+//   FinancialReportContainer,
+//   FinancialReportHeading,
+//   ArrowRight,
+//   TransactionsContainer,
+//   Overlay,
+//   NumberOfFilters,
+//   NumberOfFiltersContainer,
+//   NoTransactionMain,
+// } from "./styledComponents";
+// import { AnimatePresence } from "framer-motion";
+// import TransactionList from "../TransactionList";
+// import FilterPopup from "../FilterPopUp";
+// import CategoryPopup from "../CategoryPopUp";
+// import {
+//   ChangingTokens,
+//   NavigationEvents,
+//   url,
+// } from "../../Constants/EventHandlers";
+// import axios from "axios";
+// import NoTransactionsComponent from "../NoTransactions";
+// import MonthReviewPopUp from "../MonthReviewPopUp";
+
+// import { handleAxiosError } from "../../Constants/errorHandler";
+
+// // const data = [
+// //   {
+// //     date: "Today",
+// //     details: [
+// //       {
+// //         id: "1",
+// //         name: "Shopping",
+// //         money: "120",
+// //         description: "Buy Some grocerry",
+// //         time: "10:00 AM",
+// //         imageUrl: "/Images/shoppingicon.svg",
+// //       },
+// //       {
+// //         id: "2",
+// //         name: "Shopping",
+// //         money: "120",
+// //         description: "Buy Some grocerry",
+// //         time: "10:00 AM",
+// //         imageUrl: "/Images/foodicon.svg",
+// //       },
+// //       {
+// //         id: "3",
+// //         name: "Shopping",
+// //         money: "120",
+// //         description: "Buy Some grocerry",
+// //         time: "10:00 AM",
+// //         imageUrl: "/Images/transportation.svg",
+// //       },
+// //       {
+// //         id: "4",
+// //         name: "Shopping",
+// //         money: "120",
+// //         description: "Buy Some grocerry",
+// //         time: "10:00 AM",
+// //         imageUrl: "/Images/shoppingicon.svg",
+// //       },
+// //     ],
+// //   },
+// //   {
+// //     date: "Yesterday",
+// //     details: [
+// //       {
+// //         id: "5",
+// //         name: "Shopping",
+// //         money: "120",
+// //         description: "Buy Some grocerry",
+// //         time: "10:00 AM",
+// //         imageUrl: "/Images/foodicon.svg",
+// //       },
+// //       {
+// //         id: "6",
+// //         name: "Shopping",
+// //         money: "120",
+// //         description: "Buy Some grocerry",
+// //         time: "10:00 AM",
+// //         imageUrl: "/Images/transportation.svg",
+// //       },
+// //       {
+// //         id: "7",
+// //         name: "Shopping",
+// //         money: "120",
+// //         description: "Buy Some grocerry",
+// //         time: "10:00 AM",
+// //         imageUrl: "/Images/shoppingicon.svg",
+// //       },
+// //       {
+// //         id: "8",
+// //         name: "Shopping",
+// //         money: "120",
+// //         description: "Buy Some grocerry",
+// //         time: "10:00 AM",
+// //         imageUrl: "/Images/transportation.svg",
+// //       },
+// //     ],
+// //   },
+// // ];
+
+// // const months = [
+// //   "January",
+// //   "February",
+// //   "March",
+// //   "April",
+// //   "May",
+// //   "June",
+// //   "July",
+// //   "August",
+// //   "September",
+// //   "October",
+// //   "November",
+// //   "December",
+// // ];
+
+// // const dropdownVariants = {
+// //   hidden: { opacity: 0, height: 0 },
+// //   visible: { opacity: 1, height: "auto", transition: { duration: 0.3 } },
+// //   exit: { opacity: 0, height: 0, transition: { duration: 0.2 } },
+// // };
+
+// // const arrowVariants = {
+// //   open: { rotate: 140 },
+// //   closed: { rotate: 0 },
+// // };
+
+// const overlayVariants = {
+//   hidden: { opacity: 0 },
+//   visible: { opacity: 1 },
+//   exit: { opacity: 0 },
+// };
+
+// // const mainPopupExit = {
+// //   hidden: { x: 0, opacity: 1 },
+// //   exit: { x: "-100%", opacity: 0 },
+// // };
+
+// interface TransactionItem {
+//   category: string;
+//   amount: string;
+//   time: string;
+//   transaction_id: string;
+//   description: string;
+// }
+
+// interface Transaction {
+//   date: string;
+//   transactions: TransactionItem[];
+// }
+
+// const sortOptions = ["Highest", "Lowest", "Oldest"];
+// const categoryOptions = [
+//   "Shopping",
+//   "Food",
+//   "Travel",
+//   "Health",
+//   "Entertainment",
+//   "Rent",
+//   "Miscellaneous",
+// ];
+
+// const Transaction = () => {
+//   const [transactionsArr, setTransactionsArr] = useState<Transaction[]>([]);
+
+//   const [tempSortOptions, setTempSortOptions] = useState<string[]>([]);
+
+//   const [isPopupOpen, setIsPopUpOpen] = useState(false);
+//   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
+
+//   const [selectedSortOptions, setSelectedSortOptions] = useState<string[]>([]);
+//   const [finalSortOptions, setFinalSortOptions] = useState<string[]>([]);
+//   const [selectedMonth, setSelectedMonth] = useState("Month");
+
+//   const [isMonthDropdownOpen, setMonthDropdownOpen] = useState(false);
+
+//   const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<
+//     string[]
+//   >([]);
+
+//   const [NoTransactions, setNoTransactions] = useState(false);
+
+//   const { accessToken } = ChangingTokens();
+
+//   const [numberOfFilters, setNumberofFilters] = useState(0);
+
+//   const { navigateToFinancialReport } = NavigationEvents();
+
+//   const [showMonthReview, setShowMonthReview] = useState(false);
+
+//   const [overSpent, setOverSpent] = useState(0);
+
+//   const toggleMontlyPopUp = () => {
+//     setShowMonthReview(false);
+//   };
+
+//   const handleSortSelection = (option: string) => {
+//     if (selectedSortOptions.includes(option)) {
+//       setSelectedSortOptions([]);
+//     } else {
+//       setSelectedSortOptions([option]);
+//     }
+//   };
+
+//   const handleCategorySelection = (option: string) => {
+//     if (selectedCategoryOptions.includes(option)) {
+//       setSelectedCategoryOptions([]);
+//     } else {
+//       setSelectedCategoryOptions([option]);
+//     }
+//   };
+
+//   const togglePopUp = () => {
+//     setIsPopUpOpen(!isPopupOpen);
+//   };
+
+//   const openCategoryPopup = () => {
+//     setIsPopUpOpen(false);
+//     setIsCategoryPopupOpen(true);
+//   };
+
+//   const closeCategoryPopup = () => {
+//     setIsCategoryPopupOpen(false);
+//     setIsPopUpOpen(true);
+//   };
+
+//   const handleMonthClick = (month: string) => {
+//     setSelectedMonth(month);
+//     setMonthDropdownOpen(false);
+//   };
+
+//   const applyFilters = () => {
+//     const count = selectedSortOptions.length;
+//     const countB = selectedCategoryOptions.length > 0 ? 1 : 0;
+//     setNumberofFilters(count + countB);
+//     togglePopUp();
+//     setFinalSortOptions(sortOptions);
+
+//     const fetching = async () => {
+//       const body = {
+//         Highest: selectedSortOptions.includes("Highest"),
+//         Lowest: selectedSortOptions.includes("Lowest"),
+//         Oldest: selectedCategoryOptions.includes("Oldest"),
+//         Categories: selectedCategoryOptions[0],
+//       };
+
+//       console.log(body);
+
+//       try {
+//         const response = await axios.post(
+//           `${url}/get_transaction_filters/`,
+//           body,
+//           {
+//             headers: {
+//               Authorization: `Bearer ${accessToken}`,
+//               "Content-type": "Application/json",
+//             },
+//           }
+//         );
+
+//         setTransactionsArr(response.data.transactions_by_date);
+//       } catch (err) {
+//         handleAxiosError(err);
+//       }
+//     };
+
+//     fetching();
+//   };
+
+//   const resetFilters = () => {
+//     setSelectedSortOptions([]);
+//     setSelectedCategoryOptions([]);
+//   };
+
+//   useEffect(() => {
+//     const today = new Date();
+//     const currentDate = today.getDate();
+
+//     console.log("Current Date:", currentDate);
+//     console.log(
+//       "LocalStorage monthReviewPopUp:",
+//       localStorage.getItem("monthReviewPopUp")
+//     );
+
+//     const checkOverSpent = async () => {
+//       try {
+//         const response = await axios.post(
+//           `${url}/get_user_expenses_comparison_at_eom/`,
+//           {
+//             month: "10",
+//           },
+//           {
+//             headers: {
+//               Authorization: `Bearer ${accessToken}`,
+//               "Content-type": "Application/json",
+//             },
+//           }
+//         );
+//         const categories = response.data.under_spent.map(
+//           (eachItem: any) => eachItem.category
+//         );
+//         const overSpentCategories = response.data.over_spent.map(
+//           (eachItem: any) => eachItem.category
+//         );
+//         if (response.data.over_spent.length > 0) {
+//           if (
+//             currentDate >= 24 &&
+//             currentDate <= 31 &&
+//             localStorage.getItem("monthReviewPopUp") === null
+//           ) {
+//             localStorage.setItem("monthReviewPopUp", "true");
+//             setShowMonthReview(true);
+//             console.log("Month Review Popup is now set to show.");
+//           }
+//         }
+//       } catch (e) {
+//         handleAxiosError(e);
+//       }
+//     };
+
+//     checkOverSpent();
+
+//     // Check if it's between 25-31 and if the popup hasn't been shown before
+//     if (
+//       currentDate >= 24 &&
+//       currentDate <= 31 &&
+//       localStorage.getItem("monthReviewPopUp") === null
+//     ) {
+//       localStorage.setItem("monthReviewPopUp", "true");
+//       setShowMonthReview(true);
+//       console.log("Month Review Popup is now set to show.");
+//     }
+
+//     // Fetch transactions
+//     const fetching = async () => {
+//       try {
+//         const response = await axios.post(
+//           `${url}/get_last_all_transactions/`,
+//           {},
+//           {
+//             headers: {
+//               Authorization: `Bearer ${accessToken}`,
+//               "Content-type": "Application/json",
+//             },
+//           }
+//         );
+
+//         if (response.data.transactions_by_date.length === 0) {
+//           setNoTransactions(true);
+//         } else {
+//           setTransactionsArr(response.data.transactions_by_date);
+//         }
+//       } catch (err) {
+//         handleAxiosError(err);
+//       }
+//     };
+
+//     fetching();
+//   }, [accessToken]);
+
+//   return (
+//     <>
+//       <TransactionMainContainer>
+//         <TransactionSubContainer>
+//           {!NoTransactions ? (
+//             <>
+//               <FilterContainer>
+//                 <FilterButton onClick={togglePopUp}>
+//                   <FilterImage src="/Images/filtericon.svg" />
+//                   {numberOfFilters > 0 && (
+//                     <NumberOfFiltersContainer>
+//                       <NumberOfFilters>{numberOfFilters}</NumberOfFilters>
+//                     </NumberOfFiltersContainer>
+//                   )}
+//                 </FilterButton>
+//               </FilterContainer>
+//               <FinancialReportContainer onClick={navigateToFinancialReport}>
+//                 <FinancialReportHeading>
+//                   See your financial report
+//                 </FinancialReportHeading>
+//                 <ArrowRight src="/Images/arrow-right-2.svg" />
+//               </FinancialReportContainer>
+//               <TransactionsContainer>
+//                 {!NoTransactions ? (
+//                   transactionsArr.map((eachItem, index) => (
+//                     <TransactionList
+//                       key={index}
+//                       date={eachItem.date}
+//                       details={eachItem.transactions}
+//                     />
+//                   ))
+//                 ) : (
+//                   <NoTransactionsComponent />
+//                 )}
+//               </TransactionsContainer>
+
+//               <AnimatePresence mode="wait">
+//                 {isPopupOpen && (
+//                   <Overlay
+//                     onClick={togglePopUp}
+//                     variants={overlayVariants}
+//                     initial="hidden"
+//                     animate="visible"
+//                     exit="exit"
+//                   >
+//                     <FilterPopup
+//                       selectedSortOptions={selectedSortOptions}
+//                       selectedCategoryOptions={selectedCategoryOptions}
+//                       handleSortSelection={handleSortSelection}
+//                       togglePopUp={togglePopUp}
+//                       applyFilters={applyFilters}
+//                       resetFilters={resetFilters}
+//                       openCategoryPopup={openCategoryPopup}
+//                       sortOptions={sortOptions}
+//                     />
+//                   </Overlay>
+//                 )}
+
+//                 {isCategoryPopupOpen && (
+//                   <Overlay
+//                     variants={overlayVariants}
+//                     initial="hidden"
+//                     animate="visible"
+//                     exit="exit"
+//                     onClick={closeCategoryPopup}
+//                   >
+//                     <CategoryPopup
+//                       selectedCategoryOptions={selectedCategoryOptions}
+//                       handleCategorySelection={handleCategorySelection}
+//                       categoryOptions={categoryOptions}
+//                       closeCategoryPopup={closeCategoryPopup}
+//                     />
+//                   </Overlay>
+//                 )}
+//               </AnimatePresence>
+//             </>
+//           ) : (
+//             <NoTransactionMain>
+//               <NoTransactionsComponent />
+//             </NoTransactionMain>
+//           )}
+//         </TransactionSubContainer>
+//       </TransactionMainContainer>
+//       {showMonthReview && (
+//         <MonthReviewPopUp toggleMontlyPopUp={toggleMontlyPopUp} />
+//       )}
+//     </>
+//   );
+// };
+
+// export default Transaction;
+
 import { useEffect, useState } from "react";
-import TabBar from "../TabBar";
 import {
   TransactionMainContainer,
   TransactionSubContainer,
@@ -9,39 +467,13 @@ import {
   FinancialReportContainer,
   FinancialReportHeading,
   ArrowRight,
-  TransactionListContainer,
-  ListItem,
   TransactionsContainer,
-  ListItemContentsContainer,
-  PriceContainer,
-  DescriptionContainer,
-  DateHeading,
-  CategoryHeading,
-  PriceHeading,
-  DescriptionHeading,
-  TimeElement,
   Overlay,
-  PopupContainer,
-  PopUpSubContainer,
-  FilterPopUpHeadingContainer,
-  ResetButton,
-  FilterPopUpHeading,
-  SortByContainer,
-  PopUpSubHeading,
-  SortByItemsContainer,
-  SortItem,
-  CategoryContainer,
-  CategorySideHeading,
-  CategoryButtonContainer,
-  CategoryItemSelectedContainer,
-  NumberOfItemsSelected,
-  ApplyButton,
   NumberOfFilters,
   NumberOfFiltersContainer,
-  CategoryItemsContainer,
   NoTransactionMain,
 } from "./styledComponents";
-import { motion, AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 import TransactionList from "../TransactionList";
 import FilterPopup from "../FilterPopUp";
 import CategoryPopup from "../CategoryPopUp";
@@ -53,128 +485,11 @@ import {
 import axios from "axios";
 import NoTransactionsComponent from "../NoTransactions";
 import MonthReviewPopUp from "../MonthReviewPopUp";
-
-import {
-  MonthDropDownContainer,
-  MonthDropDown,
-  DropDownText,
-} from "../FinancialReport/styledComponents";
 import { handleAxiosError } from "../../Constants/errorHandler";
+import { Oval } from "react-loader-spinner";
+import { HomeMainContainer } from "../Home/styledComponents";
 
-const data = [
-  {
-    date: "Today",
-    details: [
-      {
-        id: "1",
-        name: "Shopping",
-        money: "120",
-        description: "Buy Some grocerry",
-        time: "10:00 AM",
-        imageUrl: "/Images/shoppingicon.svg",
-      },
-      {
-        id: "2",
-        name: "Shopping",
-        money: "120",
-        description: "Buy Some grocerry",
-        time: "10:00 AM",
-        imageUrl: "/Images/foodicon.svg",
-      },
-      {
-        id: "3",
-        name: "Shopping",
-        money: "120",
-        description: "Buy Some grocerry",
-        time: "10:00 AM",
-        imageUrl: "/Images/transportation.svg",
-      },
-      {
-        id: "4",
-        name: "Shopping",
-        money: "120",
-        description: "Buy Some grocerry",
-        time: "10:00 AM",
-        imageUrl: "/Images/shoppingicon.svg",
-      },
-    ],
-  },
-  {
-    date: "Yesterday",
-    details: [
-      {
-        id: "5",
-        name: "Shopping",
-        money: "120",
-        description: "Buy Some grocerry",
-        time: "10:00 AM",
-        imageUrl: "/Images/foodicon.svg",
-      },
-      {
-        id: "6",
-        name: "Shopping",
-        money: "120",
-        description: "Buy Some grocerry",
-        time: "10:00 AM",
-        imageUrl: "/Images/transportation.svg",
-      },
-      {
-        id: "7",
-        name: "Shopping",
-        money: "120",
-        description: "Buy Some grocerry",
-        time: "10:00 AM",
-        imageUrl: "/Images/shoppingicon.svg",
-      },
-      {
-        id: "8",
-        name: "Shopping",
-        money: "120",
-        description: "Buy Some grocerry",
-        time: "10:00 AM",
-        imageUrl: "/Images/transportation.svg",
-      },
-    ],
-  },
-];
-
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
-const dropdownVariants = {
-  hidden: { opacity: 0, height: 0 },
-  visible: { opacity: 1, height: "auto", transition: { duration: 0.3 } },
-  exit: { opacity: 0, height: 0, transition: { duration: 0.2 } },
-};
-
-const arrowVariants = {
-  open: { rotate: 180 },
-  closed: { rotate: 0 },
-};
-
-const overlayVariants = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1 },
-  exit: { opacity: 0 },
-};
-
-const mainPopupExit = {
-  hidden: { x: 0, opacity: 1 },
-  exit: { x: "-100%", opacity: 0 },
-};
-
+// Define interfaces
 interface TransactionItem {
   category: string;
   amount: string;
@@ -199,260 +514,133 @@ const categoryOptions = [
   "Miscellaneous",
 ];
 
+const overlayVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+// Main Transaction Component
 const Transaction = () => {
   const [transactionsArr, setTransactionsArr] = useState<Transaction[]>([]);
-
-  const [tempSortOptions, setTempSortOptions] = useState<string[]>([]);
-
+  const [isLoading, setIsLoading] = useState(true); // Single loading state for the entire component
   const [isPopupOpen, setIsPopUpOpen] = useState(false);
   const [isCategoryPopupOpen, setIsCategoryPopupOpen] = useState(false);
-
   const [selectedSortOptions, setSelectedSortOptions] = useState<string[]>([]);
-  const [finalSortOptions, setFinalSortOptions] = useState<string[]>([]);
-  const [selectedMonth, setSelectedMonth] = useState("Month");
-
-  const [isMonthDropdownOpen, setMonthDropdownOpen] = useState(false);
-
   const [selectedCategoryOptions, setSelectedCategoryOptions] = useState<
     string[]
   >([]);
-
   const [NoTransactions, setNoTransactions] = useState(false);
-
   const { accessToken } = ChangingTokens();
-
-  const [numberOfFilters, setNumberofFilters] = useState(0);
-
   const { navigateToFinancialReport } = NavigationEvents();
-
+  const [numberOfFilters, setNumberofFilters] = useState(0);
   const [showMonthReview, setShowMonthReview] = useState(false);
 
-  const [overSpent, setOverSpent] = useState(0);
+  // Toggle Monthly PopUp
+  const toggleMontlyPopUp = () => setShowMonthReview(false);
 
-  const toggleMontlyPopUp = () => {
-    setShowMonthReview(false);
+  // Toggle Filter Popup
+  const togglePopUp = () => setIsPopUpOpen(!isPopupOpen);
+
+  // Handle Sort Selection
+  const handleSortSelection = (option: string) => {
+    setSelectedSortOptions([option]);
   };
 
-  const handleSortSelection = (option: string) => {
-    if (selectedSortOptions.includes(option)) {
-        setSelectedSortOptions([]);
-    } else {
-        setSelectedSortOptions([option]);
+  // Handle Category Selection
+  const handleCategorySelection = (option: string) => {
+    setSelectedCategoryOptions([option]);
+  };
+
+  // Apply Filters and Fetch Filtered Transactions
+  const applyFilters = async () => {
+    const body = {
+      Highest: selectedSortOptions.includes("Highest"),
+      Lowest: selectedSortOptions.includes("Lowest"),
+      Oldest: selectedSortOptions.includes("Oldest"),
+      Categories: selectedCategoryOptions[0],
+    };
+
+    setNumberofFilters(
+      selectedSortOptions.length + (selectedCategoryOptions.length > 0 ? 1 : 0)
+    );
+    togglePopUp();
+
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `${url}/get_transaction_filters/`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-type": "Application/json",
+          },
+        }
+      );
+      setTransactionsArr(response.data.transactions_by_date);
+    } catch (err) {
+      handleAxiosError(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleCategorySelection = (option: string) => {
-      if (selectedCategoryOptions.includes(option)) {
-          setSelectedCategoryOptions([]); 
-      } else {
-        setSelectedCategoryOptions([option]); 
-      }
-     };
-
-  const togglePopUp = () => {
-    setIsPopUpOpen(!isPopupOpen);
-  };
-
-  const openCategoryPopup = () => {
-    setIsPopUpOpen(false);
-    setIsCategoryPopupOpen(true);
-  };
-
-  const closeCategoryPopup = () => {
-    setIsCategoryPopupOpen(false);
-    setIsPopUpOpen(true);
-  };
-
-  const handleMonthClick = (month: string) => {
-    setSelectedMonth(month);
-    setMonthDropdownOpen(false);
-  };
-
-  const applyFilters = () => {
-    const count = selectedSortOptions.length;
-    const countB = selectedCategoryOptions.length > 0 ? 1 : 0;
-    setNumberofFilters(count + countB);
-    togglePopUp();
-    setFinalSortOptions(sortOptions);
-
-    const fetching = async () => {
-      const body = {
-        Highest: selectedSortOptions.includes("Highest"),
-        Lowest: selectedSortOptions.includes("Lowest"),
-        Oldest: selectedCategoryOptions.includes("Oldest"),
-        Categories: selectedCategoryOptions[0],
-      };
-
-      console.log(body)
-
-      try {
-        const response = await axios.post(
-          `${url}/get_transaction_filters/`,
-          body,
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-type": "Application/json",
-            },
-          }
-        );
-
-        setTransactionsArr(response.data.transactions_by_date);
-      } catch (err) {
-        handleAxiosError(err)
-      }
-    };
-
-    fetching();
-  };
-
+  // Reset Filters
   const resetFilters = () => {
     setSelectedSortOptions([]);
     setSelectedCategoryOptions([]);
   };
 
-  useEffect(() => {
-    const today = new Date();
-    const currentDate = today.getDate();
-
-    console.log("Current Date:", currentDate);
-    console.log(
-      "LocalStorage monthReviewPopUp:",
-      localStorage.getItem("monthReviewPopUp")
-    );
-
-    const checkOverSpent = async () => {
-      try {
-        const response = await axios.post(
-          `${url}/get_user_expenses_comparison_at_eom/`,
-          {
-            month: "10",
+  // Fetch All Transactions
+  const fetchAllTransactions = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.post(
+        `${url}/get_last_all_transactions/`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-type": "Application/json",
           },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-type": "Application/json",
-            },
-          }
-        );
-        const categories = response.data.under_spent.map(
-          (eachItem: any) => eachItem.category
-        );
-        const overSpentCategories = response.data.over_spent.map(
-          (eachItem: any) => eachItem.category
-        );
-        if (response.data.over_spent.length > 0) {
-          if (
-            currentDate >= 24 &&
-            currentDate <= 31 &&
-            localStorage.getItem("monthReviewPopUp") === null
-          ) {
-            localStorage.setItem("monthReviewPopUp", "true");
-            setShowMonthReview(true);
-            console.log("Month Review Popup is now set to show.");
-          }
         }
-      } catch (e) {
-        handleAxiosError(e)
+      );
+      if (response.data.transactions_by_date.length === 0) {
+        setNoTransactions(true);
+      } else {
+        setTransactionsArr(response.data.transactions_by_date);
       }
-    };
-
-    checkOverSpent();
-
-    // Check if it's between 25-31 and if the popup hasn't been shown before
-    if (
-      currentDate >= 24 &&
-      currentDate <= 31 &&
-      localStorage.getItem("monthReviewPopUp") === null
-    ) {
-      localStorage.setItem("monthReviewPopUp", "true");
-      setShowMonthReview(true);
-      console.log("Month Review Popup is now set to show.");
+    } catch (err) {
+      handleAxiosError(err);
+    } finally {
+      setIsLoading(false);
     }
+  };
 
-    // Fetch transactions
-    const fetching = async () => {
-      try {
-        const response = await axios.post(
-          `${url}/get_last_all_transactions/`,
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-type": "Application/json",
-            },
-          }
-        );
-
-        if (response.data.transactions_by_date.length === 0) {
-          setNoTransactions(true);
-        } else {
-          setTransactionsArr(response.data.transactions_by_date);
-        }
-      } catch (err) {
-        handleAxiosError(err)
-      }
-    };
-
-    fetching();
+  useEffect(() => {
+    fetchAllTransactions();
   }, [accessToken]);
 
   return (
     <>
       <TransactionMainContainer>
         <TransactionSubContainer>
-          {!NoTransactions ? (
+          {isLoading ? (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "65dvh",
+              }}
+            >
+              <Oval height={40} width={40} color="#7f3dff" visible={true} />
+            </div>
+          ) : !NoTransactions ? (
             <>
               <FilterContainer>
-                {/* <MonthDropDownContainer>
-                  <MonthDropDown
-                    onClick={() => setMonthDropdownOpen(!isMonthDropdownOpen)}
-                  >
-                    <motion.img
-                      src="/Images/arrow down 2.svg"
-                      variants={arrowVariants}
-                      animate={isMonthDropdownOpen ? "open" : "closed"}
-                      transition={{ duration: 0.3 }}
-                      style={{ marginRight: "8px" }}
-                    />
-                    <DropDownText>{selectedMonth}</DropDownText>
-                  </MonthDropDown>
-                  <AnimatePresence>
-                    {isMonthDropdownOpen && (
-                      <motion.div
-                        variants={dropdownVariants}
-                        initial="hidden"
-                        animate="visible"
-                        exit="exit"
-                        style={{
-                          position: "absolute",
-                          zIndex: 1,
-                          backgroundColor: "#fff",
-                          borderRadius: "8px",
-                          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                          padding: "10px",
-                        }}
-                      >
-                        {months.map((month) => (
-                          <div
-                            key={month}
-                            onClick={() => handleMonthClick(month)}
-                            style={{
-                              padding: "8px 16px",
-                              cursor: "pointer",
-                              borderRadius: "4px",
-                              backgroundColor:
-                                selectedMonth === month ? "#f0f0f0" : "#fff",
-                              transition: "background-color 0.2s",
-                            }}
-                          >
-                            {month}
-                          </div>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </MonthDropDownContainer> */}
                 <FilterButton onClick={togglePopUp}>
                   <FilterImage src="/Images/filtericon.svg" />
                   {numberOfFilters > 0 && (
@@ -469,17 +657,13 @@ const Transaction = () => {
                 <ArrowRight src="/Images/arrow-right-2.svg" />
               </FinancialReportContainer>
               <TransactionsContainer>
-                {!NoTransactions ? (
-                  transactionsArr.map((eachItem, index) => (
-                    <TransactionList
-                      key={index}
-                      date={eachItem.date}
-                      details={eachItem.transactions}
-                    />
-                  ))
-                ) : (
-                  <NoTransactionsComponent />
-                )}
+                {transactionsArr.map((eachItem, index) => (
+                  <TransactionList
+                    key={index}
+                    date={eachItem.date}
+                    details={eachItem.transactions}
+                  />
+                ))}
               </TransactionsContainer>
 
               <AnimatePresence mode="wait">
@@ -498,7 +682,10 @@ const Transaction = () => {
                       togglePopUp={togglePopUp}
                       applyFilters={applyFilters}
                       resetFilters={resetFilters}
-                      openCategoryPopup={openCategoryPopup}
+                      openCategoryPopup={() => {
+                        setIsPopUpOpen(false);
+                        setIsCategoryPopupOpen(true);
+                      }}
                       sortOptions={sortOptions}
                     />
                   </Overlay>
@@ -510,13 +697,19 @@ const Transaction = () => {
                     initial="hidden"
                     animate="visible"
                     exit="exit"
-                    onClick={closeCategoryPopup}
+                    onClick={() => {
+                      setIsCategoryPopupOpen(false);
+                      setIsPopUpOpen(true);
+                    }}
                   >
                     <CategoryPopup
                       selectedCategoryOptions={selectedCategoryOptions}
                       handleCategorySelection={handleCategorySelection}
                       categoryOptions={categoryOptions}
-                      closeCategoryPopup={closeCategoryPopup}
+                      closeCategoryPopup={() => {
+                        setIsCategoryPopupOpen(false);
+                        setIsPopUpOpen(true);
+                      }}
                     />
                   </Overlay>
                 )}
@@ -524,9 +717,8 @@ const Transaction = () => {
             </>
           ) : (
             <NoTransactionMain>
-                  <NoTransactionsComponent />
+              <NoTransactionsComponent />
             </NoTransactionMain>
-            
           )}
         </TransactionSubContainer>
       </TransactionMainContainer>
@@ -538,5 +730,3 @@ const Transaction = () => {
 };
 
 export default Transaction;
-
-
