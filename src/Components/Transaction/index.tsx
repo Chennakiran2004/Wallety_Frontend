@@ -232,18 +232,20 @@ const Transaction = () => {
   };
 
   const handleSortSelection = (option: string) => {
-    if (option === selectedSortOptions[0]) {
-      return setSelectedSortOptions([]);
+    if (selectedSortOptions.includes(option)) {
+        setSelectedSortOptions([]);
+    } else {
+        setSelectedSortOptions([option]);
     }
-    setSelectedSortOptions([option]);
   };
 
   const handleCategorySelection = (option: string) => {
-    if (option === selectedCategoryOptions[0]) {
-      return setSelectedCategoryOptions([]);
-    }
-    setSelectedCategoryOptions([option]);
-  };
+      if (selectedCategoryOptions.includes(option)) {
+          setSelectedCategoryOptions([]); 
+      } else {
+        setSelectedCategoryOptions([option]); 
+      }
+     };
 
   const togglePopUp = () => {
     setIsPopUpOpen(!isPopupOpen);
@@ -261,7 +263,7 @@ const Transaction = () => {
 
   const handleMonthClick = (month: string) => {
     setSelectedMonth(month);
-    setMonthDropdownOpen(false); // Close dropdown after selection
+    setMonthDropdownOpen(false);
   };
 
   const applyFilters = () => {
@@ -276,8 +278,10 @@ const Transaction = () => {
         Highest: selectedSortOptions.includes("Highest"),
         Lowest: selectedSortOptions.includes("Lowest"),
         Oldest: selectedCategoryOptions.includes("Oldest"),
-        Categories: tempSortOptions[0],
+        Categories: selectedCategoryOptions[0],
       };
+
+      console.log(body)
 
       try {
         const response = await axios.post(
@@ -486,7 +490,7 @@ const Transaction = () => {
                     exit="exit"
                   >
                     <FilterPopup
-                      selectedSortOptions={tempSortOptions}
+                      selectedSortOptions={selectedSortOptions}
                       selectedCategoryOptions={selectedCategoryOptions}
                       handleSortSelection={handleSortSelection}
                       togglePopUp={togglePopUp}
@@ -529,3 +533,5 @@ const Transaction = () => {
 };
 
 export default Transaction;
+
+

@@ -10,7 +10,7 @@ import {
   Button,
   InputContainer,
   EditProfileMainContianer,
-  ProfileError,
+  ProfileError, UpdateProfileButton
 } from "./styledComponents";
 import { useEffect, useState } from "react";
 import {
@@ -70,6 +70,7 @@ const UserInfo = () => {
             },
           }
         );
+        setProfileError("Profile Edited Successful")
       };
 
       fetching();
@@ -86,8 +87,6 @@ const UserInfo = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-
-        setProfileError("Profile Edited Successful")
 
         setUserData(response.data);
         setUserName(response.data.full_name ?? "");
@@ -130,7 +129,10 @@ const UserInfo = () => {
             />
           </InputContainer> */}
           {profileError.length > 0 && <ProfileError>{profileError}</ProfileError>}
-          <Button onClick={updateProfile}>Submit</Button>
+          <InputContainer>
+          <UpdateProfileButton onClick={updateProfile}>Submit</UpdateProfileButton>
+          </InputContainer>
+          
         </FormContainer>
       </ProfileInfoMainContainer>
     </EditProfileMainContianer>
