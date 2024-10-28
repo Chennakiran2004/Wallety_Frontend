@@ -187,6 +187,8 @@ const AddNewAccount = () => {
           location: location.toUpperCase(),
         };
 
+        console.log(bodyData)
+
         const response = await axios.post(`${url}/store_user_data/`, bodyData, {
           headers: {
             Authorization: `Bearer ${accessToken}`,
