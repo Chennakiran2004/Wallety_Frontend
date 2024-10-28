@@ -178,3 +178,14 @@ export const RecentItemsContainer = styled.div`
 `;
 
 export const NoTransactionsMainContainer = styled.div``;
+
+export const HeadingContainer = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export const BulbImage = styled.img`
+  height: 30px;
+  width: 30px;
+`;
