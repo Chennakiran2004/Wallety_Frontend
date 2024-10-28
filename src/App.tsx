@@ -44,14 +44,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/setup" element={<SetUp />} />
         <Route path="/" element={<StartingPage />} />
-        <Route path="/addNewAccount" element={<AddNewAccount />} />
 
-        <Route
-          path="/SmartSpendingSuggestions"
-          element={<SmartSpendingSuggestions />}
-        />
         <Route element={<ProtectedRoute />}>
-          {/* <Route path="/addNewAccount" element={<AddNewAccount />} /> */}
+          <Route path="/addNewAccount" element={<AddNewAccount />} />
           <Route path="/home" element={<Home />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/transaction" element={<Transaction />} />
@@ -61,10 +56,10 @@ function App() {
           <Route path="/expense" element={<ExpenseComponent />} />
           <Route path="/transaction/:id" element={<TransactionDetails />} />
           <Route path="/financialReport" element={<FinancialReport />} />
-          {/* <Route
+          <Route
             path="/SmartSpendingSuggestions"
             element={<SmartSpendingSuggestions />}
-          /> */}
+          />
           <Route path="/monthReview" element={<MonthReview />} />
         </Route>
       </Routes>

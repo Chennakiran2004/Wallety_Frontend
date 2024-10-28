@@ -47,11 +47,11 @@ export const SmartSpendingCardsContainer = styled.div`
   flex-shrink: 0;
   margin-top: 24px;
   overflow: scroll;
-  max-height: 60vh;
+  max-height: 76vh;
   scrollbar-width: none;
 
   @media screen and (min-width: 768px) {
-    height: 50vh;
+    height: 56vh;
   }
 `;
 
@@ -132,6 +132,6 @@ export const ViewMoreButton = styled.button`
 export const LetsGoContainer = styled.div`
   position: absolute;
   bottom: 0;
-  width: 100%;
+  width: 90%;
   padding-bottom: 16px;
 `;

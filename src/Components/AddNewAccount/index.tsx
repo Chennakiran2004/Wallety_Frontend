@@ -39,7 +39,6 @@ import {
 import { GenderButton } from "./styledComponents";
 import { CarouselItemImage } from "../GainTotalControlOfYourMoney/styledComponents";
 import axios from "axios";
-import withAuthRedirect from "../../Constants/WithAuthRedirect";
 
 const dropdownVariants = {
   hidden: {

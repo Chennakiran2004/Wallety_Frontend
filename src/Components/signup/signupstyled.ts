@@ -19,6 +19,17 @@ export const slideIn = keyframes`
   }
 `;
 
+export const slideOut = keyframes`
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100vw);
+    opacity: 0;
+  }
+`;
+
 export const SignUpContainer = styled.div`
   padding-bottom: 40px;
 

@@ -5,6 +5,7 @@ import {
   interSemiBold,
 } from "../../Constants/fontStyles";
 import { PopUpSubContainer } from "../Transaction/styledComponents";
+import { slideOut } from "../signup/signupstyled";
 
 export const ProfileMainContainer = styled.div`
   display: flex;
@@ -13,6 +14,7 @@ export const ProfileMainContainer = styled.div`
   height: 91dvh;
   /* background-color: #f6f6f6; */
   align-items: center;
+  animation: ${slideOut} 0.35s;
 
   @media screen and (min-width: 768px) {
     width: 768px;
