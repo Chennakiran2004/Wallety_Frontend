@@ -1,8 +1,6 @@
-// src/utils/errorHandlers.ts
-
 import { ChangingTokens, NavigationEvents } from "./EventHandlers";
-const { deleteAccessToken, deleteRefereshToken } = ChangingTokens();
-    const { navigateLogin } = NavigationEvents();
+// const { deleteAccessToken, deleteRefereshToken } = ChangingTokens();
+//     const { navigateLogin } = NavigationEvents();
 
 export const handleAxiosError = (error: any) => {
     
@@ -12,9 +10,9 @@ export const handleAxiosError = (error: any) => {
         console.error("Bad Request:", error.message);
         break;
       case 401:
-        deleteAccessToken();
-        deleteRefereshToken();
-        navigateLogin();
+        // deleteAccessToken();
+        // deleteRefereshToken();
+        // navigateLogin();
         break;
       case 404:
         console.error("Not Found:", error.message);

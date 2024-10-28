@@ -87,6 +87,10 @@ export const TransactionsContainer = styled.div`
   flex-direction: column;
   gap: 16px;
   padding-bottom: 26px;
+
+  @media(min-width: 768px){
+    max-height: 40vh;
+  }
 `;
 
 export const ListItemContentsContainer = styled.div`
