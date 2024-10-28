@@ -177,7 +177,7 @@ const SignUp = () => {
     let hasError = false;
 
     if (name === "") {
-      console.log("asdf")
+      console.log("asdf");
       setNameError(true);
       hasError = true;
     }
@@ -185,17 +185,17 @@ const SignUp = () => {
       setEmailError(true);
       hasError = true;
     } else if (!emailRegex.test(email)) {
-      console.log("asdf")
+      console.log("asdf");
       setEmailFormatError(true);
       hasError = true;
     }
     if (password === "") {
-      console.log("asdf")
+      console.log("asdf");
       setPasswordError(true);
       hasError = true;
     }
     if (username === "") {
-      console.log("asdf")
+      console.log("asdf");
       setUsernameError(true);
       hasError = true;
     }
@@ -385,13 +385,13 @@ const SignUp = () => {
                     <GenderContents>
                       <GenderButton
                         onClick={() => setGender("MALE")}
-                        isSelected={gender === "Male"}
+                        isSelected={gender === "MALE"}
                       >
                         Male
                       </GenderButton>
                       <GenderButton
                         onClick={() => setGender("FEMALE")}
-                        isSelected={gender === "Female"}
+                        isSelected={gender === "FEMALE"}
                       >
                         Female
                       </GenderButton>

@@ -173,10 +173,6 @@ export const GenderButton = styled.button<{ isSelected: boolean }>`
   margin: auto;
   padding: 14px;
   border-radius: 8px;
-
-  &:hover {
-    background: #f0f0f0; // Optional hover effect
-  }
 `;
 
 export const SignUpButton = styled(GlobalButton1)`
