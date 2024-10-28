@@ -133,5 +133,4 @@ export const LetsGoContainer = styled.div`
   position: absolute;
   bottom: 0;
   width: 90%;
-  padding-bottom: 16px;
 `;
