@@ -15,9 +15,9 @@ interface CategoryPopupProps {
 }
 
 const categoryPopupVariants = {
-  hidden: { x: "100%", opacity: 0 },
-  visible: { x: 0, opacity: 1 },
-  exit: { x: "100%", opacity: 0 },
+  hidden: { y: "100%", opacity: 0 },
+  visible: { y: 0, opacity: 1 },
+  exit: { y: "100%", opacity: 0 },
 };
 
 const CategoryPopup: React.FC<CategoryPopupProps> = ({

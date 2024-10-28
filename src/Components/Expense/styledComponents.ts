@@ -15,7 +15,7 @@ import {
 } from "../AddNewAccount/styledComponents";
 
 export const ExpenseContainer = styled.div`
-  height: 94vh;
+  height: 90vh;
   width: 100vw;
   background-color: #fd3c4a;
   padding-top: 8%;
@@ -136,7 +136,7 @@ export const InputExpense = styled.input`
   outline: none;
   background: none;
   font-size: 36px;
-  max-width: 150px;
+  max-width: 95%;
 
   ${interSemiBold};
   color: white;

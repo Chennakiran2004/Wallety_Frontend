@@ -27,7 +27,7 @@ import {
   RupeesSymbolExpense,
   ErrorMessage,
 } from "./styledComponents";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ChangingTokens,
   NavigationEvents,
@@ -80,15 +80,22 @@ const ExpenseComponent = () => {
   const { handleBack } = NavigationEvents();
   const { accessToken } = ChangingTokens();
 
-  const [amount, setAmount] = useState("0");
+  const [amount, setAmount] = useState("");
+  const [inputWidth, setInputWidth] = useState(5);
   const [genderContents, setGenderContents] = useState(false);
   const [gender, setGender] = useState("Category");
   const [description, setDescription] = useState("");
   const [error, setError] = useState("");
-
   const [selectedCategory, setSelectedCategory] = useState<String[]>([]);
-
   const { navigateToHome } = NavigationEvents();
+
+  const amountInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (amountInputRef.current) {
+      amountInputRef.current.focus();
+    }
+  }, []);
 
   const openGenderDropDown = () => {
     setGenderContents(!genderContents);
@@ -107,9 +114,19 @@ const ExpenseComponent = () => {
     return setSelectedCategory([category]);
   };
 
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    if (value.length <= 10) {
+      setAmount(value);
+      const newWidth = Math.max(5, value.length * 25);
+      setInputWidth(newWidth);
+    }
+  };
+
   const expenseAdd = () => {
     const fetching = async () => {
-      if (amount === "0") {
+      if (amount === "" || amount === "0") {
         return setError("Please enter amount greater than 0");
       }
 
@@ -178,7 +195,10 @@ const ExpenseComponent = () => {
             <RupeesSymbolExpense>₹</RupeesSymbolExpense>
             <InputExpense
               type="number"
-              onChange={(e) => setAmount(e.target.value)}
+              ref={amountInputRef}
+              value={amount}
+              onChange={handleAmountChange}
+              style={{ width: `${inputWidth}px` }}
               min="0"
             />
           </RupeesAndInputContainer>
@@ -223,6 +243,7 @@ const ExpenseComponent = () => {
               onFocus={() => setGenderContents(false)}
               value={description}
               type="text"
+              placeholder="Description"
             />
             {error.length > 0 && <ErrorMessage>*{error}</ErrorMessage>}
             <ContinueButton onClick={expenseAdd}>Continue</ContinueButton>
