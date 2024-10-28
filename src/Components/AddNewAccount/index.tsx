@@ -122,7 +122,7 @@ const AddNewAccount = () => {
   const [spender, setSpender] = useState("Select your spending pattern");
   const [location, setLocation] = useState("Location in HYD");
   const { accessToken } = ChangingTokens();
-  const [salary, setSalary] = useState("");
+  const [salary, setSalary] = useState(0);
 
   // State to track validation errors
   const [salaryError, setSalaryError] = useState("");
@@ -186,9 +186,8 @@ const AddNewAccount = () => {
           user_preference: selectedSpender,
           location: location.toUpperCase(),
         };
-        
 
-        console.log(bodyData)
+        console.log(bodyData);
 
         const response = await axios.post(`${url}/store_user_data/`, bodyData, {
           headers: {
@@ -221,7 +220,7 @@ const AddNewAccount = () => {
               <RupeesSymbol>₹</RupeesSymbol>
               <EnterYourSalaryInput
                 type="number"
-                onChange={(e) => setSalary(e.target.value)}
+                onChange={(e) => setSalary(parseInt(e.target.value))}
               />
             </RupeesAndInputContainer>
             {salaryError && <p style={{ color: "red" }}>{salaryError}</p>}
