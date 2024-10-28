@@ -14,7 +14,8 @@ export const SmartSpendingSuggestionsMainContainer = styled.div`
     margin: auto;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
     border-radius: 16px;
-    height: 70vh;
+    height: 78vh;
+    position: relative;
   }
 `;
 
@@ -50,7 +51,7 @@ export const SmartSpendingCardsContainer = styled.div`
   scrollbar-width: none;
 
   @media screen and (min-width: 768px) {
-    height: 46vh;
+    height: 50vh;
   }
 `;
 
@@ -129,7 +130,7 @@ export const ViewMoreButton = styled.button`
 `;
 
 export const LetsGoContainer = styled.div`
-  position: relative;
+  position: absolute;
   bottom: 0;
   width: 100%;
   padding-bottom: 16px;

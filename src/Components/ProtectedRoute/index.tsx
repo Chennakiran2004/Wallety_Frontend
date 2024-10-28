@@ -24,7 +24,7 @@ const ProtectedRoute: React.FC = () => {
   const isSalaryAdded = localStorage.getItem("isSalaryAdded");
 
   if (accessToken === undefined) {
-    return <Navigate to="/signIn" />;
+    return <Navigate to="/Login" />;
   }
 
   // If salary is added, redirect away from AddNewAccount

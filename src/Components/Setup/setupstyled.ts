@@ -17,7 +17,7 @@ export const AccountSetUpContainer = styled.div`
     margin: auto;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
     border-radius: 16px;
-    height: 60vh;
+    height: 72vh;
   }
 `;
 
@@ -28,12 +28,16 @@ export const AccountSubContainer = styled.div`
   padding-top: 60px;
   display: flex;
   flex-direction: column;
+
+  @media screen and (min-width: 768px) {
+    padding-top: 24px;
+  }
 `;
 
 export const AccountSetUpHeading = styled.h1`
   ${interMedium}
   font-size: 32px;
-  text-align: left;
+  text-align: center;
 `;
 
 export const AccountSideHeading = styled.p`
@@ -45,14 +49,15 @@ export const AccountSideHeading = styled.p`
 export const AccountSetUpContents = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
+  align-items: center;
 `;
 
 export const LetsGo = styled(GlobalButton1)`
   width: 100%;
   margin-top: auto;
   @media screen and (min-width: 768px) {
-    margin-bottom: 8%;
+    margin-bottom: 4%;
   }
 `;
 
