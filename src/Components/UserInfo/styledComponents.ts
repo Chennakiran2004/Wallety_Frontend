@@ -26,7 +26,8 @@ export const BackImage = styled(IconContianer)`
 `;
 
 export const FormContainer = styled.form`
-  width: 100%;
+  width: 90%;
+  margin: auto;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -110,4 +111,10 @@ export const EditProfileMainContianer = styled.div`
 
 export const ProfileError = styled.p`
  color: green;
+`
+
+export const UpdateProfileButton = styled(GlobalButton1)`
+  width: 96%;
+  margin: auto;
+  margin-top: 16px;
 `

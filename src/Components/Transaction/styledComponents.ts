@@ -143,6 +143,10 @@ export const Overlay = styled(motion.div)`
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9;
+
+  @media(min-width: 768px){
+      
+  }
 `;
 
 export const PopupContainer = styled(motion.div)`
@@ -180,6 +184,8 @@ export const FilterPopUpHeadingContainer = styled.div`
 export const FilterPopUpHeading = styled.p`
   ${interSemiBold}
   font-size: 20px;
+  text-align: left;
+
 `;
 
 export const ResetButton = styled.button`
@@ -201,6 +207,7 @@ export const SortByContainer = styled.div`
 export const PopUpSubHeading = styled.p`
   ${interSemiBold}
   font-size: 20px;
+  text-align: left;
 `;
 
 export const SortByItemsContainer = styled.div`
@@ -241,6 +248,7 @@ export const CategoryButtonContainer = styled.div`
 export const CategorySideHeading = styled.p`
   ${interMedium}
   font-size: 16px;
+  
 `;
 
 export const CategoryItemSelectedContainer = styled.div`
