@@ -360,10 +360,16 @@ const SignUp = () => {
                     exit="exit"
                   >
                     <GenderContents>
-                      <GenderButton onClick={() => setGender("MALE")}>
+                      <GenderButton
+                        onClick={() => setGender("MALE")}
+                        isSelected={gender === "Male"}
+                      >
                         Male
                       </GenderButton>
-                      <GenderButton onClick={() => setGender("FEMALE")}>
+                      <GenderButton
+                        onClick={() => setGender("FEMALE")}
+                        isSelected={gender === "Female"}
+                      >
                         Female
                       </GenderButton>
                     </GenderContents>
@@ -406,6 +412,7 @@ const SignUp = () => {
                           setRole("Employee");
                           setRoleContents(false);
                         }}
+                        isSelected={role === "Employee"}
                       >
                         Employee
                       </GenderButton>
@@ -414,6 +421,7 @@ const SignUp = () => {
                           setRole("Student");
                           setRoleContents(false);
                         }}
+                        isSelected={role === "Student"}
                       >
                         Student
                       </GenderButton>

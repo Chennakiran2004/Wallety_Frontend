@@ -201,7 +201,7 @@ const ExpenseComponent = () => {
                       {categories.map((eachItem) => {
                         return (
                           <CategoryButton
-                            isselected={selectedCategory.includes(eachItem)}
+                            isSelected={selectedCategory.includes(eachItem)}
                             onClick={() => {
                               handleCategoryChange(eachItem);
                             }}

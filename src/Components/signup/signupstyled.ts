@@ -144,18 +144,39 @@ export const GenderContents = styled.div`
   gap: 8px;
 `;
 
-export const GenderButton = styled.button`
+// export const GenderButton = styled.button`
+//   width: 95%;
+//   background: none;
+//   border: none;
+//   text-align: left;
+//   font-size: 16px;
+//   color: #91919f;
+//   border: 1px solid #afafaf;
+//   margin: auto;
+//   padding: 14px;
+//   border-radius: 8px;
+//   color: black;
+// `;
+
+// Update the GenderButton styled component to accept a prop for active selection
+export const GenderButton = styled.button<{ isSelected: boolean }>`
   width: 95%;
-  background: none;
+  background: ${(props) =>
+    props.isSelected
+      ? "#7F3DFF"
+      : "none"}; // Change background for selected option
   border: none;
   text-align: left;
   font-size: 16px;
-  color: #91919f;
+  color: ${(props) => (props.isSelected ? "white" : "#91919f")};
   border: 1px solid #afafaf;
   margin: auto;
   padding: 14px;
   border-radius: 8px;
-  color: black;
+
+  &:hover {
+    background: #f0f0f0; // Optional hover effect
+  }
 `;
 
 export const SignUpButton = styled(GlobalButton1)`

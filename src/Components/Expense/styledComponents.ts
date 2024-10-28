@@ -9,7 +9,10 @@ import {
   ParaElement,
 } from "../signup/signupstyled";
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
-import { EnterYourSalaryInput, RupeesSymbol } from "../AddNewAccount/styledComponents";
+import {
+  EnterYourSalaryInput,
+  RupeesSymbol,
+} from "../AddNewAccount/styledComponents";
 
 export const ExpenseContainer = styled.div`
   height: 85vh;
@@ -93,13 +96,13 @@ export const ContinueButton = styled(GlobalButton1)`
 `;
 
 interface CategoryButton {
-  isselected: boolean;
+  isSelected: boolean;
 }
 
 export const CategoryButton = styled(GenderButton)<CategoryButton>`
-  background-color: ${({ isselected }) => (isselected ? "#7F3DFF" : "none")};
-  color: ${({ isselected }) => (isselected ? "white" : "black")};
-  border: ${({ isselected }) => (isselected ? "none" : "1px solid #afafaf")};
+  background-color: ${({ isSelected }) => (isSelected ? "#7F3DFF" : "none")};
+  color: ${({ isSelected }) => (isSelected ? "white" : "black")};
+  border: ${({ isSelected }) => (isSelected ? "none" : "1px solid #afafaf")};
   transition: background-color 0.2s ease, color 0.2s ease;
 `;
 interface CategoryParaElement {
@@ -143,10 +146,9 @@ export const InputExpense = styled.input`
   }
 `;
 
-
 export const RupeesSymbolExpense = styled(RupeesSymbol)`
   color: white;
-`
+`;
 
 export const ErrorMessage = styled.p`
   font-size: 14px;
@@ -154,4 +156,4 @@ export const ErrorMessage = styled.p`
   width: 90%;
   margin: auto;
   color: #fd3c4a;
-`
+`;
