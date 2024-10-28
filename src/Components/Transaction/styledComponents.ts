@@ -145,7 +145,10 @@ export const Overlay = styled(motion.div)`
   z-index: 9;
 
   @media(min-width: 768px){
-      
+      position: fixed;
+      display: flex;
+      justify-content: center;
+      align-items: center;
   }
 `;
 
@@ -161,10 +164,14 @@ export const PopupContainer = styled(motion.div)`
   padding-top: 8%;
 
   @media screen and (min-width: 768px) {
-    top: 58%;
-    width: 760px;
+    padding-bottom: 32px;
+    padding-top: 32px;
+    width: 500px;
+    height: auto;
     margin: auto;
     position: relative;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
   }
 `;
 
@@ -295,10 +302,14 @@ export const CategoryPopupContainer = styled(motion.div)`
   padding-top: 8%;
 
   @media screen and (min-width: 768px) {
-    top: 58%;
-    width: 760px;
+    padding-bottom: 32px;
+    padding-top: 32px;
+    width: 500px;
+    height: auto;
     margin: auto;
     position: relative;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
   }
 `;
 
@@ -307,3 +318,11 @@ export const CategoryItemsContainer = styled.div`
   flex-wrap: wrap;
   gap: 8px;
 `;
+
+
+export const NoTransactionMain = styled.div`
+  height: 72vh;;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`

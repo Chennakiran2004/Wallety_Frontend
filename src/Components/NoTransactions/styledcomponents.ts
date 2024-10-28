@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { DescriptionHeading } from "../Transaction/styledComponents";
 
 export const NoTransactionsContainer = styled.div`
-  height: 68vh;
   display: flex;
   align-items: center;
   flex-direction: column;

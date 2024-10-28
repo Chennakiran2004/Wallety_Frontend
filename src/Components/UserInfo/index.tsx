@@ -19,6 +19,7 @@ import {
   url,
 } from "../../Constants/EventHandlers";
 import axios from "axios";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 interface ProfileInterface {
   email: string;
@@ -75,7 +76,7 @@ const UserInfo = () => {
 
       fetching();
     } catch (err) {
-      console.log(err);
+      handleAxiosError(err)
     }
   };
 
@@ -97,7 +98,7 @@ const UserInfo = () => {
 
       fetching();
     } catch (err) {
-      console.log(err);
+      handleAxiosError(err)
     }
   }, []);
 

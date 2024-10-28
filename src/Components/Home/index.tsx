@@ -34,6 +34,7 @@ import {
 import axios from "axios";
 import NoTransactionsComponent from "../NoTransactions";
 import { useNavigate } from "react-router-dom";
+import {handleAxiosError} from '../../Constants/errorHandler'
 
 interface TransactionItem {
   category: string;
@@ -138,7 +139,7 @@ const Home: React.FC = () => {
 
         console.log(response.data);
       } catch (err) {
-        console.log(err);
+        handleAxiosError(err)
       }
     };
 
@@ -160,24 +161,7 @@ const Home: React.FC = () => {
         }
         setRecentTransactionsArr(response.data.transactions_by_date);
       } catch (err: any) {
-        if (err.response) {
-          switch (err.response.status) {
-            case 400:
-              break;
-            case 401:
-              deleteAccessToken();
-              deleteRefereshToken();
-              navigateLogin();
-              break;
-            case 404:
-              break;
-            case 500:
-              break;
-            default:
-              break;
-          }
-        }
-        console.log(err);
+        handleAxiosError(err)
       }
     };
 

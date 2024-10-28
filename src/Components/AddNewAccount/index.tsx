@@ -39,6 +39,8 @@ import {
 import { GenderButton } from "./styledComponents";
 import { CarouselItemImage } from "../GainTotalControlOfYourMoney/styledComponents";
 import axios from "axios";
+import withAuthRedirect from "../../Constants/WithAuthRedirect";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 const dropdownVariants = {
   hidden: {
@@ -197,7 +199,7 @@ const AddNewAccount = () => {
         localStorage.setItem("isSalaryAdded", "true");
         navigateToSmartSpendingSuggestions();
       } catch (err) {
-        console.log(err);
+        handleAxiosError(err);
       }
     };
 

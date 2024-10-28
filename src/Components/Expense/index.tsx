@@ -39,6 +39,7 @@ import {
   RupeesAndInputContainer,
   RupeesSymbol,
 } from "../AddNewAccount/styledComponents";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 const dropdownVariants = {
   hidden: {
@@ -148,7 +149,9 @@ const ExpenseComponent = () => {
             setError(err.response.data.message);
           }
         }
+        handleAxiosError(err)
       }
+      
     };
 
     fetching();

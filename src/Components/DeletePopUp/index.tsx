@@ -16,6 +16,7 @@ import {
   NavigationEvents,
   url,
 } from "../../Constants/EventHandlers";
+import { handleAxiosError } from "../../Constants/errorHandler";
 
 interface DeletePopUpProps {
   closePopUp: () => void;
@@ -61,7 +62,7 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({
         closePopUp();
         openSuccessPopUp();
       } catch (err) {
-        console.log(err);
+        handleAxiosError(err)
       }
     };
     fetching();
