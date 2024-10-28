@@ -177,6 +177,7 @@ const SignUp = () => {
     let hasError = false;
 
     if (name === "") {
+      console.log("asdf")
       setNameError(true);
       hasError = true;
     }
@@ -184,14 +185,17 @@ const SignUp = () => {
       setEmailError(true);
       hasError = true;
     } else if (!emailRegex.test(email)) {
+      console.log("asdf")
       setEmailFormatError(true);
       hasError = true;
     }
     if (password === "") {
+      console.log("asdf")
       setPasswordError(true);
       hasError = true;
     }
     if (username === "") {
+      console.log("asdf")
       setUsernameError(true);
       hasError = true;
     }
@@ -266,6 +270,25 @@ const SignUp = () => {
                 }}
               >
                 *Name is required
+              </p>
+            )}
+          </div>
+          <div>
+            <InputField
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            {usernameError && (
+              <p
+                style={{
+                  color: "red",
+                  fontSize: "14px",
+                  textAlign: "left",
+                  paddingLeft: "6%",
+                  paddingTop: "1%",
+                }}
+              >
+                *Username is required
               </p>
             )}
           </div>
