@@ -154,13 +154,14 @@
 
 import styled from "styled-components";
 import { IconContianer } from "../signup/signupstyled";
+import { motion } from "framer-motion";
 
 export const ChatBotMainContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: 100dvh;
+    height: 90dvh;
     margin: auto;
     @media screen and (min-width: 768px) {
         width: 768px;
@@ -221,14 +222,95 @@ export const HeaderContents = styled.div`
 export const BottomContainer = styled.div`
     position: absolute;
     bottom: 0;
+    width: 90%;  /* Ensures BottomContainer takes full width */
     display: flex;
+    align-items: center;
+    padding: 18px;
+    gap: 8px;
+    background: white;
+    margin: auto;
 `
 
 export const InputElementStyling = styled.input`
-    flex-grow: 1;
-    width: 100%;
+    flex-grow: 1;  
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #FAFAFA;
 `
 
 export const SubmitButtonChat = styled.button`
 
+`
+
+export const SendButton = styled.button`
+    width: 48px;
+    height: 48px;
+    border: none;
+    background: url('/Images/sendIcon.svg') no-repeat center;
+    background-size: contain;
+    padding: 0;
+    margin-right: 4px;
+`
+
+export const MainChatContainer = styled.div`    
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+`
+
+export const MessageElement = styled.p`
+    color: white;
+    text-align: left;
+`
+
+export const FromMessage = styled(motion.div)`
+    max-width: 50%;
+    display: inline-flex;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 12px 12px 0px 12px;
+    background: #7F3DFF;
+    align-self: flex-end;
+`
+
+export const ToMessageElement = styled(MessageElement)`
+    color: black;
+`
+
+export const ToMessage = styled(motion.div)`
+    display: inline-flex;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 0px 12px 12px 12px;
+    background: #F5F5F5;
+    max-width: 70%;
+    align-self: flex-start;
+`
+
+
+export const MainChatSubContainer = styled.div`
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 16px;
+    height: fit-content;
+    max-height: calc(100% - 70px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+    padding-bottom: 50px;
+    scrollbar-width: none;
+    @media (min-width: 768px){
+        padding-bottom: 100px;  
+        max-height: 50%;
+    }
 `

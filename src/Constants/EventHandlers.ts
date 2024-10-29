@@ -105,6 +105,7 @@ export const ChangingTokens = () => {
 
   const deleteAccessToken = () => {
     Cookies.remove("access_token");
+    localStorage.removeItem("isSalaryAdded");
   };
 
   const deleteRefereshToken = () => {
