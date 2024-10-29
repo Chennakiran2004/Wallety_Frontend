@@ -183,6 +183,7 @@ export const HeadingContainer = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const BulbImage = styled.img`
