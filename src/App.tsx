@@ -25,6 +25,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 
 import "./App.css";
 import StartingPage from "./Components/StartingPage";
+import ChatBot from "./Components/ChatBot";
 
 function App() {
   const location = useLocation();
@@ -56,6 +57,7 @@ function App() {
           <Route path="/expense" element={<ExpenseComponent />} />
           <Route path="/transaction/:id" element={<TransactionDetails />} />
           <Route path="/financialReport" element={<FinancialReport />} />
+          <Route path="/chatBot" element={<ChatBot />} />
           <Route
             path="/SmartSpendingSuggestions"
             element={<SmartSpendingSuggestions />}
