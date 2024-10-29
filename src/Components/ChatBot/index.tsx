@@ -7,6 +7,8 @@
 //     MessageElement, ToMessage, ToMessageElement, InputFieldContainer,
 //     InputElement, SendButton} from "./styledcomponents";
 
+import { BackButton, BottomContainer, ChatBotMainContainer, ChatBotMainSubContainer, ChatWithHeading, HeaderContents, HeaderTopContents, Headings, InputElementStyling, NameHeading, SubmitButtonChat } from "./styledcomponents"
+
 // interface Message {
 //     text: string;
 //     fromUser: boolean;
@@ -118,7 +120,25 @@
 
 const ChatBot = ()=>{
     return(
-        <h1>ChatBot Page</h1>
+        <ChatBotMainContainer>
+            <ChatBotMainSubContainer>
+                <HeaderTopContents>
+                        <BackButton/>
+                        <Headings>
+                            <img src = "/Images/profileSmallIcon.svg"/>
+                            <HeaderContents>
+                                <ChatWithHeading>Chat With</ChatWithHeading>
+                                <NameHeading>Riya</NameHeading>
+                            </HeaderContents>
+                        </Headings>
+                        <img src = "/Images/deleteSessionIcon.svg"/>
+                </HeaderTopContents>
+                <BottomContainer>
+                        <InputElementStyling/>
+                        <SubmitButtonChat>Submit</SubmitButtonChat>
+                </BottomContainer>
+            </ChatBotMainSubContainer>
+        </ChatBotMainContainer>
     )
 }
 

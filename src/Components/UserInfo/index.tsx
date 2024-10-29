@@ -34,7 +34,7 @@ interface ProfileInterface {
 const UserInfo = () => {
   const { handleBack } = NavigationEvents();
 
-  const [username, setUserName] = useState("");
+  const [fullname, setFullName] = useState("");
   const [email, setEmail] = useState("");
 
   const [profileError, setProfileError] = useState("");
@@ -43,8 +43,10 @@ const UserInfo = () => {
     ChangingTokens();
   const [userData, setUserData] = useState<ProfileInterface | null>();
 
-  const onChangeUserName = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value);
+  const [username, setUsername] = useState("")
+
+  const onChangeFullName = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFullName(event.target.value);
   };
 
   const onChangeEmail = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -55,12 +57,17 @@ const UserInfo = () => {
     event.preventDefault();
   };
 
+  const onChangeUserName = (e: any)=>{
+    setUsername(e.target.value)
+  }
+
   const updateProfile = () => {
     try {
       const fetching = async () => {
         const data = {
           email: email,
-          full_name: username,
+          full_name: fullname,
+          username: username
         };
 
         const response = await axios.post(
@@ -91,8 +98,10 @@ const UserInfo = () => {
         });
 
         setUserData(response.data);
-        setUserName(response.data.full_name ?? "");
+        setFullName(response.data.full_name ?? "");
         setEmail(response.data.email ?? "");
+        setUsername(response.data.username ?? "");
+        
       };
 
       fetching();
@@ -111,6 +120,10 @@ const UserInfo = () => {
       <FormContainer onSubmit={onSubmit}>
         <InputContainer>
           <InputLabel>Full Name</InputLabel>
+          <InputElement value={fullname} onChange={onChangeFullName} />
+        </InputContainer>
+        <InputContainer>
+          <InputLabel>Username</InputLabel>
           <InputElement value={username} onChange={onChangeUserName} />
         </InputContainer>
 
