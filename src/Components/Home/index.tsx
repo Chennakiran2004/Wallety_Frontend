@@ -37,6 +37,7 @@ import NoTransactionsComponent from "../NoTransactions";
 import { useNavigate } from "react-router-dom";
 import { handleAxiosError } from "../../Constants/errorHandler";
 import { Oval } from "react-loader-spinner";
+import NotFound from "../NotFound";
 
 // Define interfaces
 interface TransactionItem {
@@ -93,7 +94,7 @@ const UserBalance: React.FC<{ userExpense: UserExpenseDetails | null }> = ({
     userExpense?.Expense
   );
 
-  const { navigateToSmartSpendingSuggestions } = NavigationEvents();
+  const { navigateToHomeSmartSpendingSuggestions } = NavigationEvents();
 
   return (
     <HomeContentContainer>
@@ -101,7 +102,7 @@ const UserBalance: React.FC<{ userExpense: UserExpenseDetails | null }> = ({
         <HeadingContainer>
           <UserName>Hello {userExpense?.user_name} 👋,</UserName>
           <BulbImage
-            onClick={navigateToSmartSpendingSuggestions}
+            onClick={navigateToHomeSmartSpendingSuggestions}
             src="/Images/light-bulb.svg"
             height="60px"
             width="60px"
@@ -183,6 +184,7 @@ const Home: React.FC = () => {
     null
   );
   const [noTransactions, setNoTransactions] = useState(false);
+  const [notFound, setIsNotFound] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -213,8 +215,11 @@ const Home: React.FC = () => {
         setRecentTransactionsArr(
           transactionsResponse.data.transactions_by_date
         );
-      } catch (error) {
+      } catch (error: any) {
         handleAxiosError(error);
+        if (error.response.status === 404) {
+          setIsNotFound(true);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -225,6 +230,10 @@ const Home: React.FC = () => {
 
   if (isLoading) {
     return <LoaderSpinner />;
+  }
+
+  if (notFound) {
+    return <NotFound />;
   }
 
   return (

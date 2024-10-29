@@ -209,6 +209,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { handleAxiosError } from "../../Constants/errorHandler";
 import { Oval } from "react-loader-spinner"; // Import loader
+import NotFound from "../NotFound";
 
 const overlayVariants = {
   hidden: { opacity: 0 },
@@ -230,6 +231,7 @@ const TransactionDetails = () => {
   const [successfulPopUp, setSuccessfulPopUp] = useState(false);
   const [data, setData] = useState<TransactionInterface | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Loading state for data fetching
+  const [notFound, setNotFound] = useState(false);
 
   let { id } = useParams();
   const { accessToken } = ChangingTokens();
@@ -266,14 +268,21 @@ const TransactionDetails = () => {
 
         setData(response.data);
         setIsLoading(false); // Stop loading once data is fetched
-      } catch (err) {
+      } catch (err: any) {
         handleAxiosError(err);
+        if (err.response && err.response.status === 404) {
+          setNotFound(true);
+        }
         setIsLoading(false); // Stop loading in case of error
       }
     };
 
     fetching();
   }, [id, accessToken]);
+
+  if (notFound) {
+    return <NotFound />;
+  }
 
   return (
     <DetailsContainer>

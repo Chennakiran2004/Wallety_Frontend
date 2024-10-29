@@ -199,6 +199,7 @@ import {
 } from "../../Constants/EventHandlers";
 import { handleAxiosError } from "../../Constants/errorHandler";
 import { BackImage } from "../UserInfo/styledComponents";
+import NotFound from "../NotFound";
 
 const MonthReview = () => {
   const [expandedCard, setExpandedCard] = useState<number | null>(null);
@@ -244,8 +245,11 @@ const MonthReview = () => {
         setUnderSpentCategoriesArr(response.data.under_spent);
 
         console.log(response.data);
-      } catch (e) {
+      } catch (e: any) {
         handleAxiosError(e);
+        if (e.response && e.response.status === 404) {
+          return <NotFound />;
+        }
       }
     };
 
