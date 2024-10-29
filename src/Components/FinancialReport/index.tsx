@@ -27,6 +27,7 @@ import ExpensesItem from "../ExpensesItem";
 import SalayItem from "../SalaryItem";
 import axios from "axios";
 import { handleAxiosError } from "../../Constants/errorHandler";
+import NotFound from "../NotFound";
 
 const dropdownVariants = {
   hidden: { opacity: 0, height: 0 },
@@ -57,6 +58,7 @@ const months = [
 const FinancialReport = () => {
   const { handleBack } = NavigationEvents();
   const { accessToken } = ChangingTokens();
+  const [notFound, setIsNotFound] = useState(false);
 
   const [activeTab, setActiveTab] = useState<"expense" | "income">("expense");
   const [isMonthDropdownOpen, setMonthDropdownOpen] = useState(false); // Dropdown state
@@ -137,8 +139,11 @@ const FinancialReport = () => {
           }
         );
         setExpensesData(expenses);
-      } catch (err) {
+      } catch (err: any) {
         handleAxiosError(err);
+        if (err.response && err.response.status === 404) {
+          setIsNotFound(true);
+        }
       }
     };
 
@@ -162,14 +167,21 @@ const FinancialReport = () => {
           },
         ];
         setIncomeData(incomeDataObj);
-      } catch (err) {
+      } catch (err: any) {
         handleAxiosError(err);
+        if (err.response && err.response.status === 404) {
+          setIsNotFound(true);
+        }
       }
     };
 
     fetchIncome();
     fetching();
   }, [selectedMonth, accessToken]);
+
+  if (notFound) {
+    return <NotFound />;
+  }
 
   return (
     <FinancialReportMainContainer>

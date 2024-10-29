@@ -8,10 +8,12 @@ import {
   TabBarMainContainer,
   TabBarSubContainer,
   TabBarContainer,
+  BotImage,
 } from "./styledComponents";
 import { useLocation } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
+import { NavigationEvents } from "../../Constants/EventHandlers";
 
 const TabBar = () => {
   const location = useLocation();
@@ -30,6 +32,8 @@ const TabBar = () => {
     tab === activeTab ? "#7F3DFF" : "#C6C6C6";
   const getTextColor = (tab: any) =>
     tab === activeTab ? "#7F3DFF" : "#C6C6C6";
+
+  const {navigateToBot} = NavigationEvents()
 
   return (
     <TabBarMainContainer>
@@ -126,6 +130,8 @@ const TabBar = () => {
             </TabBarItemText>
           </TabBarItemContainer>
         </CustomLink>
+      <BotImage  onClick = {navigateToBot} alt = "Riya Evvaru?" src = "/Images/Hello Robot.gif"/>
+
       </TabBarSubContainer>
     </TabBarMainContainer>
   );

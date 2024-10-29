@@ -10,6 +10,8 @@ export const TabBarMainContainer = styled.div`
   flex-shrink: 0;
   position: relative;
   height: 9dvh;
+  overflow: hidden;
+  
 
   @media screen and (min-width: 768px) {
     width: 768px;
@@ -20,13 +22,15 @@ export const TabBarMainContainer = styled.div`
 export const TabBarSubContainer = styled.div`
   display: flex;
   justify-content: space-around;
-  width: 100%;
+  width: 90%;
   background: #fff;
   align-items: baseline;
   padding-bottom: 16px;
+  position: relative;
 
   @media screen and (min-width: 768px) {
     border-radius: 0px 0px 16px 16px;
+    width: 100%;
   }
 `;
 
@@ -75,8 +79,25 @@ export const TabBarContainer = styled.div`
   position: relative;
   bottom: -5%;
 
+
+
   @media screen and (min-width: 768px) {
     width: 768px;
     bottom: 20%;
   }
 `;
+
+
+export const BotImage = styled.img`
+  position: absolute;
+  left: 91%;
+  width: 74px;
+  height: 96.522px;
+  transform: rotate(-32deg);
+  bottom: -16%;
+  z-index: 4888;
+
+  @media (min-width: 768px){
+    left: 90%;
+  }
+`

@@ -29,6 +29,7 @@ import NoTransactionsComponent from "../NoTransactions";
 import MonthReviewPopUp from "../MonthReviewPopUp";
 import { handleAxiosError } from "../../Constants/errorHandler";
 import { Oval } from "react-loader-spinner";
+import NotFound from "../NotFound";
 
 // Define interfaces
 interface TransactionItem {
@@ -76,6 +77,7 @@ const Transaction = () => {
   const { navigateToFinancialReport } = NavigationEvents();
   const [numberOfFilters, setNumberofFilters] = useState(0);
   const [showMonthReview, setShowMonthReview] = useState(false);
+  const [notFound, setNotFound] = useState(false);
 
   // Toggle Monthly PopUp
   const toggleMontlyPopUp = () => setShowMonthReview(false);
@@ -120,8 +122,11 @@ const Transaction = () => {
         }
       );
       setTransactionsArr(response.data.transactions_by_date);
-    } catch (err) {
+    } catch (err: any) {
       handleAxiosError(err);
+      if (err.response && err.response.status === 404) {
+        setNotFound(true);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -152,8 +157,11 @@ const Transaction = () => {
       } else {
         setTransactionsArr(response.data.transactions_by_date);
       }
-    } catch (err) {
+    } catch (err: any) {
       handleAxiosError(err);
+      if (err.response && err.response.status === 404) {
+        setNotFound(true);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -162,6 +170,10 @@ const Transaction = () => {
   useEffect(() => {
     fetchAllTransactions();
   }, [accessToken]);
+
+  if (notFound) {
+    return <NotFound />;
+  }
 
   return (
     <>

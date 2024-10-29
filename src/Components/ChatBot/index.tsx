@@ -1,8 +1,8 @@
 // // import React, { useState, useEffect, useRef } from 'react';
 // // import { motion } from 'framer-motion';
-// // import { ChatBotMainContainer, ChatBotSubContainer, 
+// // import { ChatBotMainContainer, ChatBotSubContainer,
 // //     ChatWithHeading, Headings, NameHeading, TopContainerChatBot,
-// //     TopContainerContents, IconsContainer, MainChatContainer, 
+// //     TopContainerContents, IconsContainer, MainChatContainer,
 // //     FromMessage, MainChatSubContainer,
 // //     MessageElement, ToMessage, ToMessageElement, InputFieldContainer,
 // //     InputElement, SendButton} from "./styledcomponents";
@@ -12,7 +12,6 @@
 // import { useState, useRef } from "react";
 // import { ChangingTokens, url } from "../../Constants/EventHandlers";
 // import { handleAxiosError } from "../../Constants/errorHandler";
-
 
 // // interface Message {
 // //     text: string;
@@ -82,7 +81,7 @@
 // //                 <MainChatContainer>
 // //                     <MainChatSubContainer ref={messagesEndRef}>
 // //                         {messages.map((message, index) => (
-// //                             message.fromUser ? 
+// //                             message.fromUser ?
 // //                                 <FromMessage
 // //                                     key={index}
 // //                                     variants={fromVariants}
@@ -103,7 +102,7 @@
 // //                         ))}
 // //                     </MainChatSubContainer>
 // //                     <InputFieldContainer>
-// //                         <InputElement 
+// //                         <InputElement
 // //                             ref={inputRef}
 // //                             value={input}
 // //                             onChange={handleInputChange}
@@ -122,7 +121,6 @@
 
 // // export default ChatBot;
 
-
 // interface Message {
 //     text: string;
 //     fromUser: boolean;
@@ -138,7 +136,6 @@
 //     visible: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 120 } }
 // };
 
-
 // const ChatBot = ()=>{
 //         const [messages, setMessages] = useState<Message[]>([]);
 //     const [input, setInput] = useState<string>('');
@@ -147,12 +144,11 @@
 
 //     const { accessToken} = ChangingTokens();
 
-
 //     const sendMessage = () => {
 //                 if (input.trim()) {
 //                     const newMessage: Message = { text: input, fromUser: true };
 //                     setMessages(prevMessages => [...prevMessages, newMessage]);
-//                     //send request 
+//                     //send request
 //                     const fetching = async()=>{
 //                         try{
 //                             const body = {
@@ -170,7 +166,7 @@
 //                             if (inputRef.current) {
 //                                 inputRef.current.blur();
 //                             }
-                              
+
 //                         }catch(e){
 //                             handleAxiosError(e)
 //                         }
@@ -180,19 +176,15 @@
 //                 }
 //         };
 
-
 //             const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 //                 setInput(event.target.value);
 //             };
-
 
 //             const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
 //                     if (event.key === 'Enter') {
 //                         sendMessage();
 //                     }
 //             };
-
-
 
 //     return(
 //         <ChatBotMainContainer>
@@ -211,7 +203,7 @@
 //                 <MainChatContainer>
 //                     <MainChatSubContainer>
 //                     {messages.map((message, index) => (
-//                             message.fromUser ? 
+//                             message.fromUser ?
 //                                 <FromMessage
 //                                     key={index}
 //                                     variants={fromVariants}
@@ -242,7 +234,6 @@
 // }
 
 // export default ChatBot
-
 
 // import React, { useEffect, useState } from "react";
 // import styled from "styled-components";
@@ -424,10 +415,22 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import { BackButton, ChatWithHeading, HeaderContents, HeaderTopContents, Headings, NameHeading } from "./styledcomponents";
+import {
+  BackButton,
+  ChatWithHeading,
+  HeaderContents,
+  HeaderTopContents,
+  Headings,
+  NameHeading,
+} from "./styledcomponents";
 import axios from "axios";
-import { ChangingTokens, NavigationEvents, url } from "../../Constants/EventHandlers";
+import {
+  ChangingTokens,
+  NavigationEvents,
+  url,
+} from "../../Constants/EventHandlers";
 import { handleAxiosError } from "../../Constants/errorHandler";
+import NotFound from "../NotFound";
 
 interface Message {
   text: string;
@@ -448,8 +451,7 @@ const InputComponent: React.FC = () => {
   const { accessToken, refreshToken, deleteAccessToken, deleteRefereshToken } =
     ChangingTokens();
 
-    const { handleBack} =
-    NavigationEvents();
+  const { handleBack } = NavigationEvents();
 
   // Update the viewport height CSS variable dynamically
   const updateViewportHeight = () => {
@@ -482,59 +484,69 @@ const InputComponent: React.FC = () => {
   };
 
   // Simulate a bot response
-  const generateBotResponse = async(userMessage: string): Promise<string> => {
-        try{
-            const body = {
-                message: userMessage
-            }
-            console.log(userMessage)
-            const response = await axios.post(`${url}/generate_personalized_response/`, body, {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                });
-                console.log(response)
-
-                return response.data.response
-        }catch(e){
-            handleAxiosError(e)
-            return Promise.reject(e);
+  const generateBotResponse = async(userMessage: string)=> {
+    try {
+      const body = {
+        message: input,
+      };
+      const response = await axios.post(
+        `${url}/generate_personalized_response/`,
+        body,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         }
+      );
+
+      console.log(response.data.response)
+
+      return response.data.response
+      
+    
+    }catch(e){
+        console.log(e)
+        handleAxiosError(e)
+        return Promise.reject(e);
+    }
   };
 
-  const handleSubmit = async(event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setInput("");
     if (input.trim() === "") return;
 
     const userMessage: Message = { text: input, sender: "user" };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
 
+    
+
+    const data = await generateBotResponse(input)
     const botMessage: Message = {
-      text: await generateBotResponse(input),
-      sender: "bot",
-    };
+        text: data,
+        sender: "bot",
+      };
 
     setTimeout(() => {
       setMessages((prevMessages) => [...prevMessages, botMessage]);
     }, 500);
 
-    setInput("");
   };
 
   return (
-    <ChatContainer isFocused={isFocused}>
-        <HeaderTopContents>
-                        <BackButton onClick = {handleBack}/>
-                         <Headings>
-                             <img src = "/Images/profileSmallIcon.svg"/>
-                             <HeaderContents>
-                                <ChatWithHeading>Chat With</ChatWithHeading>
-                                 <NameHeading>Riya</NameHeading>
-                             </HeaderContents>
-                         </Headings>
-                         <img src = "/Images/deleteSessionIcon.svg"/>
-        </HeaderTopContents>
-      <MessagesContainer>
+    <ChatContainer>
+      <HeaderTopContents>
+        <BackButton onClick={handleBack} />
+        <Headings>
+          <img src="/Images/profileSmallIcon.svg" />
+          <HeaderContents>
+            <ChatWithHeading>Chat With</ChatWithHeading>
+            <NameHeading>Riya</NameHeading>
+          </HeaderContents>
+        </Headings>
+        <img src="/Images/deleteSessionIcon.svg" />
+      </HeaderTopContents>
+      <MessagesContainer isFocused={isFocused}>
         {messages.map((message, index) => (
           <MessageBubble key={index} sender={message.sender}>
             {message.text}
@@ -560,7 +572,7 @@ const InputComponent: React.FC = () => {
 export default InputComponent;
 
 // Styled Components
-const ChatContainer = styled.div<{ isFocused: boolean }>`
+const ChatContainer = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
@@ -568,8 +580,8 @@ const ChatContainer = styled.div<{ isFocused: boolean }>`
   background-color: white;
   display: flex;
   flex-direction: column;
-  height: ${(props) =>
-    props.isFocused ? "auto" : "calc(var(--vh, 1vh) * 100)"};
+ 
+    height: 100dvh;
   overflow: hidden; /* Prevents resizing when keyboard opens */
 
   @media (min-width: 768px) {
@@ -579,13 +591,15 @@ const ChatContainer = styled.div<{ isFocused: boolean }>`
   }
 `;
 
-const MessagesContainer = styled.div`
+const MessagesContainer = styled.div<{ isFocused: boolean }>`
   flex: 1;
   padding: 10px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
   scrollbar-width: none;
+   height: ${(props) =>
+    props.isFocused ? "auto" : "calc(var(--vh, 1vh) * 100)"};
   margin-bottom: 60px; /* Space for the fixed input area */
 `;
 
@@ -594,8 +608,7 @@ const MessageBubble = styled.div<{ sender: "user" | "bot" }>`
     props.sender === "user" ? "flex-end" : "flex-start"};
   background-color: ${(props) =>
     props.sender === "user" ? "#7F3DFF" : "#F5F5F5"};
-    color: ${(props) =>
-        props.sender === "user" ? "white" : "black"};
+  color: ${(props) => (props.sender === "user" ? "white" : "black")};
   padding: 10px;
   border-radius: 8px;
   margin: 5px 0;
@@ -613,7 +626,7 @@ const Form = styled.form`
   border-top: 1px solid #ddd;
   background-color: white;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-  @media(min-width: 768px){
+  @media (min-width: 768px) {
     position: relative;
     max-width: 768px;
   }
@@ -640,10 +653,7 @@ const SendButton = styled.button`
   width: 48px;
   height: 48px;
   border: none;
-  background: url('/Images/sendIcon.svg') no-repeat center;
+  background: url("/Images/sendIcon.svg") no-repeat center;
   background-size: contain;
   margin-right: 16px;
 `;
-
-
-

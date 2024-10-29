@@ -21,6 +21,7 @@ import {
 } from "../../Constants/EventHandlers";
 import axios from "axios";
 import { handleAxiosError } from "../../Constants/errorHandler";
+import NotFound from "../NotFound";
 
 interface ProfileInterface {
   email: string;
@@ -43,7 +44,8 @@ const UserInfo = () => {
     ChangingTokens();
   const [userData, setUserData] = useState<ProfileInterface | null>();
 
-  const [username, setUsername] = useState("")
+  const [username, setUsername] = useState("");
+  const [notFound, setNotFound] = useState(false);
 
   const onChangeFullName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFullName(event.target.value);
@@ -57,9 +59,9 @@ const UserInfo = () => {
     event.preventDefault();
   };
 
-  const onChangeUserName = (e: any)=>{
-    setUsername(e.target.value)
-  }
+  const onChangeUserName = (e: any) => {
+    setUsername(e.target.value);
+  };
 
   const updateProfile = () => {
     try {
@@ -67,7 +69,7 @@ const UserInfo = () => {
         const data = {
           email: email,
           full_name: fullname,
-          username: username
+          username: username,
         };
 
         const response = await axios.post(
@@ -83,8 +85,11 @@ const UserInfo = () => {
       };
 
       fetching();
-    } catch (err) {
+    } catch (err: any) {
       handleAxiosError(err);
+      if (err.response && err.response.status === 404) {
+        setNotFound(true);
+      }
     }
   };
 
@@ -101,14 +106,20 @@ const UserInfo = () => {
         setFullName(response.data.full_name ?? "");
         setEmail(response.data.email ?? "");
         setUsername(response.data.username ?? "");
-        
       };
 
       fetching();
-    } catch (err) {
+    } catch (err: any) {
       handleAxiosError(err);
+      if (err.response && err.response.status === 404) {
+        setNotFound(true);
+      }
     }
   }, []);
+
+  if (notFound) {
+    return <NotFound />;
+  }
 
   return (
     <EditProfileMainContianer>

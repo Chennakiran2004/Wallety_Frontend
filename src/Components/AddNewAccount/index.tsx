@@ -41,6 +41,7 @@ import { CarouselItemImage } from "../GainTotalControlOfYourMoney/styledComponen
 import axios from "axios";
 import withAuthRedirect from "../../Constants/WithAuthRedirect";
 import { handleAxiosError } from "../../Constants/errorHandler";
+import NotFound from "../NotFound";
 
 const dropdownVariants = {
   hidden: {
@@ -132,7 +133,7 @@ const AddNewAccount = () => {
 
   const amountInputRef = useRef<HTMLInputElement>(null);
 
-  const { navigateToSmartSpendingSuggestions } = NavigationEvents();
+  const { navigateToNewSmartSpendingSuggestions } = NavigationEvents();
 
   const openGenderDropDown = () => {
     setSpenderContents(!spenderContents);
@@ -205,9 +206,12 @@ const AddNewAccount = () => {
         });
 
         localStorage.setItem("isSalaryAdded", "true");
-        navigateToSmartSpendingSuggestions();
-      } catch (err) {
+        navigateToNewSmartSpendingSuggestions();
+      } catch (err: any) {
         handleAxiosError(err);
+        if (err.response && err.response.status === 404) {
+          return <NotFound />;
+        }
       }
     };
 

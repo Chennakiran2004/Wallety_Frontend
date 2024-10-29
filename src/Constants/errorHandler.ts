@@ -1,9 +1,7 @@
 import { ChangingTokens, NavigationEvents } from "./EventHandlers";
 // const { deleteAccessToken, deleteRefereshToken } = ChangingTokens();
 //     const { navigateLogin } = NavigationEvents();
-
 export const handleAxiosError = (error: any) => {
-    
   if (error.response) {
     switch (error.response.status) {
       case 400:
@@ -14,9 +12,7 @@ export const handleAxiosError = (error: any) => {
         // deleteRefereshToken();
         // navigateLogin();
         break;
-      case 404:
-        console.error("Not Found:", error.message);
-        break;
+
       case 500:
         console.error("Server Error:", error.message);
         break;

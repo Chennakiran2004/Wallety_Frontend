@@ -5,9 +5,12 @@ import {
   interSemiBold,
 } from "../../Constants/fontStyles";
 
-export const SmartSpendingSuggestionsMainContainer = styled.div`
+export const SmartSpendingSuggestionsMainContainer = styled.div<{
+  showLetsGoButton: boolean;
+}>`
   display: flex;
   width: 100%;
+  height: ${({ showLetsGoButton }) => (showLetsGoButton ? "100dvh" : "none")};
 
   @media screen and (min-width: 768px) {
     width: 768px;
@@ -27,7 +30,6 @@ export const SmartSpendingSuggestionsSubContainer = styled.div`
   align-items: center;
   justify-content: center;
   gap: 16px;
-  margin-top: 8%;
 `;
 
 export const SmartSpendingSuggestionsHeading = styled.h1`
@@ -38,7 +40,9 @@ export const SmartSpendingSuggestionsHeading = styled.h1`
   text-align: start;
 `;
 
-export const SmartSpendingCardsContainer = styled.div`
+export const SmartSpendingCardsContainer = styled.div<{
+  showLetsGoButton: boolean;
+}>`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -47,11 +51,12 @@ export const SmartSpendingCardsContainer = styled.div`
   flex-shrink: 0;
   margin-top: 24px;
   overflow: scroll;
-  max-height: 64dvh;
+  max-height: ${({ showLetsGoButton }) =>
+    showLetsGoButton ? "64dvh" : "72dvh"};
   scrollbar-width: none;
 
   @media screen and (min-width: 768px) {
-    height: 50dvh;
+    height: ${({ showLetsGoButton }) => (showLetsGoButton ? "50dvh" : "56dvh")};
   }
 `;
 
@@ -133,4 +138,8 @@ export const LetsGoContainer = styled.div`
   position: absolute;
   bottom: 0;
   width: 90%;
+
+  @media screen and (min-width: 768px) {
+    bottom: 2%;
+  }
 `;

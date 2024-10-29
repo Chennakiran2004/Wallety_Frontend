@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   PopUpSubContainer,
   PopupContainer,
@@ -17,6 +17,7 @@ import {
   url,
 } from "../../Constants/EventHandlers";
 import { handleAxiosError } from "../../Constants/errorHandler";
+import NotFound from "../NotFound";
 
 interface DeletePopUpProps {
   closePopUp: () => void;
@@ -36,6 +37,7 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({
   transactionId,
 }) => {
   const { accessToken } = ChangingTokens();
+  const [notFound, setIsNotFound] = useState(true);
 
   const { navigateToHome } = NavigationEvents();
 
@@ -61,12 +63,19 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({
 
         closePopUp();
         openSuccessPopUp();
-      } catch (err) {
-        handleAxiosError(err)
+      } catch (err: any) {
+        handleAxiosError(err);
+        if (err.response && err.response.status === 404) {
+          setIsNotFound(true);
+        }
       }
     };
     fetching();
   };
+
+  if (notFound) {
+    return <NotFound />;
+  }
 
   return (
     <PopupContainer

@@ -59,8 +59,12 @@ export const NavigationEvents = () => {
     navigate("/financialReport");
   };
 
-  const navigateToSmartSpendingSuggestions = () => {
-    navigate("/smartSpendingSuggestions");
+  const navigateToHomeSmartSpendingSuggestions = () => {
+    navigate("/HomeSmartSpendingSuggestions");
+  };
+
+  const navigateToNewSmartSpendingSuggestions = () => {
+    navigate("/NewSmartSpendingSuggestions");
   };
 
   const navigateToMonthReview = () => {
@@ -75,6 +79,10 @@ export const NavigationEvents = () => {
     navigate("/monthReview");
   };
 
+  const navigateToBot = ()=>{
+    navigate("/chatBot")
+  }
+
   return {
     navigateSignIn,
     navigateLogin,
@@ -86,11 +94,13 @@ export const NavigationEvents = () => {
     navigateToTransactionDetails,
     navigateToUserInfo,
     navigateToFinancialReport,
-    navigateToSmartSpendingSuggestions,
+    navigateToHomeSmartSpendingSuggestions,
+    navigateToNewSmartSpendingSuggestions,
     navigateToLogin,
     navigateToMonthReview,
     navigateToExpense,
     navigateToMonthlyBudget,
+    navigateToBot
   };
 };
 
@@ -142,7 +152,7 @@ export const CategoriesColors: { [key: string]: string } = {
   Travel: "#E83E8C",
   Health: "#0077B6",
   Entertainment: "#7F3DFF",
-  Miscellaneous: "228B22",
+  Miscellaneous: "#F6F64B",
   Rent: "#1E3A8A",
   Savings: "#20C997",
 };

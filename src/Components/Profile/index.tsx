@@ -46,6 +46,7 @@ import { handleAxiosError } from "../../Constants/errorHandler";
 import StarRating from "../StarRating";
 import styled from "styled-components";
 import { Oval } from "react-loader-spinner";
+import NotFound from "../NotFound";
 
 // Loader component
 const LoaderSpinner: React.FC = () => (
@@ -97,6 +98,7 @@ const Profile = () => {
   const [errorRating, setErrorRating] = useState("");
   const [loading, setLoading] = useState(true); // Add loading state
   const [userData, setUserData] = useState<ProfileInterface | null>();
+  const [notFound, setNotFound] = useState(false);
 
   const { navigateToUserInfo, navigateToLogin, navigateToMonthReview } =
     NavigationEvents();
@@ -135,8 +137,11 @@ const Profile = () => {
       deleteAccessToken();
       deleteRefereshToken();
       navigateToLogin();
-    } catch (err) {
-      console.log(err);
+    } catch (err: any) {
+      handleAxiosError(err);
+      if (err.response && err.response.status === 404) {
+        setNotFound(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -152,14 +157,21 @@ const Profile = () => {
           },
         });
         setUserData(response.data);
-      } catch (err) {
+      } catch (err: any) {
         handleAxiosError(err);
+        if (err.response && err.response.status === 404) {
+          setNotFound(true);
+        }
       } finally {
         setLoading(false);
       }
     };
     fetchUserData();
   }, [accessToken]);
+
+  if (notFound) {
+    return <NotFound />;
+  }
 
   const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -186,8 +198,11 @@ const Profile = () => {
 
           setDescription("");
           setRating(0);
-        } catch (err) {
+        } catch (err: any) {
           handleAxiosError(err);
+          if (err.response && err.response.status === 404) {
+            return <NotFound />;
+          }
         } finally {
           setLoading(false);
           handleClosePopup();

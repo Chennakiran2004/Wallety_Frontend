@@ -19,16 +19,21 @@ import ExpenseComponent from "./Components/Expense";
 import TransactionDetails from "./Components/TransactionDetails";
 import UserInfo from "./Components/UserInfo";
 import FinancialReport from "./Components/FinancialReport";
-import SmartSpendingSuggestions from "./Components/SmartSpendingSuggestions";
 import MonthReview from "./Components/MonthReview";
 import ProtectedRoute from "./Components/ProtectedRoute";
 
 import "./App.css";
 import StartingPage from "./Components/StartingPage";
 import ChatBot from "./Components/ChatBot";
+import HomeSmartSpendingSuggestions from "./Components/HomeSmartSpendingSuggestion";
+import NewSmartSpendingSuggestions from "./Components/NewUserSmartSpendingSuggestions";
+import { BotImage } from "./Components/TabBar/styledComponents";
+import { NavigationEvents } from "./Constants/EventHandlers";
 
 function App() {
   const location = useLocation();
+
+  const {navigateToBot} = NavigationEvents()
 
   const shouldShowTabBar = [
     "/home",
@@ -59,9 +64,15 @@ function App() {
           <Route path="/financialReport" element={<FinancialReport />} />
           <Route path="/chatBot" element={<ChatBot />} />
           <Route
-            path="/SmartSpendingSuggestions"
-            element={<SmartSpendingSuggestions />}
+            path="/HomeSmartSpendingSuggestions"
+            element={<HomeSmartSpendingSuggestions />}
           />
+
+          <Route
+            path="/NewSmartSpendingSuggestions"
+            element={<NewSmartSpendingSuggestions />}
+          />
+
           <Route path="/monthReview" element={<MonthReview />} />
         </Route>
       </Routes>
@@ -69,7 +80,7 @@ function App() {
     </div>
   );
 }
-
+  
 const WrappedApp = () => (
   <Router>
     <App />
