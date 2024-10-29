@@ -4,6 +4,9 @@ import {
   interMedium,
   interSemiBold,
 } from "../../Constants/fontStyles";
+import { motion } from "framer-motion";
+import { PopupContainer } from "../Transaction/styledComponents";
+import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
 
 export const ProfileMainContainer = styled.div`
   display: flex;
@@ -171,4 +174,98 @@ export const NoButton = styled(Button)`
 export const YesButton = styled(Button)`
   background: var(--Violet-Violet-100, #7f3dff);
   color: var(--Base-Light-Light-80, #fcfcfc);
+`;
+
+export const FeedbackPopupContainer = styled(motion.div)`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 24px;
+  padding-top: 24px;
+  width: 500px;
+  height: auto;
+  margin: auto;
+  position: relative;
+  border-radius: 24px;
+  background: white;
+
+  @media screen and (max-width: 768px) {
+    top: 30%;
+    width: 88%;
+  }
+`;
+
+export const FeedbackHeadingContainer = styled.div`
+  width: 90%;
+  margin: auto;
+`;
+
+export const FeedbackTextMainContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const FeedbackTextContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 8px;
+`;
+
+export const FeedbackText = styled.p`
+  ${interSemiBold}
+  color: var(--Base-Light-Light-20, #91919f);
+  font-style: normal;
+  line-height: normal;
+  font-size: 12px;
+  text-align: start;
+
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
+export const FeedbackDescription = styled(FeedbackText)`
+  font-size: 14px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
+`;
+
+export const DescriptionInput = styled.input`
+  width: 90%;
+  margin: auto;
+  display: flex;
+  height: 34px;
+  padding: 4.082px 8.163px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 5.102px;
+  align-self: stretch;
+  border-radius: 8.163px;
+  border: 1px solid var(--Base-Light-Light-60, #f1f1fa);
+  background: var(--Base-Light-Light-100, #fff);
+`;
+
+export const FalseImage = styled.img`
+  align-self: flex-end;
+  height: 18px;
+  width: 18px;
+`;
+
+export const SubmitButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+`;
+
+export const SubmitButton = styled(GlobalButton1)`
+  height: 40px;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 30%;
 `;

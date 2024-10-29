@@ -13,6 +13,7 @@ Chart.register(DoughnutController, ArcElement, Tooltip, Legend);
 
 interface DoughnutChartProps {
   data: number[];
+  type: string[];
   total: number;
   backgroundColors: string[];
 }
@@ -21,14 +22,15 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
   data,
   total,
   backgroundColors,
+  type,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const chartData = {
+    labels: type,
     datasets: [
       {
-        label: "Expenses Breakdown",
-        data: data,
+        data,
         backgroundColor: backgroundColors,
         hoverBackgroundColor: backgroundColors.map((color) => color + "AA"),
         hoverOffset: 20,
@@ -41,23 +43,14 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
     type: "doughnut",
     data: chartData,
     options: {
-      cutout: "85%",
+      cutout: "85%", // Optional: Adjust cutout to your liking
       plugins: {
-        tooltip: {
-          enabled: true,
-        },
+        tooltip: { enabled: true }, // Disable tooltips
+        legend: { display: false }, // Disable legend
       },
       elements: {
         arc: {
-          borderWidth: 0,
-          borderRadius(ctx, options) {
-            return {
-              outerStart: 0,
-              innerStart: 0,
-              outerEnd: 20,
-              innerEnd: 10,
-            };
-          },
+          borderWidth: 0, // Ensure border width is set here as well
         },
       },
     },
@@ -67,13 +60,12 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
     id: "centerTextPlugin",
     afterDraw(chart) {
       const { ctx, chartArea } = chart;
-      const text = total.toString()
+      const text = total.toString();
 
       const fontSize = 32;
       const fontStyle = "normal";
       const fontWeight = 700; // Bold
       const fontFamily = "Inter";
-      const lineHeight = 39;
       const color = "#000";
 
       ctx.save();
@@ -102,7 +94,7 @@ const DoughnutChart: React.FC<DoughnutChartProps> = ({
         doughnutChart.destroy();
       };
     }
-  }, [config]);
+  }, [total]);
 
   return (
     <div style={{ width: "200px", height: "200px" }}>
