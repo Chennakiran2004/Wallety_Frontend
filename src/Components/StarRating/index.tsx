@@ -16,6 +16,10 @@ const Star = styled(motion.div)`
   cursor: none;
   color: #ffd700;
   font-size: 2rem;
+
+  @media screen and (min-width: 768px) {
+    cursor: pointer;
+  }
 `;
 
 interface StarRatingProps {

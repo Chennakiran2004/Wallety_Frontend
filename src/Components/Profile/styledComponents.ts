@@ -191,7 +191,7 @@ export const FeedbackPopupContainer = styled(motion.div)`
 
   @media screen and (max-width: 768px) {
     top: 30%;
-    width: 70%;
+    width: 88%;
   }
 `;
 
@@ -205,7 +205,6 @@ export const FeedbackTextMainContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8%;
 `;
 
 export const FeedbackTextContainer = styled.div`
@@ -222,10 +221,18 @@ export const FeedbackText = styled.p`
   line-height: normal;
   font-size: 12px;
   text-align: start;
+
+  @media screen and (min-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 export const FeedbackDescription = styled(FeedbackText)`
   font-size: 14px;
+
+  @media screen and (min-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 export const DescriptionInput = styled.input`

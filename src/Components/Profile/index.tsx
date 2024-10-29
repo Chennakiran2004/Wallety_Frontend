@@ -279,8 +279,12 @@ const Profile = () => {
                             </FeedbackDescription>
                           </FeedbackTextContainer>
                           <ProfileItemImage
-                            src="/Images/feedback.svg"
+                            src="/gifs/Bird Say Hi (1).gif"
                             alt="userinfo pic"
+                            style={{
+                              width: "70px",
+                              height: "70px",
+                            }}
                           />
                         </FeedbackTextMainContainer>
                       </FeedbackHeadingContainer>
