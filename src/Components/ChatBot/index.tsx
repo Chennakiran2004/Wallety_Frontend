@@ -483,35 +483,32 @@ const InputComponent: React.FC = () => {
 
   // Simulate a bot response
   const generateBotResponse = async(userMessage: string): Promise<string> => {
-                        try{
-                            const body = {
-                                message: input
-                            }
-                            const response = await axios.post(`${url}/generate_personalized_response/`, body, {
-                                headers: {
-                                  Authorization: `Bearer ${accessToken}`,
-                                },
-                              });
+        try{
+            const body = {
+                message: userMessage
+            }
+            console.log(userMessage)
+            const response = await axios.post(`${url}/generate_personalized_response/`, body, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                });
+                console.log(response)
 
-                              return response.data.response
-
-                              
-                              
-                        }catch(e){
-                            handleAxiosError(e)
-                            return Promise.reject(e);
-                        }
+                return response.data.response
+        }catch(e){
+            handleAxiosError(e)
+            return Promise.reject(e);
+        }
   };
 
   const handleSubmit = async(event: React.FormEvent) => {
     event.preventDefault();
     if (input.trim() === "") return;
 
-    // Add user's message to messages array
     const userMessage: Message = { text: input, sender: "user" };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
 
-    // Generate bot response and add to messages array
     const botMessage: Message = {
       text: await generateBotResponse(input),
       sender: "bot",
@@ -519,9 +516,9 @@ const InputComponent: React.FC = () => {
 
     setTimeout(() => {
       setMessages((prevMessages) => [...prevMessages, botMessage]);
-    }, 500); // Simulate response delay
+    }, 500);
 
-    setInput(""); // Clear input field
+    setInput("");
   };
 
   return (
@@ -543,7 +540,7 @@ const InputComponent: React.FC = () => {
             {message.text}
           </MessageBubble>
         ))}
-        <div ref={messagesEndRef} /> {/* Reference to scroll to */}
+        <div ref={messagesEndRef} />
       </MessagesContainer>
       <Form onSubmit={handleSubmit}>
         <StyledInput
