@@ -137,12 +137,13 @@ export const CategoriesMap: { [key: string]: string } = {
 
 export const CategoriesColors: { [key: string]: string } = {
   Food: "#FD3C4A",
-  Shopping: "#FCAC12",
-  Travel: "#0077FF",
+  Shopping: "#FFB629",
+  Travel: "#E83E8C",
   Health: "#0077B6",
   Entertainment: "#7F3DFF",
-  Miscellaneous: "red",
+  Miscellaneous: "228B22",
   Rent: "#1E3A8A",
+  Savings: "#20C997",
 };
 
 export const url = `http://139.84.155.74:8000`;
