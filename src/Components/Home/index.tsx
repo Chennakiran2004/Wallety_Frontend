@@ -230,7 +230,6 @@ const Home: React.FC = () => {
               case 401:
                 deleteAccessToken()
                 navigateToLogin()
-                
                 // setError("Unauthorized. Please check your credentials.");
                 break;
               case 404:
