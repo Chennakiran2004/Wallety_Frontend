@@ -23,6 +23,7 @@ export const ProfileMainContainer = styled.div`
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
     border-radius: 16px;
     height: 72vh;
+    scrollbar-width: none;
   }
 `;
 
@@ -92,7 +93,6 @@ export const ProfileInfoItemsContainer = styled.div`
   /* background-color: #f6f6f6; */
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Updated shadow */
   margin: 8% 0;
-
 `;
 
 export const ProfileInfoItemContainer = styled.div`
@@ -275,8 +275,7 @@ export const SubmitButton = styled(GlobalButton1)`
   width: 30%;
 `;
 
-
 export const MaleIcon = styled.img`
   width: 90px;
   height: 90px;
-`
+`;
