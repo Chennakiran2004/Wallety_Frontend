@@ -137,6 +137,7 @@ const SignUp = () => {
   const { changePassword } = ChangeEvents();
   const { handleBack } = NavigationEvents();
   const { setAccessToken, setRefreshToken } = ChangingTokens();
+  const [isError, setIsError] = useState(true);
 
   // Email validation regex pattern
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -229,7 +230,6 @@ const SignUp = () => {
           setAccessToken(response.data.access_token);
           setRefreshToken(response.data.refresh_token);
           console.log(response.data);
-          navigate("/Setup");
         } catch (err: any) {
           if (err.response) {
             if (err.response.data.error_message) {
@@ -238,6 +238,7 @@ const SignUp = () => {
               switch (err.response.status) {
                 case 400:
                   setError(err.response.data.error_message);
+                  setIsError(true);
                   break;
                 case 401:
                   setError("Unauthorized. Please check your credentials.");
@@ -262,6 +263,10 @@ const SignUp = () => {
       };
       fetching();
       // Navigate to the setup page after successful signup
+      if (!isError) {
+        navigate("/Setup");
+        setIsError(false);
+      }
     } else {
       setError("Please fill all the fields correctly");
     }
