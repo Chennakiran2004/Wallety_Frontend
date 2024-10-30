@@ -37,7 +37,7 @@ const DeletePopUp: React.FC<DeletePopUpProps> = ({
   transactionId,
 }) => {
   const { accessToken } = ChangingTokens();
-  const [notFound, setIsNotFound] = useState(true);
+  const [notFound, setIsNotFound] = useState(false);
 
   const { navigateToHome } = NavigationEvents();
 

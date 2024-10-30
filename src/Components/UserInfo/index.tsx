@@ -82,6 +82,9 @@ const UserInfo = () => {
           }
         );
         setProfileError("Profile Edited Successful");
+        setTimeout(()=>{
+          handleBack();
+        }, 2000)
       };
 
       fetching();

@@ -155,6 +155,8 @@
 import styled from "styled-components";
 import { IconContianer } from "../signup/signupstyled";
 import { motion } from "framer-motion";
+import { interBold, interMedium, interRegular } from "../../Constants/fontStyles";
+import { GlobalButton1, GlobalButton2 } from "../GainTotalControlOfYourMoney/styledComponents";
 
 export const ChatBotMainContainer = styled.div`
     display: flex;
@@ -313,4 +315,36 @@ export const MainChatSubContainer = styled.div`
         padding-bottom: 100px;  
         max-height: 50%;
     }
+`
+
+export const EndChatSubContainer = styled.div`
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+`
+
+export const RiyaPic = styled.img`
+    width: 100px;
+    height: 100px;
+`
+
+export const ParaEndChat = styled.p`
+    ${interRegular}
+    font-size: 16px;
+`
+
+export const NameHeadingRiya = styled.span`
+    ${interMedium}
+    font-size: 20px;
+`
+
+export const EndChatButton = styled(GlobalButton1)`
+    height: 45px;
+`
+
+export const CancelChatButton = styled(GlobalButton2)`
+    height: 45px;
 `

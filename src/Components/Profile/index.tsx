@@ -28,6 +28,7 @@ import {
   SubmitButtonContainer,
   SubmitButton,
   FeedbackDescription,
+  MaleIcon,
 } from "./styledComponents";
 import { AnimatePresence } from "framer-motion";
 import React, { useEffect, useState } from "react";
@@ -220,13 +221,9 @@ const Profile = () => {
         <ProfileMainContainer>
           <ProfileContentContainer>
             <ProfileHeadingContainer>
-              <ProfileHeadingIcon>
-                <ProfileHeadingIconSymbol>
-                  {userData?.username[0]}
-                </ProfileHeadingIconSymbol>
-              </ProfileHeadingIcon>
+                  {userData?.gender === "MALE" ? <MaleIcon src = "/Images/man-avatar.svg"/>: <MaleIcon src = "/Images/female-avatar.svg"/>}
+             
               <ProfileHeadingTextContainer>
-                <UserNameText>Username</UserNameText>
                 <UserName>{userData?.username}</UserName>
               </ProfileHeadingTextContainer>
             </ProfileHeadingContainer>
