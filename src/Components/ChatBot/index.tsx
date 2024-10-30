@@ -419,6 +419,7 @@ import {
   BackButton,
   CancelChatButton,
   ChatWithHeading,
+  Cross,
   EndChatButton,
   EndChatSubContainer,
   HeaderContents,
@@ -428,6 +429,7 @@ import {
   NameHeadingRiya,
   ParaEndChat,
   RiyaPic,
+  RiyaProfileImage,
 } from "./styledcomponents";
 import axios from "axios";
 import {
@@ -437,7 +439,7 @@ import {
 } from "../../Constants/EventHandlers";
 import { handleAxiosError } from "../../Constants/errorHandler";
 import NotFound from "../NotFound";
-import ThreeDotsWave from "../ThreeDotsWave"; // Import the loading animation component
+import ThreeDotsWave from "../ThreeDotsWave";
 import { AnimatePresence } from "framer-motion";
 import { ThreeDots } from 'react-loader-spinner';
 import { FeedbackPopupContainer } from "../Profile/styledComponents";
@@ -465,10 +467,12 @@ const InputComponent: React.FC = () => {
   const [input, setInput] = useState(""); // Track user input
   const [isFocused, setIsFocused] = useState(false); // Track input focus
   const [loading, setLoading] = useState(false); // Track loading state for bot response
+  const [isSessionClose, setIsSessionClose] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null); // Reference to the end of the messages container
-  const [isSessionClose, setIsSessionClose] = useState(false)
+  const timerRef = useRef<NodeJS.Timeout | null>(null); // Ref to hold timer
+  const [tooMuch, setTooMuchTime] = useState(false)
 
-  const {navigateToHome} = NavigationEvents()
+  const { navigateToHome } = NavigationEvents();
 
   // Scroll to the latest message
   const scrollToBottom = () => {
@@ -510,6 +514,21 @@ const InputComponent: React.FC = () => {
     document.body.classList.remove("no-scroll");
   };
 
+  const startTimer = () => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    timerRef.current = setTimeout(() => {
+      const timeoutMessage: Message = {
+        text: "This has taken too long; please try again later.",
+        sender: "bot",
+      };
+      setMessages((prevMessages) => [...prevMessages, timeoutMessage]);
+        setTooMuchTime(true);
+        setLoading(false)
+    },  2.5 * 60* 1000); 
+  };
+
   // Simulate a bot response
   const generateBotResponse = async (userMessage: string) => {
     try {
@@ -527,16 +546,14 @@ const InputComponent: React.FC = () => {
       );
 
       console.log(response.data.response);
-
       return response.data.response;
     } catch (e: any) {
-          if (e.response && e.response.status === 400) {
-              return `Invalid Input`
-          } else {
-            handleAxiosError(e); // Handle other errors
-          }
-          return Promise.reject(e);
-        
+      if (e.response && e.response.status === 400) {
+        return `Invalid Input`;
+      } else {
+        handleAxiosError(e); // Handle other errors
+      }
+      return Promise.reject(e);
     }
   };
 
@@ -544,10 +561,12 @@ const InputComponent: React.FC = () => {
     event.preventDefault();
     if (input.trim() === "" || loading) return;
 
-    const userMessage: Message = { text: input, sender: "user" };
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
     setInput(""); // Clear input field
     setLoading(true); // Set loading to true while waiting for bot response
+    startTimer(); // Start the 2.5-minute timer when fetching begins
+
+    const userMessage: Message = { text: input, sender: "user" };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     try {
       const data = await generateBotResponse(input);
@@ -556,82 +575,119 @@ const InputComponent: React.FC = () => {
         sender: "bot",
       };
       setMessages((prevMessages) => [...prevMessages, botMessage]);
-    }catch(err){
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     } finally {
       setLoading(false); // Stop loading after receiving bot response
+      if (timerRef.current) clearTimeout(timerRef.current); // Clear timer if response is received in time
     }
   };
 
-  const handleSessionClose = ()=>{
-      setIsSessionClose(false)
-  }
+  const handleSessionClose = () => {
+    setIsSessionClose(false);
+    if (timerRef.current) clearTimeout(timerRef.current); // Clear timer when session closes
+  };
 
   return (
     <>
-    <ChatContainer>
-      <HeaderTopContents>
-        <BackButton onClick={handleBack} />
-        <Headings>
-          <img src="/Images/riyaImage.svg" />
-          <HeaderContents>
-            <ChatWithHeading>Chat With</ChatWithHeading>
-            <NameHeading>Riya</NameHeading>
-          </HeaderContents>
-        </Headings>
-        <img onClick = {()=> setIsSessionClose(true)} src="/Images/deleteSessionIcon.svg" />
-      </HeaderTopContents>
-      <MessagesContainer isFocused={isFocused}>
-        {messages.map((message, index) => (
-          <MessageBubble key={index} sender={message.sender}>
-            {message.text}
-          </MessageBubble>
-        ))}
-        {loading && <WrapperDots color="#d1cfcf" height="40" width="40" />}
-        <div ref={messagesEndRef} />
-      </MessagesContainer>
-      <Form onSubmit={handleSubmit}>
-        <StyledInput
-          type="text"
-          placeholder="Type a message..."
-          onFocus={handleFocus}
-          onBlur={handleBlur}
-          onChange={(e) => setInput(e.target.value)}
-          value={input}
-        />
-        <SendButton type="submit" disabled={loading} />
-      </Form>
-    </ChatContainer>
-    <AnimatePresence mode="wait">
-    {isSessionClose && (
-      <Overlay
-        variants={overlayVariants}
-        initial="hidden"
-        animate="visible"
-        exit="exit"
-        onClick={handleSessionClose}
-      >
-        <FeedbackPopupContainer
-          onClick={(e) => e.stopPropagation()}
-          variants={popupVariants}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-        >
-          <PopUpSubContainer>
-            <EndChatSubContainer>
-                <RiyaPic src = "/Images/womanImageRiya.svg"/>
-                <ParaEndChat>Are you sure you want to end the session with <NameHeadingRiya>Riya</NameHeadingRiya></ParaEndChat>
-                <EndChatButton onClick = {navigateToHome}>End Chat</EndChatButton>
-                <CancelChatButton onClick={handleSessionClose}>Cancel</CancelChatButton>
-            </EndChatSubContainer>
-                
-          </PopUpSubContainer>
-        </FeedbackPopupContainer>
-      </Overlay>
-    )}
-  </AnimatePresence>
-  </>
+      <ChatContainer>
+        <HeaderTopContents>
+          <BackButton onClick={handleBack} />
+          <Headings>
+            <RiyaProfileImage src="/Images/riyaImage.svg" />
+            <HeaderContents>
+              <ChatWithHeading>Chat With</ChatWithHeading>
+              <NameHeading>Riya</NameHeading>
+            </HeaderContents>
+          </Headings>
+          <Cross
+            onClick={() => setIsSessionClose(true)}
+            src="/Images/cross.svg"
+          />
+        </HeaderTopContents>
+        <MessagesContainer isFocused={isFocused}>
+          {messages.map((message, index) => (
+            <MessageBubble key={index} sender={message.sender}>
+              {message.text}
+            </MessageBubble>
+          ))}
+          {loading && <WrapperDots color="#d1cfcf" height="40" width="40" />}
+          <div ref={messagesEndRef} />
+        </MessagesContainer>
+        <Form onSubmit={handleSubmit}>
+          <StyledInput
+            type="text"
+            placeholder="Type a message..."
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            onChange={(e) => setInput(e.target.value)}
+            value={input}
+          />
+          <SendButton type="submit" disabled={loading} />
+        </Form>
+      </ChatContainer>
+      <AnimatePresence mode="wait">
+        {isSessionClose && (
+          <Overlay
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onClick={handleSessionClose}
+          >
+            <FeedbackPopupContainer
+              onClick={(e) => e.stopPropagation()}
+              variants={popupVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <PopUpSubContainer>
+                <EndChatSubContainer>
+                  <RiyaPic src="/Images/womanImageRiya.svg" />
+                  <ParaEndChat>
+                    Are you sure you want to end the session with{" "}
+                    <NameHeadingRiya>Riya</NameHeadingRiya>
+                  </ParaEndChat>
+                  <EndChatButton onClick={navigateToHome}>End Chat</EndChatButton>
+                  <CancelChatButton onClick={handleSessionClose}>
+                    Cancel
+                  </CancelChatButton>
+                </EndChatSubContainer>
+              </PopUpSubContainer>
+            </FeedbackPopupContainer>
+          </Overlay>
+        )}
+      </AnimatePresence>
+      <AnimatePresence mode="wait">
+        {tooMuch && (
+          <Overlay
+            variants={overlayVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <FeedbackPopupContainer
+              onClick={(e) => e.stopPropagation()}
+              variants={popupVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+            >
+              <PopUpSubContainer>
+                <EndChatSubContainer>
+                  <RiyaPic src="/Images/womanImageRiya.svg" />
+                  <ParaEndChat>
+                    This has taken too long please try again later{" "}
+                  </ParaEndChat>
+                  <EndChatButton onClick={navigateToHome}>End Chat</EndChatButton>
+                </EndChatSubContainer>
+              </PopUpSubContainer>
+            </FeedbackPopupContainer>
+          </Overlay>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
@@ -647,7 +703,7 @@ const ChatContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100dvh;
-  overflow: hidden; /* Prevents resizing when keyboard opens */
+  overflow: hidden;
 
   @media (min-width: 768px) {
     position: relative;
@@ -665,7 +721,7 @@ const MessagesContainer = styled.div<{ isFocused: boolean }>`
   scrollbar-width: none;
   height: ${(props) =>
     props.isFocused ? "auto" : "calc(var(--vh, 1vh) * 100)"};
-  margin-bottom: 60px; /* Space for the fixed input area */
+  margin-bottom: 60px;
 `;
 
 const MessageBubble = styled.div<{ sender: "user" | "bot" }>`

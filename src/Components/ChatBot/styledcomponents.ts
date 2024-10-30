@@ -213,12 +213,19 @@ export const ChatWithHeading = styled.p`
 export const NameHeading = styled.p`
     color: white;
     text-align: left;
+    ${interMedium}
+    font-size: 20px;
 `
 
 export const HeaderContents = styled.div`
     display: flex;
     flex-direction: column;
     gap: 4px;
+`
+
+export const RiyaProfileImage = styled.img`
+    width: 50px;
+    height: 50px;
 `
 
 export const BottomContainer = styled.div`
@@ -347,4 +354,9 @@ export const EndChatButton = styled(GlobalButton1)`
 
 export const CancelChatButton = styled(GlobalButton2)`
     height: 45px;
+`
+
+export const Cross = styled.img`
+    width: 15px;
+    height: 15px;
 `
