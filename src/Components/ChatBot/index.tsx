@@ -417,11 +417,17 @@ import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import {
   BackButton,
+  CancelChatButton,
   ChatWithHeading,
+  EndChatButton,
+  EndChatSubContainer,
   HeaderContents,
   HeaderTopContents,
   Headings,
   NameHeading,
+  NameHeadingRiya,
+  ParaEndChat,
+  RiyaPic,
 } from "./styledcomponents";
 import axios from "axios";
 import {
@@ -431,17 +437,38 @@ import {
 } from "../../Constants/EventHandlers";
 import { handleAxiosError } from "../../Constants/errorHandler";
 import NotFound from "../NotFound";
+import ThreeDotsWave from "../ThreeDotsWave"; // Import the loading animation component
+import { AnimatePresence } from "framer-motion";
+import { ThreeDots } from 'react-loader-spinner';
+import { FeedbackPopupContainer } from "../Profile/styledComponents";
+import { Overlay, PopUpSubContainer } from "../Transaction/styledComponents";
 
 interface Message {
   text: string;
   sender: "user" | "bot";
 }
 
+const popupVariants = {
+  hidden: { opacity: 0, y: "100%" },
+  visible: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: "100%" },
+};
+
+const overlayVariants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
 const InputComponent: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState(""); // Track user input
   const [isFocused, setIsFocused] = useState(false); // Track input focus
+  const [loading, setLoading] = useState(false); // Track loading state for bot response
   const messagesEndRef = useRef<HTMLDivElement>(null); // Reference to the end of the messages container
+  const [isSessionClose, setIsSessionClose] = useState(false)
+
+  const {navigateToHome} = NavigationEvents()
 
   // Scroll to the latest message
   const scrollToBottom = () => {
@@ -484,7 +511,7 @@ const InputComponent: React.FC = () => {
   };
 
   // Simulate a bot response
-  const generateBotResponse = async(userMessage: string)=> {
+  const generateBotResponse = async (userMessage: string) => {
     try {
       const body = {
         message: input,
@@ -499,52 +526,60 @@ const InputComponent: React.FC = () => {
         }
       );
 
-      console.log(response.data.response)
+      console.log(response.data.response);
 
-      return response.data.response
-      
-    
-    }catch(e){
-        console.log(e)
-        handleAxiosError(e)
-        return Promise.reject(e);
+      return response.data.response;
+    } catch (e: any) {
+          if (e.response && e.response.status === 400) {
+              return `Invalid Input`
+          } else {
+            handleAxiosError(e); // Handle other errors
+          }
+          return Promise.reject(e);
+        
     }
   };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setInput("");
-    if (input.trim() === "") return;
+    if (input.trim() === "" || loading) return;
 
     const userMessage: Message = { text: input, sender: "user" };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setInput(""); // Clear input field
+    setLoading(true); // Set loading to true while waiting for bot response
 
-    
-
-    const data = await generateBotResponse(input)
-    const botMessage: Message = {
+    try {
+      const data = await generateBotResponse(input);
+      const botMessage: Message = {
         text: data,
         sender: "bot",
       };
-
-    setTimeout(() => {
       setMessages((prevMessages) => [...prevMessages, botMessage]);
-    }, 500);
-
+    }catch(err){
+      console.log(err)
+    } finally {
+      setLoading(false); // Stop loading after receiving bot response
+    }
   };
 
+  const handleSessionClose = ()=>{
+      setIsSessionClose(false)
+  }
+
   return (
+    <>
     <ChatContainer>
       <HeaderTopContents>
         <BackButton onClick={handleBack} />
         <Headings>
-          <img src="/Images/profileSmallIcon.svg" />
+          <img src="/Images/riyaImage.svg" />
           <HeaderContents>
             <ChatWithHeading>Chat With</ChatWithHeading>
             <NameHeading>Riya</NameHeading>
           </HeaderContents>
         </Headings>
-        <img src="/Images/deleteSessionIcon.svg" />
+        <img onClick = {()=> setIsSessionClose(true)} src="/Images/deleteSessionIcon.svg" />
       </HeaderTopContents>
       <MessagesContainer isFocused={isFocused}>
         {messages.map((message, index) => (
@@ -552,6 +587,7 @@ const InputComponent: React.FC = () => {
             {message.text}
           </MessageBubble>
         ))}
+        {loading && <WrapperDots color="#d1cfcf" height="40" width="40" />}
         <div ref={messagesEndRef} />
       </MessagesContainer>
       <Form onSubmit={handleSubmit}>
@@ -563,9 +599,39 @@ const InputComponent: React.FC = () => {
           onChange={(e) => setInput(e.target.value)}
           value={input}
         />
-        <SendButton type="submit"></SendButton>
+        <SendButton type="submit" disabled={loading} />
       </Form>
     </ChatContainer>
+    <AnimatePresence mode="wait">
+    {isSessionClose && (
+      <Overlay
+        variants={overlayVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        onClick={handleSessionClose}
+      >
+        <FeedbackPopupContainer
+          onClick={(e) => e.stopPropagation()}
+          variants={popupVariants}
+          initial="hidden"
+          animate="visible"
+          exit="exit"
+        >
+          <PopUpSubContainer>
+            <EndChatSubContainer>
+                <RiyaPic src = "/Images/womanImageRiya.svg"/>
+                <ParaEndChat>Are you sure you want to end the session with <NameHeadingRiya>Riya</NameHeadingRiya></ParaEndChat>
+                <EndChatButton onClick = {navigateToHome}>End Chat</EndChatButton>
+                <CancelChatButton onClick={handleSessionClose}>Cancel</CancelChatButton>
+            </EndChatSubContainer>
+                
+          </PopUpSubContainer>
+        </FeedbackPopupContainer>
+      </Overlay>
+    )}
+  </AnimatePresence>
+  </>
   );
 };
 
@@ -580,8 +646,7 @@ const ChatContainer = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
- 
-    height: 100dvh;
+  height: 100dvh;
   overflow: hidden; /* Prevents resizing when keyboard opens */
 
   @media (min-width: 768px) {
@@ -598,7 +663,7 @@ const MessagesContainer = styled.div<{ isFocused: boolean }>`
   display: flex;
   flex-direction: column;
   scrollbar-width: none;
-   height: ${(props) =>
+  height: ${(props) =>
     props.isFocused ? "auto" : "calc(var(--vh, 1vh) * 100)"};
   margin-bottom: 60px; /* Space for the fixed input area */
 `;
@@ -609,6 +674,7 @@ const MessageBubble = styled.div<{ sender: "user" | "bot" }>`
   background-color: ${(props) =>
     props.sender === "user" ? "#7F3DFF" : "#F5F5F5"};
   color: ${(props) => (props.sender === "user" ? "white" : "black")};
+  text-align: ${(props) => (props.sender === "user" ? "right" : "left")};
   padding: 10px;
   border-radius: 8px;
   margin: 5px 0;
@@ -626,6 +692,7 @@ const Form = styled.form`
   border-top: 1px solid #ddd;
   background-color: white;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+
   @media (min-width: 768px) {
     position: relative;
     max-width: 768px;
@@ -642,18 +709,18 @@ const StyledInput = styled.input`
 `;
 
 const SendButton = styled.button`
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin-left: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
   width: 48px;
   height: 48px;
   border: none;
   background: url("/Images/sendIcon.svg") no-repeat center;
   background-size: contain;
   margin-right: 16px;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+`;
+
+const WrapperDots = styled(ThreeDots)`
+  display: block;
+  margin-left: 1600px !important;
+  width: auto;
 `;

@@ -19,6 +19,7 @@ export const ProfileMainContainer = styled.div`
   @media screen and (min-width: 768px) {
     width: 768px;
     margin: auto;
+    overflow-y: scroll;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
     border-radius: 16px;
     height: 72vh;
@@ -40,6 +41,8 @@ export const ProfileHeadingContainer = styled.div`
   align-items: center;
   gap: 24px;
   width: 100%;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 export const ProfileHeadingIcon = styled.div`
@@ -78,6 +81,7 @@ export const UserName = styled.p`
   color: var(--Base-Dark-Dark-75, #161719);
   font-size: 24px;
   line-height: normal;
+  text-align: center;
 `;
 
 export const ProfileInfoItemsContainer = styled.div`
@@ -87,7 +91,8 @@ export const ProfileInfoItemsContainer = styled.div`
   border-radius: 24px;
   /* background-color: #f6f6f6; */
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Updated shadow */
-  margin-top: 16%;
+  margin: 8% 0;
+
 `;
 
 export const ProfileInfoItemContainer = styled.div`
@@ -269,3 +274,9 @@ export const SubmitButton = styled(GlobalButton1)`
   font-size: 16px;
   width: 30%;
 `;
+
+
+export const MaleIcon = styled.img`
+  width: 90px;
+  height: 90px;
+`
