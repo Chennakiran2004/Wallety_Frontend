@@ -616,7 +616,7 @@ const InputComponent: React.FC = () => {
         <Form onSubmit={handleSubmit}>
           <StyledInput
             type="text"
-            placeholder="Type a message..."
+            placeholder="Type a message to Riya..."
             onFocus={handleFocus}
             onBlur={handleBlur}
             onChange={(e) => setInput(e.target.value)}
@@ -730,6 +730,8 @@ const MessagesContainer = styled.div<{ isFocused: boolean }>`
   height: ${(props) =>
     props.isFocused ? "auto" : "calc(var(--vh, 1vh) * 100)"};
   margin-bottom: 60px;
+  margin-top: 40px;
+  gap: 16px;
 `;
 
 const MessageBubble = styled.div<{ sender: "user" | "bot" }>`
@@ -738,10 +740,15 @@ const MessageBubble = styled.div<{ sender: "user" | "bot" }>`
   background-color: ${(props) =>
     props.sender === "user" ? "#7F3DFF" : "#F5F5F5"};
   color: ${(props) => (props.sender === "user" ? "white" : "black")};
-  text-align: ${(props) => (props.sender === "user" ? "right" : "left")};
-  padding: 10px;
-  border-radius: 8px;
+  border-radius: 12px;
+  border-top-left-radius: ${(props) => (props.sender === "bot" && "0px")};
+  border-bottom-right-radius: ${(props) => (props.sender === "user" && "0px")};
+  
+
+  text-align: ${(props) => (props.sender === "user" ? "left" : "left")};
+  padding: 12px;
   margin: 5px 0;
+  font-size: 18px;
   max-width: 80%;
 `;
 
@@ -753,9 +760,6 @@ const Form = styled.form`
   display: flex;
   align-items: center;
   padding: 10px;
-  border-top: 1px solid #ddd;
-  background-color: white;
-  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
 
   @media (min-width: 768px) {
     position: relative;
@@ -765,11 +769,20 @@ const Form = styled.form`
 
 const StyledInput = styled.input`
   flex: 1;
-  padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 12px;
   outline: none;
+  margin: 8px 16px;
+  background-color: #FAFAFA;
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 16px;
+  outline: none;
+
+  &:focus{
+    border: 1px solid #7F3DFF
+  }
+
+  
 `;
 
 const SendButton = styled.button`
