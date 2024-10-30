@@ -11,6 +11,13 @@
   }
 }
 
+@media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+  .slider-container {
+    overflow: auto;
+    scrollbar-width: none;
+  }
+}
+
 .custom-dots {
   display: flex !important;
   justify-content: center;

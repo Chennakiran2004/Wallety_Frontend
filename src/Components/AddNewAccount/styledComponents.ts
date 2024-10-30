@@ -20,8 +20,14 @@ export const AddNewAccountMainContainer = styled.div`
     margin: auto;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
     border-radius: 16px;
-    height: 70vh;
+    height: 72vh;
     position: relative;
+  }
+
+  /* General MacBook Media Query */
+  @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+    overflow: auto;
+    scrollbar-width: none;
   }
 `;
 

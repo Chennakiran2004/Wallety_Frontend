@@ -11,11 +11,15 @@ export const TabBarMainContainer = styled.div`
   position: relative;
   height: 9dvh;
   overflow: hidden;
-  
 
   @media screen and (min-width: 768px) {
     width: 768px;
     bottom: 16%;
+  }
+
+  @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+    overflow: auto;
+    scrollbar-width: none;
   }
 `;
 
@@ -79,14 +83,11 @@ export const TabBarContainer = styled.div`
   position: relative;
   bottom: -5%;
 
-
-
   @media screen and (min-width: 768px) {
     width: 768px;
     bottom: 20%;
   }
 `;
-
 
 export const BotImage = styled.img`
   position: absolute;
@@ -97,7 +98,7 @@ export const BotImage = styled.img`
   bottom: -16%;
   z-index: 4888;
 
-  @media (min-width: 768px){
+  @media (min-width: 768px) {
     left: 90%;
   }
-`
+`;

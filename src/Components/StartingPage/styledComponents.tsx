@@ -15,6 +15,11 @@ export const TextContainer = styled.div`
     margin-bottom: 32%;
     gap: 0px;
   }
+
+  @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+    overflow: auto;
+    scrollbar-width: none;
+  }
 `;
 
 export const PersonaText = styled.p`

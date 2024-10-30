@@ -35,6 +35,11 @@ const IntroStartingContainer = styled.div`
   @media screen and (min-width: 768px) {
     width: 100vw;
   }
+
+  @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+    overflow: auto;
+    scrollbar-width: none;
+  }
 `;
 
 const IntroSubContainer = styled.div`

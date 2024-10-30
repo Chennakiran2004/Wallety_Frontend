@@ -24,6 +24,11 @@ export const ProfileMainContainer = styled.div`
     height: 72vh;
     scrollbar-width: none;
   }
+
+  @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+    overflow: auto;
+    scrollbar-width: none;
+  }
 `;
 
 export const ProfileContentContainer = styled.div`

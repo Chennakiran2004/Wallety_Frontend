@@ -20,6 +20,11 @@ const Star = styled(motion.div)`
   @media screen and (min-width: 768px) {
     cursor: pointer;
   }
+
+  @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+    overflow: auto;
+    scrollbar-width: none;
+  }
 `;
 
 interface StarRatingProps {

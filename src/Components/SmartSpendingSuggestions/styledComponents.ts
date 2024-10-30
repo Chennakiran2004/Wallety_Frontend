@@ -20,6 +20,11 @@ export const SmartSpendingSuggestionsMainContainer = styled.div<{
     height: 78dvh;
     position: relative;
   }
+
+  @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+    overflow: auto;
+    scrollbar-width: none;
+  }
 `;
 
 export const SmartSpendingSuggestionsSubContainer = styled.div`

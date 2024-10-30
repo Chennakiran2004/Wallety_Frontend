@@ -18,6 +18,11 @@ export const TransactionMainContainer = styled.div`
     border-radius: 16px;
     height: 72vh;
   }
+
+  @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+    overflow: auto;
+    scrollbar-width: none;
+  }
 `;
 
 export const TransactionSubContainer = styled.div`

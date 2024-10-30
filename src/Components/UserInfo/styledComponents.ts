@@ -104,6 +104,11 @@ export const EditProfileMainContianer = styled.div`
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
     border-radius: 16px;
   }
+
+  @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
+    overflow: auto;
+    scrollbar-width: none;
+  }
 `;
 
 export const ProfileError = styled.p`
