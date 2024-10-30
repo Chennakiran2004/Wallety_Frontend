@@ -592,7 +592,7 @@ const InputComponent: React.FC = () => {
     <>
       <ChatContainer>
         <HeaderTopContents>
-          <BackButton onClick={handleBack} />
+          <BackButton onClick={() => setIsSessionClose(true)} />
           <Headings>
             <RiyaProfileImage src="/Images/riyaImage.svg" />
             <HeaderContents>
