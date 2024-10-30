@@ -186,6 +186,9 @@ const Home: React.FC = () => {
   const [noTransactions, setNoTransactions] = useState(false);
   const [notFound, setIsNotFound] = useState(false);
 
+  const {deleteAccessToken} = ChangingTokens()
+  const {navigateToLogin} = NavigationEvents()
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -215,11 +218,37 @@ const Home: React.FC = () => {
         setRecentTransactionsArr(
           transactionsResponse.data.transactions_by_date
         );
-      } catch (error: any) {
-        handleAxiosError(error);
-        if (error.response.status === 404) {
-          setIsNotFound(true);
+      } catch (err: any) {
+        if (err.response) {
+          if (err.response.data.error_message) {
+            // setError(err.response.data.error_message);
+          } else {
+            switch (err.response.status) {
+              case 400:
+                // setError(err.response.data.error_message);
+                break;
+              case 401:
+                deleteAccessToken()
+                navigateToLogin()
+                
+                // setError("Unauthorized. Please check your credentials.");
+                break;
+              case 404:
+                setIsNotFound(true);
+                // setError("Not found. The URL may be incorrect.");
+                break;
+              case 500:
+                // setError("Internal server error. Please try again later.");
+                break;
+              default:
+                // setError("An unexpected error occurred. Please try again.");
+            }
+          }
+        } else if (err.request) {
+          // setError("Network error. Please check your connection.");
+        } else {
         }
+        handleAxiosError(err);
       } finally {
         setIsLoading(false);
       }
