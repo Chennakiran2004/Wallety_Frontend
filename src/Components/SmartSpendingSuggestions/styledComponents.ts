@@ -59,6 +59,7 @@ export const SmartSpendingCardsContainer = styled.div<{
   max-height: ${({ showLetsGoButton }) =>
     showLetsGoButton ? "64dvh" : "72dvh"};
   scrollbar-width: none;
+  margin-bottom: 8%;
 
   @media screen and (min-width: 768px) {
     height: ${({ showLetsGoButton }) => (showLetsGoButton ? "50dvh" : "56dvh")};
