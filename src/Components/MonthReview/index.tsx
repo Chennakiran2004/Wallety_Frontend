@@ -190,6 +190,7 @@ import {
   RecommentAmount,
   TextCategory,
   TextCategoryItems,
+  NoTransactionHeading,
 } from "./styledcomponent";
 import axios from "axios";
 import {
@@ -270,7 +271,7 @@ const MonthReview = () => {
           </MonthReviewTopContainer>
           <MonthReviewItemsContainer>
             {/* Render only if underSpent categories exist */}
-            {underSpent.length > 0 && (
+            {underSpent.length > 0 ? (
               <ItemContainerMonthReview isOpen={expandedCard === 0}>
                 <ItemSubContainerMonthReview>
                   <OverviewContainer>
@@ -329,7 +330,7 @@ const MonthReview = () => {
                   </MoreContentsReview>
                 </ItemSubContainerMonthReview>
               </ItemContainerMonthReview>
-            )}
+            ): <NoTransactionHeading>To review your monthly spending, please add your transactions.</NoTransactionHeading>}
 
             {/* Render only if overSpent categories exist */}
             {overSpent.length > 0 && (

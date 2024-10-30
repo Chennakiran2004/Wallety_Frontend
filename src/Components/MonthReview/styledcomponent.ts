@@ -223,3 +223,11 @@ export const TextCategoryItems = styled.ul`
   margin: auto;
   gap: 18px;
 `;
+
+
+export const NoTransactionHeading = styled.h1`
+  height: 55dvh;
+  display: flex;
+  align-items: center;
+  color: rgb(198, 198, 198);
+`
