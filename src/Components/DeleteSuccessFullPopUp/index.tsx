@@ -1,5 +1,5 @@
 import { Button } from '../DeletePopUp/styledcomponents';
-import {SuccessPopUpContainer, SuccessGifContainer, GifWrapperDelete, DeleteSuccessPopUpHeading, OkayButton} from './styledcomponents'
+import {SuccessPopUpContainer, SuccessGifContainer, GifWrapperDelete, DeleteSuccessPopUpHeading, OkayButton, GifImage} from './styledcomponents'
 
 
 interface DeleteSuccessPopUp{
@@ -39,7 +39,7 @@ const DeleteSuccessPopUp: React.FC<DeleteSuccessPopUp> = ({closePopUp, transacti
     return(
         <SuccessPopUpContainer>
             <SuccessGifContainer>
-                <GifComponent/>
+                <GifImage src = "/gifs/deleteTransaction.gif"/>
                 <DeleteSuccessPopUpHeading>
                     Transaction has been successfully removed
                 </DeleteSuccessPopUpHeading>

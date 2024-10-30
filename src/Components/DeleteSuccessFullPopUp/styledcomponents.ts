@@ -44,3 +44,8 @@ export const OkayButton = styled(Button)`
     background-color: #5856D6;
     color: white;
 `
+
+export const GifImage = styled.img`
+    width: 56px;
+    height: 56px;
+`
