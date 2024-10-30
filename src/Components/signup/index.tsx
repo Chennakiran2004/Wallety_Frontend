@@ -167,6 +167,111 @@ const SignUp = () => {
     setGenderContents(false);
   };
 
+  // const submitForm = () => {
+  //   setNameError(false);
+  //   setEmailError(false);
+  //   setEmailFormatError(false);
+  //   setPasswordError(false);
+  //   setUsernameError(false);
+  //   setGenderError(false);
+  //   setRoleError(false);
+
+  //   let hasError = false;
+
+  //   if (name === "") {
+  //     console.log("asdf");
+  //     setNameError(true);
+  //     hasError = true;
+  //   }
+  //   if (email === "") {
+  //     setEmailError(true);
+  //     hasError = true;
+  //   } else if (!emailRegex.test(email)) {
+  //     console.log("asdf");
+  //     setEmailFormatError(true);
+  //     hasError = true;
+  //   }
+  //   if (password === "") {
+  //     console.log("asdf");
+  //     setPasswordError(true);
+  //     hasError = true;
+  //   }
+  //   if (username === "") {
+  //     console.log("asdf");
+  //     setUsernameError(true);
+  //     hasError = true;
+  //   }
+  //   if (gender === "Gender") {
+  //     setGenderError(true);
+  //     hasError = true;
+  //   }
+  //   if (role === "Role") {
+  //     setRoleError(true);
+  //     hasError = true;
+  //   }
+
+  //   if (!hasError) {
+  //     const fetching = async () => {
+  //       try {
+  //         const data = {
+  //           username: username,
+  //           email: email,
+  //           password: password,
+  //           full_name: name,
+  //           role: role,
+  //           gender: gender,
+  //         };
+
+  //         console.log(data);
+  //         const response = await axios.post(
+  //           `${url}/user_account/signup/v1`,
+  //           data
+  //         );
+  //         setAccessToken(response.data.access_token);
+  //         setRefreshToken(response.data.refresh_token);
+  //         console.log(response.data);
+  //       } catch (err: any) {
+  //         if (err.response) {
+  //           if (err.response.data.error_message) {
+  //             setError(err.response.data.error_message);
+  //           } else {
+  //             switch (err.response.status) {
+  //               case 400:
+  //                 setError(err.response.data.error_message);
+  //                 break;
+  //               case 401:
+  //                 setError("Unauthorized. Please check your credentials.");
+  //                 break;
+  //               case 404:
+  //                 setError("Not found. The URL may be incorrect.");
+  //                 break;
+  //               case 500:
+  //                 setError("Internal server error. Please try again later.");
+  //                 break;
+  //               default:
+  //                 setError("An unexpected error occurred. Please try again.");
+  //             }
+  //           }
+  //         } else if (err.request) {
+  //           setError("Network error. Please check your connection.");
+  //         } else {
+  //           setError("An error occurred. Please try again.");
+  //         }
+  //         // handleAxiosError(err)
+  //       }
+  //     };
+  //     fetching();
+  //     // Navigate to the setup page after successful signup
+  //     if (!isError) {
+  //       navigate("/Setup");
+  //       console.log(isError);
+  //     }
+  //   } else {
+  //     setError("Please fill all the fields correctly");
+  //   }
+  //   setIsError(false);
+  // };
+
   const submitForm = () => {
     setNameError(false);
     setEmailError(false);
@@ -179,7 +284,6 @@ const SignUp = () => {
     let hasError = false;
 
     if (name === "") {
-      console.log("asdf");
       setNameError(true);
       hasError = true;
     }
@@ -187,17 +291,14 @@ const SignUp = () => {
       setEmailError(true);
       hasError = true;
     } else if (!emailRegex.test(email)) {
-      console.log("asdf");
       setEmailFormatError(true);
       hasError = true;
     }
     if (password === "") {
-      console.log("asdf");
       setPasswordError(true);
       hasError = true;
     }
     if (username === "") {
-      console.log("asdf");
       setUsernameError(true);
       hasError = true;
     }
@@ -214,61 +315,34 @@ const SignUp = () => {
       const fetching = async () => {
         try {
           const data = {
-            username: username,
-            email: email,
-            password: password,
+            username,
+            email,
+            password,
             full_name: name,
-            role: role,
-            gender: gender,
+            role,
+            gender,
           };
 
-          console.log(data);
           const response = await axios.post(
             `${url}/user_account/signup/v1`,
             data
           );
+
           setAccessToken(response.data.access_token);
           setRefreshToken(response.data.refresh_token);
-          console.log(response.data);
+          navigate("/Setup");
         } catch (err: any) {
-          if (err.response) {
-            if (err.response.data.error_message) {
-              setError(err.response.data.error_message);
-            } else {
-              switch (err.response.status) {
-                case 400:
-                  setError(err.response.data.error_message);
-                  setIsError(true);
-                  break;
-                case 401:
-                  setError("Unauthorized. Please check your credentials.");
-                  break;
-                case 404:
-                  setError("Not found. The URL may be incorrect.");
-                  break;
-                case 500:
-                  setError("Internal server error. Please try again later.");
-                  break;
-                default:
-                  setError("An unexpected error occurred. Please try again.");
-              }
-            }
-          } else if (err.request) {
-            setError("Network error. Please check your connection.");
+          if (err.response && err.response.data.error_message) {
+            setError(err.response.data.error_message);
           } else {
-            setError("An error occurred. Please try again.");
+            handleAxiosError(err);
           }
-          // handleAxiosError(err)
         }
       };
       fetching();
-      // Navigate to the setup page after successful signup
-      if (!isError) {
-        navigate("/Setup");
-        setIsError(false);
-      }
     } else {
       setError("Please fill all the fields correctly");
+      setIsError(true); // Explicitly set this only when there’s an error
     }
   };
 
