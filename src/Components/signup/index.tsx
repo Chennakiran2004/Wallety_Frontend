@@ -229,14 +229,39 @@ const SignUp = () => {
           setAccessToken(response.data.access_token);
           setRefreshToken(response.data.refresh_token);
           console.log(response.data);
-        } catch (err) {
-          console.log(err)
+          navigate("/Setup");
+        } catch (err: any) {
+          if (err.response) {
+            if (err.response.data.error_message) {
+              setError(err.response.data.error_message);
+            } else {
+              switch (err.response.status) {
+                case 400:
+                  setError(err.response.data.error_message);
+                  break;
+                case 401:
+                  setError("Unauthorized. Please check your credentials.");
+                  break;
+                case 404:
+                  setError("Not found. The URL may be incorrect.");
+                  break;
+                case 500:
+                  setError("Internal server error. Please try again later.");
+                  break;
+                default:
+                  setError("An unexpected error occurred. Please try again.");
+              }
+            }
+          } else if (err.request) {
+            setError("Network error. Please check your connection.");
+          } else {
+            setError("An error occurred. Please try again.");
+          }
           // handleAxiosError(err)
         }
       };
       fetching();
       // Navigate to the setup page after successful signup
-      navigate("/Setup");
     } else {
       setError("Please fill all the fields correctly");
     }
