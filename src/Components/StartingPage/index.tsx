@@ -2,6 +2,15 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, { keyframes } from "styled-components";
 import { interBold } from "../../Constants/fontStyles";
+import {
+  TextContainer,
+  CAContainer,
+  CAText,
+  PersonaText,
+  TextMainConainer,
+  GifImage,
+} from "./styledComponents";
+import { ProfileItemImage } from "../Profile/styledComponents";
 
 // Define the scale-in animation using keyframes
 const scaleIn = keyframes`
@@ -59,7 +68,7 @@ const StartingPage = () => {
     // Redirect to another page after 2 seconds
     const timer = setTimeout(() => {
       navigate("/intro"); // Replace '/intro' with the route you want to redirect to
-    }, 2000);
+    }, 2900);
 
     // Cleanup the timer when the component is unmounted
     return () => clearTimeout(timer);
@@ -68,7 +77,15 @@ const StartingPage = () => {
   return (
     <IntroStartingContainer>
       <IntroSubContainer>
-        <Heading>Wallety</Heading>
+        <TextContainer>
+          <GifImage src="/gifs/logoanimation.gif" />
+          <TextMainConainer>
+            <PersonaText>Persona</PersonaText>
+            <CAContainer>
+              <CAText>CA</CAText>
+            </CAContainer>
+          </TextMainConainer>
+        </TextContainer>
       </IntroSubContainer>
     </IntroStartingContainer>
   );
