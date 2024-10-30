@@ -5,7 +5,6 @@ import {
   interSemiBold,
 } from "../../Constants/fontStyles";
 import { motion } from "framer-motion";
-import { PopupContainer } from "../Transaction/styledComponents";
 import { GlobalButton1 } from "../GainTotalControlOfYourMoney/styledComponents";
 
 export const ProfileMainContainer = styled.div`

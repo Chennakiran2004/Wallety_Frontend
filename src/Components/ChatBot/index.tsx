@@ -441,7 +441,7 @@ import { handleAxiosError } from "../../Constants/errorHandler";
 import NotFound from "../NotFound";
 import ThreeDotsWave from "../ThreeDotsWave";
 import { AnimatePresence } from "framer-motion";
-import { ThreeDots } from 'react-loader-spinner';
+import { ThreeDots } from "react-loader-spinner";
 import { FeedbackPopupContainer } from "../Profile/styledComponents";
 import { Overlay, PopUpSubContainer } from "../Transaction/styledComponents";
 
@@ -470,7 +470,7 @@ const InputComponent: React.FC = () => {
   const [isSessionClose, setIsSessionClose] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null); // Reference to the end of the messages container
   const timerRef = useRef<NodeJS.Timeout | null>(null); // Ref to hold timer
-  const [tooMuch, setTooMuchTime] = useState(false)
+  const [tooMuch, setTooMuchTime] = useState(false);
 
   const { navigateToHome } = NavigationEvents();
 
@@ -524,9 +524,9 @@ const InputComponent: React.FC = () => {
         sender: "bot",
       };
       setMessages((prevMessages) => [...prevMessages, timeoutMessage]);
-        setTooMuchTime(true);
-        setLoading(false)
-    },  2.5 * 60* 1000); 
+      setTooMuchTime(true);
+      setLoading(false);
+    }, 2.5 * 60 * 1000);
   };
 
   // Simulate a bot response
@@ -549,7 +549,7 @@ const InputComponent: React.FC = () => {
       return response.data.response;
     } catch (e: any) {
       if (e.response && e.response.status === 400) {
-        return `Invalid Input`;
+        return `Offensive language detected: "${userMessage}"`;
       } else {
         handleAxiosError(e); // Handle other errors
       }
@@ -649,7 +649,9 @@ const InputComponent: React.FC = () => {
                     Are you sure you want to end the session with{" "}
                     <NameHeadingRiya>Riya</NameHeadingRiya>
                   </ParaEndChat>
-                  <EndChatButton onClick={navigateToHome}>End Chat</EndChatButton>
+                  <EndChatButton onClick={navigateToHome}>
+                    End Chat
+                  </EndChatButton>
                   <CancelChatButton onClick={handleSessionClose}>
                     Cancel
                   </CancelChatButton>
@@ -680,7 +682,9 @@ const InputComponent: React.FC = () => {
                   <ParaEndChat>
                     This has taken too long please try again later{" "}
                   </ParaEndChat>
-                  <EndChatButton onClick={navigateToHome}>End Chat</EndChatButton>
+                  <EndChatButton onClick={navigateToHome}>
+                    End Chat
+                  </EndChatButton>
                 </EndChatSubContainer>
               </PopUpSubContainer>
             </FeedbackPopupContainer>
