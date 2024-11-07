@@ -83,6 +83,10 @@ export const NavigationEvents = () => {
     navigate("/chatBot")
   }
 
+  const navigateToCreateBudget = ()=>{
+    navigate("/create-budget")
+  }
+
   return {
     navigateSignIn,
     navigateLogin,
@@ -100,7 +104,8 @@ export const NavigationEvents = () => {
     navigateToMonthReview,
     navigateToExpense,
     navigateToMonthlyBudget,
-    navigateToBot
+    navigateToBot,
+    navigateToCreateBudget
   };
 };
 
