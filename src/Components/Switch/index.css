@@ -1,0 +1,23 @@
+.switch {
+    width: 50px;
+    height: 24px;
+    background-color: #EEE5FF;
+    display: flex;
+    justify-content: flex-start;
+    border-radius: 16px;
+    padding: 4px;
+    align-self: flex-end;
+  }
+  
+  .switch[data-isOn="true"] {
+    justify-content: flex-end;
+    background-color: #7F3DFF;
+  }
+  
+  .handle {
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 40px;
+  }
+  

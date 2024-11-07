@@ -223,7 +223,7 @@ const MonthReview = () => {
         const response = await axios.post(
           `${url}/get_user_expenses_comparison_at_eom/`,
           {
-            month: "10",
+            month: "11",
           },
           {
             headers: {

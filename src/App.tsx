@@ -29,6 +29,7 @@ import HomeSmartSpendingSuggestions from "./Components/HomeSmartSpendingSuggesti
 import NewSmartSpendingSuggestions from "./Components/NewUserSmartSpendingSuggestions";
 import { BotImage } from "./Components/TabBar/styledComponents";
 import { NavigationEvents } from "./Constants/EventHandlers";
+import CreateBudget from "./Components/CreateBudget";
 
 function App() {
   const location = useLocation();
@@ -74,6 +75,8 @@ function App() {
           />
 
           <Route path="/monthReview" element={<MonthReview />} />
+          <Route path="/budget" element={<Budget />} />
+          <Route path="/create-budget" element={<CreateBudget />} />
         </Route>
       </Routes>
       {shouldShowTabBar && <TabBar />}
