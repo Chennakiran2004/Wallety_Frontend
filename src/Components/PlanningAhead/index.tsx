@@ -19,7 +19,7 @@ const PlanningAhead = () => {
       <CarouselItemTextContainer>
         <CarouselItemHeading>Planning ahead</CarouselItemHeading>
         <CarouselItemDescription style={{ marginBottom: "24px" }}>
-          Setup your budget for each category so you in control{" "}
+          Setup your budget for each category so you are in control{" "}
         </CarouselItemDescription>
       </CarouselItemTextContainer>
       <GlobalButtonsContainer>
