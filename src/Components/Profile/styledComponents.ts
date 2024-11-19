@@ -21,7 +21,7 @@ export const ProfileMainContainer = styled.div`
     overflow-y: scroll;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Add shadow here */
     border-radius: 16px;
-    height: 72vh;
+    min-height: 72dvh;
     scrollbar-width: none;
   }
 
