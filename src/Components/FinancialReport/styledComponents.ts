@@ -115,6 +115,7 @@ export const ExpensesBarsContainer = styled.div`
   scrollbar-width: none;
   overflow: scroll;
   @media screen and (min-width: 768px) {
-    height: 23dvh;
+    height: 12dvh;
+    overflow: scroll;
   }
 `;

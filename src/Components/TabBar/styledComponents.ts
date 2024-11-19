@@ -9,12 +9,12 @@ export const TabBarMainContainer = styled.div`
   align-items: center;
   flex-shrink: 0;
   position: relative;
-  height: 9dvh;
+  /* height: 9dvh; */
   overflow: hidden;
 
   @media screen and (min-width: 768px) {
     width: 768px;
-    bottom: 16%;
+    bottom: 9%;
   }
 
   @media screen and (min-width: 1280px) and (max-width: 1792px) and (min-resolution: 2dppx) {
