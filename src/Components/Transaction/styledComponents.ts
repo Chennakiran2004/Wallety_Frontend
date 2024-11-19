@@ -94,7 +94,7 @@ export const TransactionsContainer = styled.div`
   padding-bottom: 26px;
   scrollbar-width: none;
   @media screen and (min-width: 768px) {
-    max-height: 40vh;
+    min-height: 40dvh;
   }
 `;
 
